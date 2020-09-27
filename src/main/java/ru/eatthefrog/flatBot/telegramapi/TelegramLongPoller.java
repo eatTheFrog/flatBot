@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TelegramLongPoller {
-    public String getForLongPollMessage() {
-        return "a";
+    public LongPollResponse getForLongPollMessage() {
+        return new LongPollResponse();
     }
 }

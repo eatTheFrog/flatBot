@@ -9,4 +9,8 @@ public class TelegramApiProvider {
     public void setToken(Token token) {
         this.token = token;
     }
+
+    public void sendMessage(String chatId, String message) {
+
+    }
 }
