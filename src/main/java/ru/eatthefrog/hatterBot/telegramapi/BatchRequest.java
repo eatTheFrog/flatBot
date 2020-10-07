@@ -1,8 +1,8 @@
 package ru.eatthefrog.hatterBot.telegramapi;
 
-import ru.eatthefrog.hatterBot.requesthandling.UseRequest;
+import ru.eatthefrog.hatterBot.requesthandling.Request;
 
 public class BatchRequest {
     String newOffset;
-    UseRequest[] useRequests;
+    Request[] requests;
 }

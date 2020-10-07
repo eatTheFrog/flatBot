@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot.telegramapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.requesthandling.UseRequest;
+import ru.eatthefrog.hatterBot.requesthandling.Request;
 
 @Component
 public class TelegramApiProvider {
@@ -26,10 +26,10 @@ public class TelegramApiProvider {
         messageSender.sendChatMessage(chatId, message);
     }
 
-    public UseRequest[] getAndPreProcessMessages(){
+    public Request[] getAndPreProcessMessages(){
         LongPollResponse longPollResponse = longPoller.getLongPollResponce();
         BatchRequest batchRequest = longPollResponseHandler.handleResponce(longPollResponse);
         longPoller.updateOffset(batchRequest.newOffset);
-        return batchRequest.useRequests;
+        return batchRequest.requests;
     }
 }

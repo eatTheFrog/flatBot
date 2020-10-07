@@ -1,6 +1,6 @@
 package ru.eatthefrog.hatterBot.requesthandling;
 
-public class UseRequest {
+public class Request {
     public String chatId;
 
 }
