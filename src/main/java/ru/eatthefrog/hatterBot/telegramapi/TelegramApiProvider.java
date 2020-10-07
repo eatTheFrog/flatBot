@@ -1,19 +1,35 @@
 package ru.eatthefrog.hatterBot.telegramapi;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.requesthandling.UseRequest;
 
 @Component
 public class TelegramApiProvider {
-    Token token;
 
-    public void setToken(Token token) {
-        this.token = token;
+    Token botToken;
+
+    @Autowired
+    LongPollResponseHandler longPollResponseHandler;
+
+    @Autowired
+    LongPoller longPoller;
+
+    @Autowired
+    MessageSender messageSender;
+
+    public void setToken(Token botToken) {
+        this.botToken = botToken;
     }
 
-    public LongPollResponse getLongPollMessage() {
-        return new LongPollResponse();
+    public void sendChatMessage(String chatId, String message) {
+        messageSender.sendChatMessage(chatId, message);
     }
 
-    public void sendMessage(String chatId, String message) {
+    public UseRequest[] getAndPreProcessMessages(){
+        LongPollResponse longPollResponse = longPoller.getLongPollResponce();
+        BatchRequest batchRequest = longPollResponseHandler.handleResponce(longPollResponse);
+        longPoller.updateOffset(batchRequest.newOffset);
+        return batchRequest.useRequests;
     }
 }
