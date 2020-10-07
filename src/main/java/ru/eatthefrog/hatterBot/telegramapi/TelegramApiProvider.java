@@ -10,7 +10,10 @@ public class TelegramApiProvider {
         this.token = token;
     }
 
-    public void sendMessage(String chatId, String message) {
+    public LongPollResponse getLongPollMessage() {
+        return new LongPollResponse();
+    }
 
+    public void sendMessage(String chatId, String message) {
     }
 }

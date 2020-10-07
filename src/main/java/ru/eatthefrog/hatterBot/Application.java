@@ -1,66 +1,45 @@
 package ru.eatthefrog.hatterBot;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.databasefiller.DataBaseFiller;
-import ru.eatthefrog.hatterBot.flatrequesthandling.FlatBatch;
-import ru.eatthefrog.hatterBot.flatrequesthandling.FlatRequestHandler;
+import ru.eatthefrog.hatterBot.requesthandling.Response;
+import ru.eatthefrog.hatterBot.requesthandling.UseRequest;
+import ru.eatthefrog.hatterBot.requesthandling.RequestHandler;
 import ru.eatthefrog.hatterBot.telegramapi.LongPollResponse;
 import ru.eatthefrog.hatterBot.telegramapi.TelegramApiProvider;
-import ru.eatthefrog.hatterBot.telegramapi.TelegramLongPoller;
-import ru.eatthefrog.hatterBot.telegramapi.TokenProvider;
+import ru.eatthefrog.hatterBot.telegramapi.Token;
 
 @Component()
 public class Application {
-    int updateFrequencySec = 100;
-
     @Autowired
-    DataBaseFiller dataBaseFiller;
-
-    @Autowired
-    FlatRequestHandler flatRequestHandler;
+    RequestHandler requestHandler;
 
     @Autowired
     TelegramApiProvider telegramApiProvider;
 
     @Autowired
-    TelegramLongPoller telegramLongPoller;
+    LongPollResponseHandler longPollHandler;
 
-    @Autowired
-    LongPollResponseHandler longPollResponseHandler;
-
-    @Autowired
-    TokenProvider tokenProvider;
+    @Value("${bot.tokenValue}")
+    String tokenValue;
 
     public void run() {
         telegramApiProvider.setToken(
-                tokenProvider.getToken()
+                new Token(tokenValue, true)
         );
-        //Добавляет в telegramApiProvider токен для бота.
 
-        while(true) {
-            if (dataBaseFiller.getSecondsSinceUpdate() > updateFrequencySec) {
-                dataBaseFiller.updateFlatDataBase();
-                //Обновляет базу данных, если она не обновлялась
-                // updateFrequencySec секунд
-            }
-            LongPollResponse longPollResponse = telegramLongPoller.getForLongPollMessage();
-            //Делает longpoll запрос
-            FlatRequest[] flatRequests = longPollResponseHandler.handleResponse(
-                    longPollResponse
+        while (true) {
+            UseRequest[] useRequests = longPollHandler.handleMessage(
+                    telegramApiProvider.getLongPollMessage()
             );
-            // После этого обрабатывает запрос в специальном обработчике
-            // который формирует из всех обновлений клиентский заявки
-            for (FlatRequest flatRequest:
-                 flatRequests) {
-                // Проходится по всем заявкам, заполняет их внутреннее состояние.
-                // Затем, передаёт каждую из заявок обработчику, который возвращает
-                // удовлетворяющий запросу набор квартир.
-                flatRequest.parseContentBuildState();
-                FlatBatch flats = flatRequestHandler.handleFlatRequest(flatRequest);
+
+            for (UseRequest useRequest :
+                    useRequests) {
+                Response response = requestHandler.handleUseRequest(useRequest);
                 telegramApiProvider.sendMessage(
-                        flatRequest.chatId,
-                        flats.getMessageInterpretation()
+                        useRequest.chatId,
+                        response.getHumanFriendlyMessage()
                 );
             }
         }
