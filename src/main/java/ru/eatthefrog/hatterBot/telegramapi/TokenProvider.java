@@ -1,8 +1,8 @@
-package ru.eatthefrog.flatBot.telegramapi;
+package ru.eatthefrog.hatterBot.telegramapi;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.flatBot.simpleAES.AES;
+import ru.eatthefrog.hatterBot.simpleAES.AES;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,11 +16,13 @@ public class TokenProvider {
     AES aes;
     String result = "";
     InputStream inputStream;
+
     public String askForPassword() {
         Scanner in = new Scanner(System.in);
         System.out.println("Введите пароль");
         return in.nextLine();
     }
+
     public String getEncryptedToken() throws IOException {
         try {
             Properties prop = new Properties();
@@ -43,6 +45,7 @@ public class TokenProvider {
         }
         return result;
     }
+
     public Token getToken() {
         System.out.println(aes);
         String encryptedToken = null;

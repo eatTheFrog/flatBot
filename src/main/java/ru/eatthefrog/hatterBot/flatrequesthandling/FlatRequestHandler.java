@@ -1,7 +1,7 @@
-package ru.eatthefrog.flatBot.flatrequesthandling;
+package ru.eatthefrog.hatterBot.flatrequesthandling;
 
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.flatBot.FlatRequest;
+import ru.eatthefrog.hatterBot.FlatRequest;
 
 @Component
 public class FlatRequestHandler {

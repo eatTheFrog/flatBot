@@ -1,4 +1,4 @@
-package ru.eatthefrog.flatBot.databasefiller;
+package ru.eatthefrog.hatterBot.databasefiller;
 
 import org.springframework.stereotype.Component;
 

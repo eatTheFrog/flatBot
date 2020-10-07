@@ -1,4 +1,4 @@
-package ru.eatthefrog.flatBot;
+package ru.eatthefrog.hatterBot;
 
 public class mongoDBOperator {
 }

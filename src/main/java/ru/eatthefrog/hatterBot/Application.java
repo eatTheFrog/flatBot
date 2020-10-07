@@ -1,20 +1,16 @@
-package ru.eatthefrog.flatBot;
+package ru.eatthefrog.hatterBot;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.flatBot.databasefiller.DataBaseFiller;
-import ru.eatthefrog.flatBot.flatrequesthandling.Flat;
-import ru.eatthefrog.flatBot.flatrequesthandling.FlatBatch;
-import ru.eatthefrog.flatBot.flatrequesthandling.FlatRequestHandler;
-import ru.eatthefrog.flatBot.telegramapi.LongPollResponse;
-import ru.eatthefrog.flatBot.telegramapi.TelegramApiProvider;
-import ru.eatthefrog.flatBot.telegramapi.TelegramLongPoller;
-import ru.eatthefrog.flatBot.telegramapi.TokenProvider;
+import ru.eatthefrog.hatterBot.databasefiller.DataBaseFiller;
+import ru.eatthefrog.hatterBot.flatrequesthandling.FlatBatch;
+import ru.eatthefrog.hatterBot.flatrequesthandling.FlatRequestHandler;
+import ru.eatthefrog.hatterBot.telegramapi.LongPollResponse;
+import ru.eatthefrog.hatterBot.telegramapi.TelegramApiProvider;
+import ru.eatthefrog.hatterBot.telegramapi.TelegramLongPoller;
+import ru.eatthefrog.hatterBot.telegramapi.TokenProvider;
 
-import java.io.IOException;
-
-@Component
+@Component()
 public class Application {
     int updateFrequencySec = 100;
 
@@ -35,6 +31,7 @@ public class Application {
 
     @Autowired
     TokenProvider tokenProvider;
+
     public void run() {
         telegramApiProvider.setToken(
                 tokenProvider.getToken()
@@ -66,8 +63,6 @@ public class Application {
                         flats.getMessageInterpretation()
                 );
             }
-
-
         }
     }
 }

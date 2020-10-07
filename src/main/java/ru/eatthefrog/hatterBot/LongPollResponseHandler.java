@@ -1,7 +1,7 @@
-package ru.eatthefrog.flatBot;
+package ru.eatthefrog.hatterBot;
 
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.flatBot.telegramapi.LongPollResponse;
+import ru.eatthefrog.hatterBot.telegramapi.LongPollResponse;
 
 @Component
 public class LongPollResponseHandler {

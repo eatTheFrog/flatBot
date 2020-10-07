@@ -1,4 +1,4 @@
-package ru.eatthefrog.flatBot.flatrequesthandling;
+package ru.eatthefrog.hatterBot.flatrequesthandling;
 
 public class FlatBatch {
     Flat[] flats;

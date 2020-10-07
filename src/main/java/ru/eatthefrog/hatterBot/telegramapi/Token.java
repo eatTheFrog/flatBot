@@ -1,4 +1,4 @@
-package ru.eatthefrog.flatBot.telegramapi;
+package ru.eatthefrog.hatterBot.telegramapi;
 
 public class Token {
     String content;

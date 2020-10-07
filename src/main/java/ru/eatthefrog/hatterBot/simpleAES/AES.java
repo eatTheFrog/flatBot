@@ -1,4 +1,4 @@
-package ru.eatthefrog.flatBot.simpleAES;
+package ru.eatthefrog.hatterBot.simpleAES;
 
 import org.springframework.stereotype.Component;
 

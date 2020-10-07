@@ -1,4 +1,4 @@
-package ru.eatthefrog.flatBot.telegramapi;
+package ru.eatthefrog.hatterBot.telegramapi;
 
 import org.springframework.stereotype.Component;
 
