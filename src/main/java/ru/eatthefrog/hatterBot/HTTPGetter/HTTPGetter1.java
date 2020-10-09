@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
+
 public class HTTPGetter1 implements HTTPGetterable {
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 

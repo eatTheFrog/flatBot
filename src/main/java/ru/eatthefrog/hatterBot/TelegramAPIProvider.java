@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter1;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter2;
+import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -12,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class TelegramAPIProvider {
     @Autowired
-    HTTPGetter2 httpGetter;
+    HTTPGetterable httpGetter;
 
     String Token;
 
@@ -32,19 +33,13 @@ public class TelegramAPIProvider {
         );
     }
 
-    String sendMessage(String text, int chatID) {
+    String sendMessage(TelegramMessage telegramMessage){
         return httpGetter.doRequest(
                 String.format("%s%s/sendMessage?chat_id=%s&text=%s",
                         API_PREFIX,
                         Token,
-                        chatID,
-                        URLEncoder.encode(text, StandardCharsets.UTF_8))
+                        telegramMessage.chatID,
+                        URLEncoder.encode(telegramMessage.messageText, StandardCharsets.UTF_8))
         );
-    }
-
-    String sendMessage(TelegramMessage telegramMessage){
-        return sendMessage(
-                telegramMessage.messageText,
-                telegramMessage.chatID);
     }
 }

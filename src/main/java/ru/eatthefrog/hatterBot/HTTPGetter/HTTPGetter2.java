@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-@Component
 public class HTTPGetter2 implements HTTPGetterable {
     public String doUnsafeRequest(String url_string) throws IOException{
         URL url = new URL(url_string);
