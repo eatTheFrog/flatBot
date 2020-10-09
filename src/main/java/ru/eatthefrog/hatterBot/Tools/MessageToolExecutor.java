@@ -1,6 +1,5 @@
 package ru.eatthefrog.hatterBot.Tools;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.TelegramMessage;
 
@@ -8,27 +7,20 @@ import java.util.HashMap;
 
 @Component
 public class MessageToolExecutor {
-    @Autowired
-    PraiseTool praiseTool;
+    private HashMap<String, Toolable> tools = new HashMap<>();
 
-    private HashMap<String, Toolable> tools;
+    private UnknownTool unknownTool = new UnknownTool();
 
     public MessageToolExecutor(){
         tools.put("/echo", new EchoTool());
-        tools.put("/unknown", new UnknownTool());
-    }
-
-    public Toolable getTool(String messageText) {
-        String[] messageArgs = messageText.split(" ");
-        switch (messageArgs[0]) {
-            default:
-                return praiseTool;
-        }
+        tools.put("/praise", new PraiseTool());
+        tools.put("/help", new HelpTool());
+        tools.put("/start", new GreetingsTool());
     }
 
     public TelegramMessage execute(TelegramMessage userMessage){
         String[] args = userMessage.messageText.split(" ");
-        var tool = tools.getOrDefault(args[0], new UnknownTool());
-        return new TelegramMessage(userMessage.messageText, userMessage.chatID);
+        String botMessage = tools.getOrDefault(args[0], unknownTool).getExecuteOut(args, userMessage.longPollUpdateMessageChat);
+        return new TelegramMessage(botMessage, userMessage.chatID);
     }
 }

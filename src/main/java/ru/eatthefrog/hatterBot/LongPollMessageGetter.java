@@ -27,7 +27,7 @@ public class LongPollMessageGetter {
     }
 
     private TelegramMessage[] generateMessagess(LongPollResponse longPollResponse){
-        List<TelegramMessage> telegramMessages = new ArrayList<TelegramMessage>();
+        List<TelegramMessage> telegramMessages = new ArrayList<>();
         for (LongPollUpdate longPollUpdate :
                 longPollResponse.longPollUpdates) {
             if (longPollUpdate.longPollUpdateMessage == null)

@@ -11,12 +11,12 @@ public class LongPollUpdateMessage {
     int date;
 
     @SerializedName("text")
-    String text;
+    String messageText;
 
     @SerializedName("chat")
     LongPollUpdateMessageChat longPollUpdateMessageChat;
 
     public TelegramMessage toTelegramMessage() {
-        return new TelegramMessage(text, longPollUpdateMessageChat.id);
+        return new TelegramMessage(messageText, longPollUpdateMessageChat.id, longPollUpdateMessageChat);
     }
 }
