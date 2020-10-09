@@ -1,39 +1,39 @@
 package ru.eatthefrog.hatterBot;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.requesthandling.Response;
-import ru.eatthefrog.hatterBot.requesthandling.Request;
-import ru.eatthefrog.hatterBot.requesthandling.RequestHandler;
-import ru.eatthefrog.hatterBot.telegramapi.TelegramApiProvider;
-import ru.eatthefrog.hatterBot.telegramapi.Token;
+import ru.eatthefrog.hatterBot.Tools.MessageToToolCompiler;
+import ru.eatthefrog.hatterBot.Tools.Toolable;
+import ru.eatthefrog.hatterBot.Tools.Toolable;
 
-@Component()
+
+@Component
 public class Application {
     @Autowired
-    RequestHandler requestHandler;
+    LongPollMessageGetter longPollerMessageGetter;
 
     @Autowired
-    TelegramApiProvider telegramApiProvider;
+    TelegramBotTokenProvider telegramBotTokenProvider;
 
-    @Value("${bot.tokenValue}")
-    String tokenValue;
+    @Autowired
+    MessageToToolCompiler messageToToolCompiler;
 
+    @Autowired
+    TelegramAPIProvider telegramAPIProvider;
     public void run() {
-        telegramApiProvider.setToken(
-                new Token(tokenValue, true)
-        );
+        telegramAPIProvider.Token = telegramBotTokenProvider.getToken();
 
         while (true) {
-            Request[] requests = telegramApiProvider.getAndPreProcessMessages();
-
-            for (Request request : requests) {
-                Response response = requestHandler.handleUseRequest(request);
-                telegramApiProvider.sendChatMessage(
-                        request.chatId,
-                        response.getHumanFriendlyMessage()
+            TelegramMessage[] telegramMessages = longPollerMessageGetter.getMessagesLongPoll();
+            for (TelegramMessage telegramMessage:
+                    telegramMessages) {
+                Toolable tool = messageToToolCompiler.getTool(telegramMessage.messageText);
+                String outString = tool.getExecuteOut(telegramMessage.messageText);
+                telegramAPIProvider.sendMessage(
+                        outString,
+                        telegramMessage.chatID
                 );
+
             }
         }
     }
