@@ -2,8 +2,7 @@ package ru.eatthefrog.hatterBot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.Tools.MessageToToolCompiler;
-import ru.eatthefrog.hatterBot.Tools.Toolable;
+import ru.eatthefrog.hatterBot.Tools.MessageToolExecutor;
 
 
 @Component
@@ -12,31 +11,27 @@ public class Application {
     LongPollMessageGetter longPollMessageGetter;
 
     @Autowired
-    TelegramBotTokenProvider telegramBotTokenProvider;
+    BotTokenProvider botTokenProvider;
 
     @Autowired
-    MessageToToolCompiler messageToToolCompiler;
+    MessageToolExecutor messageToolExecutor;
 
     @Autowired
     TelegramAPIProvider telegramAPIProvider;
 
     public void run() {
         telegramAPIProvider.setToken(
-                telegramBotTokenProvider.getToken()
+                botTokenProvider.getToken()
         );
 
         while (true) {
-            TelegramMessage[] telegramMessages = longPollMessageGetter.getMessagesLongPoll();
-            for (TelegramMessage telegramMessage :
-                    telegramMessages) {
-                if (telegramMessage.messageText == null)
+            TelegramMessage[] userMessages = longPollMessageGetter.getMessagesLongPoll();
+            for (TelegramMessage userMessage :
+                    userMessages) {
+                if (userMessage.messageText == null)
                     continue;
-                Toolable tool = messageToToolCompiler.getTool(telegramMessage.messageText);
-                String outString = tool.getExecuteOut(telegramMessage.messageText);
-                telegramAPIProvider.sendMessage(
-                        outString,
-                        telegramMessage.chatID
-                );
+                TelegramMessage botMessage = messageToolExecutor.execute(userMessage);
+                telegramAPIProvider.sendMessage(botMessage);
             }
         }
     }

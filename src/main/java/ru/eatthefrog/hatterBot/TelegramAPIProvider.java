@@ -25,7 +25,7 @@ public class TelegramAPIProvider {
         return httpGetter.doRequest(
                 API_PREFIX + Token + "/"
                         + methodName
-                        + "?offset=" + String.valueOf(offset)
+                        + "?offset=" + offset
                         + "&timeout=3600"
         );
     }
@@ -36,8 +36,14 @@ public class TelegramAPIProvider {
         return httpGetter.doRequest(
                 API_PREFIX + Token + "/"
                         + methodName
-                        + "?chat_id=" + String.valueOf(chatID)
+                        + "?chat_id=" + chatID
                         + "&text=" + uriText
         );
+    }
+
+    String sendMessage(TelegramMessage telegramMessage){
+        return sendMessage(
+                telegramMessage.messageText,
+                telegramMessage.chatID);
     }
 }
