@@ -2,7 +2,6 @@ package ru.eatthefrog.hatterBot.Tools;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.TelegramMessage;
 
 @Component
 public class MessageToToolCompiler {

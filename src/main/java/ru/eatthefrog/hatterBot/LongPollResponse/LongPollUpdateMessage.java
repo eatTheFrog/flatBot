@@ -13,9 +13,6 @@ public class LongPollUpdateMessage {
     @SerializedName("text")
     String text;
 
-    @SerializedName("from")
-    LongPollUpdateMessageFrom longPollUpdateMessageFrom;
-
     @SerializedName("chat")
     LongPollUpdateMessageChat longPollUpdateMessageChat;
 

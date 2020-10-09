@@ -16,8 +16,7 @@ public class PropertiesProvider {
             //get the property value and print it out
             return prop.getProperty(propertyName);
 
-        }
-        catch (IOException ex) {
+        } catch(IOException ex) {
             ex.printStackTrace();
         }
         return null;

@@ -1,6 +1,5 @@
 package ru.eatthefrog.hatterBot;
 
-import org.apache.http.client.methods.HttpGet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +12,7 @@ public class TelegramAPIProvider {
     HTTPGetter httpGetter;
 
     String Token;
+
     final String API_PREFIX = "https://api.telegram.org/bot";
 
     public void setToken(String token) {
@@ -26,21 +26,18 @@ public class TelegramAPIProvider {
                 API_PREFIX + Token + "/"
                         + methodName
                         + "?offset=" + String.valueOf(offset)
-        );
-    }
-    String sendMessage(String text, int chatID)
-    {
-        String uriText = URLEncoder.encode(text);
-        String methodName = "sendMessage";
-        return httpGetter.doRequest(
-            API_PREFIX + Token + "/"
-                    + methodName
-                    + "?chat_id=" + String.valueOf(chatID)
-                    + "&text=" + uriText
+                        + "&timeout=3600"
         );
     }
 
-    String longPoll() {
-        return "";
+    String sendMessage(String text, int chatID) {
+        String uriText = URLEncoder.encode(text);
+        String methodName = "sendMessage";
+        return httpGetter.doRequest(
+                API_PREFIX + Token + "/"
+                        + methodName
+                        + "?chat_id=" + String.valueOf(chatID)
+                        + "&text=" + uriText
+        );
     }
 }
