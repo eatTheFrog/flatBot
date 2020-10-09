@@ -1,4 +1,4 @@
-package ru.eatthefrog.hatterBot;
+package ru.eatthefrog.hatterBot.HTTPGetter;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -10,22 +10,22 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class HTTPGetter {
+public class HTTPGetter1 implements HTTPGetterable {
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     public String doRequest(String url_string) {
         HttpGet httpGet = new HttpGet(url_string);
-        CloseableHttpResponse response1 = null;
+        CloseableHttpResponse response = null;
         try {
-            response1 = httpClient.execute(httpGet);
-            return EntityUtils.toString(response1.getEntity());
+            response = httpClient.execute(httpGet);
+            return EntityUtils.toString(response.getEntity());
         } catch(IOException e) {
             e.printStackTrace();
             return "";
         } finally {
             try {
-                assert response1 != null;
-                response1.close();
+                assert response != null;
+                response.close();
             } catch(IOException e) {
                 e.printStackTrace();
             }

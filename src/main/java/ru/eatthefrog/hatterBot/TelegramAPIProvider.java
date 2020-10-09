@@ -2,14 +2,17 @@ package ru.eatthefrog.hatterBot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter1;
+import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter2;
 
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 @Component
 public class TelegramAPIProvider {
     @Autowired
-    HTTPGetter httpGetter;
+    HTTPGetter2 httpGetter;
 
     String Token;
 
@@ -21,23 +24,21 @@ public class TelegramAPIProvider {
 
     //TELEGRAM API METHODS: args -> String
     String getUpdates(int offset) {
-        String methodName = "getUpdates";
         return httpGetter.doRequest(
-                API_PREFIX + Token + "/"
-                        + methodName
-                        + "?offset=" + offset
-                        + "&timeout=3600"
+                String.format("%s%s/getUpdates?offset=%s&timeout=3600",
+                        API_PREFIX,
+                        Token,
+                        offset)
         );
     }
 
     String sendMessage(String text, int chatID) {
-        String uriText = URLEncoder.encode(text);
-        String methodName = "sendMessage";
         return httpGetter.doRequest(
-                API_PREFIX + Token + "/"
-                        + methodName
-                        + "?chat_id=" + chatID
-                        + "&text=" + uriText
+                String.format("%s%s/sendMessage?chat_id=%s&text=%s",
+                        API_PREFIX,
+                        Token,
+                        chatID,
+                        URLEncoder.encode(text, StandardCharsets.UTF_8))
         );
     }
 
