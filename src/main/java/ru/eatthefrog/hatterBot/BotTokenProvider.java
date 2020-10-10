@@ -17,6 +17,7 @@ public class BotTokenProvider {
             token = propertiesProvider.getProperty(
                     "secret.bot.properties",
                     "token");
+        System.out.println(token);
         return token;
     }
 }
