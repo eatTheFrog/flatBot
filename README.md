@@ -4,3 +4,14 @@
 
 The idea behind the flatHatBot is to allow one to use a small array of network oriented tools from the comfort of their own telegram!
 
+# Updates:
+## 2.0.0
+-- Dialog system was added.
+-- Login/registration system was added.
+-- MongoDB login saving was added.
+
+## 2.0.1
+-- Git ignore was added!
+
+## 2.0.2
+-- Smart token control.
