@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Java template
+*.properties
 # Compiled class file
 *.class
 
