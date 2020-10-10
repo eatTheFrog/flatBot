@@ -20,3 +20,7 @@ The idea behind the flatHatBot is to allow one to use a small array of network o
 
 ## 2.0.3
 -- Hashing passwords in MongoDB.
+
+## 2.1.0
+-- Log/pass caching was added.
+-- DebugPrinter was added.

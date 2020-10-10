@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BotTokenProvider {
+    @Autowired
+    DebugPrinter DEBUG_PRINTER;
     @Value("${bot.tokenValue}")
     String token;
 
@@ -17,7 +19,7 @@ public class BotTokenProvider {
             token = propertiesProvider.getProperty(
                     "secret.bot.properties",
                     "token");
-        System.out.println(token);
+        DEBUG_PRINTER.print(token, this);
         return token;
     }
 }

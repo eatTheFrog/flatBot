@@ -19,6 +19,9 @@ public class LongPollMessageGetter {
     @Autowired
     TelegramAPIProvider telegramAPIProvider;
 
+    @Autowired
+    DebugPrinter debugPrinter;
+
     private void updateOffset(LongPollResponse longPollResponse){
         int lengthUpdates = longPollResponse.longPollUpdates.length;
         if (lengthUpdates > 0) {
@@ -43,7 +46,7 @@ public class LongPollMessageGetter {
 
     TelegramMessage[] getMessagesLongPoll() {
         String response = telegramAPIProvider.getUpdates(offest);
-        System.out.println(response);
+        debugPrinter.print(response, this);
         LongPollResponse longPollResponse = gson.fromJson(response, LongPollResponse.class);
         updateOffset(longPollResponse);
         return generateMessagess(longPollResponse);

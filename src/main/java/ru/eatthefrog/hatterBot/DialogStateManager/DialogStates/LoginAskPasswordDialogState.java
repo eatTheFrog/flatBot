@@ -18,6 +18,7 @@ public class LoginAskPasswordDialogState extends DialogState {
 
     public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
         userDialogStatePosition.loginInstance.password = arg;
+        loginValidChecker.checkValidLoginInDB(userDialogStatePosition.loginInstance);
         if (isLogged(userDialogStatePosition.loginInstance)) {
             telegramChatSTDOUT.printInChat("You have logged!", userDialogStatePosition.chatID);
         }

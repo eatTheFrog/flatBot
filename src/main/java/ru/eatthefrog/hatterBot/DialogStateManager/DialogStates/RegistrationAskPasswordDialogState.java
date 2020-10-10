@@ -18,6 +18,7 @@ public class RegistrationAskPasswordDialogState extends DialogState {
     public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
         userDialogStatePosition.loginInstance.password = arg;
         loginValidChecker.rememberLoginInDB(userDialogStatePosition.loginInstance);
+        loginValidChecker.checkValidLoginInDB(userDialogStatePosition.loginInstance);
         telegramChatSTDOUT.printInChat(
                 "You have made registration.",
                 userDialogStatePosition.chatID

@@ -12,12 +12,19 @@ import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter1;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter2;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
 
+import java.util.Random;
+
 @Configuration
 @ComponentScan("ru.eatthefrog.hatterBot")
 @PropertySource("bot.properties")
 public class SpringConfiguration {
     final String dataBaseName = "FlatHatBotDatabase";
     final String mongoUri = "mongodb://127.0.0.1:27017";
+
+    @Bean
+    public Random randomBean() {
+        return new Random();
+    }
 
     @Bean
     public Gson gsonBean() {

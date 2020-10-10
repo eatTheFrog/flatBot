@@ -1,8 +1,10 @@
 package ru.eatthefrog.hatterBot.FinalStringProvider;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
+import ru.eatthefrog.hatterBot.DebugPrinter;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
@@ -14,8 +16,10 @@ import java.util.Hashtable;
 @Component
 public class FinalStringProvider {
 
-    Dictionary<String, String> finalStringsDictionary = new Hashtable<>();
 
+    Dictionary<String, String> finalStringsDictionary = new Hashtable<>();
+    @Autowired
+    DebugPrinter debugPrinter;
     @PostConstruct
     void loadFinalStrings() {
         try {
@@ -39,7 +43,7 @@ public class FinalStringProvider {
     }
 
     public String getFinalString(String identifierString) {
-        System.out.println(identifierString);
+        debugPrinter.print(identifierString, this);
         return finalStringsDictionary.get(identifierString);
     }
 }
