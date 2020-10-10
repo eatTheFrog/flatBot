@@ -1,4 +1,4 @@
-# v2.0.2
+# v2.0.3
 # What can I do?
 ![Image of Yaktocat](https://media.discordapp.net/attachments/665150642700156951/763855369645850625/sombrero-02.png)
 
@@ -17,3 +17,6 @@ The idea behind the flatHatBot is to allow one to use a small array of network o
 
 ## 2.0.2
 -- Smart token control.
+
+## 2.0.3
+-- Hashing passwords in MongoDB.
