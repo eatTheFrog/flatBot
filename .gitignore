@@ -1,6 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Java template
-*.properties
 # Compiled class file
 *.class
 
@@ -31,3 +30,4 @@ hs_err_pid*
 Будет удалено target/classes/helpDoc
 Будет удалено target/classes/logback.xml
 Будет удалено target/generated-sources/
+/src/main/resources/secret.bot.properties

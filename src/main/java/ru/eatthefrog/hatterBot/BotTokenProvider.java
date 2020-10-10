@@ -9,9 +9,14 @@ public class BotTokenProvider {
     @Value("${bot.tokenValue}")
     String token;
 
+    @Autowired
+    PropertiesProvider propertiesProvider;
 
     String getToken() {
-        System.out.println(token);
+        if (token.equals("default"))
+            token = propertiesProvider.getProperty(
+                    "secret.bot.properties",
+                    "token");
         return token;
     }
 }
