@@ -6,12 +6,15 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
+import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 
 import javax.annotation.PostConstruct;
 
 @Component
 public class MongoLoginManager {
     MongoCollection<Document> loginCollection;
+    @Autowired
+    MD5StringHasher md5StringHasher;
 
     @Autowired
     MongoDatabase mongoDatabase;
@@ -24,7 +27,7 @@ public class MongoLoginManager {
     public void putLoginInstance(LoginInstance loginInstance) {
         Document mongoLoginInstance = new Document() {{
            append("login", loginInstance.login);
-           append("password", loginInstance.password);
+           append("password", md5StringHasher.getHash(loginInstance.password));
         }};
         loginCollection.insertOne(mongoLoginInstance);
     }

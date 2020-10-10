@@ -3,6 +3,7 @@ package ru.eatthefrog.hatterBot.LoginManager;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
 import java.util.ArrayList;
@@ -12,13 +13,18 @@ import java.util.List;
 public class LoginValidChecker {
     List<String> loginCache = new ArrayList<String>();
     @Autowired
+    MD5StringHasher md5StringHasher;
+
+    @Autowired
     MongoLoginManager mongoLoginManager;
     public Boolean checkValidLogin(LoginInstance loginInstance)
     {
         Document loginInstanceDocument = mongoLoginManager.getLoginInstanceDocument(loginInstance.login);
         if (loginInstanceDocument == null)
             return false;
-        if (!loginInstanceDocument.get("password").equals(loginInstance.password))
+        if (!loginInstanceDocument.get("password").equals(
+                md5StringHasher.getHash(loginInstance.password)
+        ))
             return false;
         return true;
     }
