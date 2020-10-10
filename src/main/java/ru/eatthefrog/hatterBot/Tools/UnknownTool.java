@@ -1,9 +1,12 @@
 package ru.eatthefrog.hatterBot.Tools;
 
+import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
 import ru.eatthefrog.hatterBot.LongPollResponse.LongPollUpdateMessageChat;
 
-public class UnknownTool implements Toolable {
-    public String getExecuteOut(String[] args, LongPollUpdateMessageChat personalization) {
-        return "I don't know this command. Try /help!";
+@Component
+public class UnknownTool {
+    public String getExecuteOut() {
+        return "I don't know this command.";
     }
 }

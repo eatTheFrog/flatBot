@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.Tools.MessageToolExecutor;
+import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
 
 @Component
@@ -14,11 +14,11 @@ public class Application {
     BotTokenProvider botTokenProvider;
 
     @Autowired
-    MessageToolExecutor messageToolExecutor;
-
-    @Autowired
     TelegramAPIProvider telegramAPIProvider;
-
+    @Autowired
+    MessageProcessor messageProcessor;
+    @Autowired
+    MongoLoginManager mongoLoginManager;
     public void run() {
         telegramAPIProvider.setToken(
                 botTokenProvider.getToken()
@@ -30,8 +30,11 @@ public class Application {
                     userMessages) {
                 if (userMessage.messageText == null)
                     continue;
-                TelegramMessage botMessage = messageToolExecutor.execute(userMessage);
-                telegramAPIProvider.sendMessage(botMessage);
+                TelegramMessage telegramMessage = messageProcessor.processMessage(userMessage);
+                if (telegramMessage.messageText.equals(""))
+                    continue;
+                telegramAPIProvider.sendMessage(telegramMessage);
+
             }
         }
     }
