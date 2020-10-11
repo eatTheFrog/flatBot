@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RegistrationDialogStateEnabler {
+public class  RegistrationDialogStateEnabler {
 
     @Autowired
     RegistrationAskLoginDialogState registrationAskLoginDialogState;

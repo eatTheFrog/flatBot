@@ -8,7 +8,9 @@ public class UserDialogStatePosition {
     DialogState userDialogState = null;
     public Boolean recentCreated = true;
     public int chatID;
+    public long lastTimeTouched;
     public UserDialogStatePosition(DialogState userDialogStateArg, int chatIDArg) {
+        lastTimeTouched = System.currentTimeMillis();
         userDialogState = userDialogStateArg;
         chatID = chatIDArg;
         loginInstance = new LoginInstance();

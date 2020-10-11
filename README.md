@@ -1,4 +1,4 @@
-# v2.1.0
+# v2.1.1
 # What can I do?
 ![Image of Yaktocat](https://media.discordapp.net/attachments/665150642700156951/763855369645850625/sombrero-02.png)
 
@@ -24,3 +24,8 @@ The idea behind the flatHatBot is to allow one to use a small array of network o
 ## 2.1.0
 -- Log/pass caching was added.
 -- DebugPrinter was added.
+
+## 2.1.1
+-- Добавлена поддержка аспектного программирования.
+-- Внедрена функция сохранения состояний диалога в базу данных (ещё не реализована).
+

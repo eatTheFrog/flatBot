@@ -3,6 +3,7 @@ package ru.eatthefrog.hatterBot.DialogStateManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.RootDialogState;
+import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
 import ru.eatthefrog.hatterBot.TelegramMessage;
 
 import java.util.*;
@@ -11,9 +12,20 @@ import java.util.*;
 public class DialogStateManager {
     @Autowired
     RootDialogState rootDialogState;
-    Dictionary<Integer, UserDialogStatePosition> statePositionDict = new Hashtable<>();
+
+    @Autowired
+    MongoUserStatesManager mongoUserStatesManager;
+
+    public Dictionary<Integer, UserDialogStatePosition> getStatePositionDict() {
+        return statePositionDict;
+    }
+
+    @Autowired
+    Dictionary<Integer, UserDialogStatePosition> statePositionDict;
+
 
     public TelegramMessage statefulMessageProcess(TelegramMessage telegramMessage) {
+        System.out.println(statePositionDict);
         int chatID = telegramMessage.chatID;
         UserDialogStatePosition userStatePosition = getUserDialogStatePosition(chatID);
         String newMessageText = userStatePosition.makeStep(telegramMessage.messageText);
@@ -24,8 +36,11 @@ public class DialogStateManager {
     UserDialogStatePosition getUserDialogStatePosition(int chatID) {
         UserDialogStatePosition userDialogStatePosition = statePositionDict.get(chatID);
         if (userDialogStatePosition == null) {
-            userDialogStatePosition = new UserDialogStatePosition(rootDialogState, chatID);
-            statePositionDict.put(chatID, userDialogStatePosition);
+            userDialogStatePosition = mongoUserStatesManager.getStatePosition(chatID);
+            if (userDialogStatePosition == null) {
+                userDialogStatePosition = new UserDialogStatePosition(rootDialogState, chatID);
+                statePositionDict.put(chatID, userDialogStatePosition);
+            }
         }
         return userDialogStatePosition;
     }

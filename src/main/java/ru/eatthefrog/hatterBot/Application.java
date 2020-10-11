@@ -10,10 +10,8 @@ import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 public class Application {
     @Autowired
     LongPollMessageGetter longPollMessageGetter;
-
     @Autowired
     BotTokenProvider botTokenProvider;
-
     @Autowired
     TelegramAPIProvider telegramAPIProvider;
     @Autowired
@@ -22,25 +20,25 @@ public class Application {
     MongoLoginManager mongoLoginManager;
     @Autowired
     LoginValidChecker loginValidChecker;
+
     public void run() {
         telegramAPIProvider.setToken(
                 botTokenProvider.getToken()
         );
-        while (true) {
-            if (loginValidChecker.isItTimeToUpdateVerifyKey())
-                loginValidChecker.updateVerifyKeyRandom();
+        while (true)
+            this.longPollIteration();
+    }
 
-            TelegramMessage[] userMessages = longPollMessageGetter.getMessagesLongPoll();
-            for (TelegramMessage userMessage :
-                    userMessages) {
-                if (userMessage.messageText == null)
-                    continue;
-                TelegramMessage telegramMessage = messageProcessor.processMessage(userMessage);
-                if (telegramMessage.messageText.equals(""))
-                    continue;
-                telegramAPIProvider.sendMessage(telegramMessage);
-
-            }
+    public void longPollIteration() {
+        TelegramMessage[] userMessages = longPollMessageGetter.getMessagesLongPoll();
+        for (TelegramMessage userMessage :
+                userMessages) {
+            if (userMessage.messageText == null)
+                continue;
+            TelegramMessage telegramMessage = messageProcessor.processMessage(userMessage);
+            if (telegramMessage.messageText.equals(""))
+                continue;
+            telegramAPIProvider.sendMessage(telegramMessage);
         }
     }
 }
