@@ -23,9 +23,11 @@ The idea behind the flatHatBot is to allow one to use a small array of network o
 
 ## 2.1.0
 -- Log/pass caching was added.
+
 -- DebugPrinter was added.
 
 ## 2.1.1
--- Добавлена поддержка аспектного программирования.
+-- Добавлена поддержка Spring AOP, AspectJ.
+
 -- Внедрена функция сохранения состояний диалога в базу данных (ещё не реализована).
 
