@@ -1,4 +1,4 @@
-# v2.1.1
+# v2.2.0
 # What can I do?
 ![Image of Yaktocat](https://media.discordapp.net/attachments/665150642700156951/763855369645850625/sombrero-02.png)
 
@@ -31,3 +31,8 @@ The idea behind the flatHatBot is to allow one to use a small array of network o
 
 -- Внедрена функция сохранения состояний диалога в базу данных (ещё не реализована).
 
+## 2.2.0
+-- Добавлена поддержка JUnit, SpringTest и Hamcrest.
+-- Написаны тесты для LoginValidChecker.
+-- Исправлены некоторые ошибки, связанные с LoginValidChecker.
+-- Добавлен интерфейс для базы данных.

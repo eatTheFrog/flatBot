@@ -4,6 +4,7 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
+import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
 import javax.annotation.PostConstruct;
@@ -17,21 +18,24 @@ public class LoginValidChecker {
     MD5StringHasher md5StringHasher;
 
     @Autowired
-    MongoLoginManager mongoLoginManager;
+    DataBaseLoginManager dataBaseLoginManager;
 
     public Boolean checkValidLogin(LoginInstance loginInstance)
     {
+        if (!loginInstance.isValid)
+            return false;
         if (loginInstance.isItTimeToVerify())
             return checkValidLoginInMongoAndUpdateVerification(loginInstance);
-        return loginInstance.isValid;
+
+        return true;
     }
 
     public Boolean checkValidLoginInMongoAndUpdateVerification(LoginInstance loginInstance) {
         System.out.println("HELLO WORLD");
-        Document loginInstanceDocument = mongoLoginManager.getLoginInstanceDocument(loginInstance.login);
+        String hashPass = dataBaseLoginManager.getHashPasswordForLogin(loginInstance.login);
 
-        if (loginInstanceDocument == null ||
-                !loginInstanceDocument.get("password").equals(
+        if (hashPass == null ||
+                !hashPass.equals(
                 md5StringHasher.getHash(loginInstance.password)
         ))
         {
@@ -45,7 +49,7 @@ public class LoginValidChecker {
     public Boolean checkIfLoginIsFree(String login) {
         if (loginCache.contains(login))
             return false;
-        if (mongoLoginManager.getLoginInstanceDocument(login) != null)
+        if (dataBaseLoginManager.getHashPasswordForLogin(login) != null)
             return false;
         return true;
     }
@@ -53,8 +57,12 @@ public class LoginValidChecker {
         loginCache.add(login);
     }
     public void rememberLoginInDB(LoginInstance loginInstance) {
-        mongoLoginManager.putLoginInstance(loginInstance);
+        dataBaseLoginManager.putLoginPasswordHash(
+                loginInstance.login,
+                md5StringHasher.getHash(loginInstance.password)
+        );
         loginCache.remove(loginInstance.login);
+        loginInstance.setValid();
     }
 
 }

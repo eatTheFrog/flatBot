@@ -11,8 +11,8 @@ import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 
 import javax.annotation.PostConstruct;
 
-@Component
-public class MongoLoginManager {
+
+public class MongoLoginManager implements DataBaseLoginManager {
     MongoCollection<Document> loginCollection;
     @Autowired
     DebugPrinter debugPrinter;
@@ -28,19 +28,29 @@ public class MongoLoginManager {
         loginCollection = mongoDatabase.getCollection("loginCollection");
     }
 
-    public void putLoginInstance(LoginInstance loginInstance) {
+    public void putLoginPasswordHash(String login, String hashPass) {
         Document mongoLoginInstance = new Document() {{
-           append("login", loginInstance.login);
-           append("password", md5StringHasher.getHash(loginInstance.password));
+           append("login", login);
+           append("password", hashPass);
         }};
         loginCollection.insertOne(mongoLoginInstance);
     }
-    public Document getLoginInstanceDocument(String login) {
+    public String getHashPasswordForLogin(String login) {
         debugPrinter.print("DB was touched", this);
         if (login == null)
             return null;
-        return loginCollection.find(new Document("login", login)).first();
+        Document doc = loginCollection.find(new Document("login", login)).first();
+        if (doc == null)
+            return null;
+        return (String) doc.get("password");
     }
 
+    public void resetDatabase() {
 
+    }
+
+    @Override
+    public int getCount() {
+        return 0;
+    }
 }
