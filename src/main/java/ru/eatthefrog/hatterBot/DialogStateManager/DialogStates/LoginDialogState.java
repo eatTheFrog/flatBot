@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
 import javax.annotation.PostConstruct;
 
@@ -19,15 +19,15 @@ public class LoginDialogState extends DialogState {
     @Autowired
     LoginAskLoginDialogState loginAskLoginDialogState;
 
-    public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
-        int chatID = userDialogStatePosition.chatID;
-        switch (arg) {
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        int chatID = dialogStatePosition.chatID;
+        switch (userInput) {
             case "1":
                 return loginAskLoginDialogState;
             case "2":
                 return registrationEnablerDialogState.getRegistrationState();
             case "3":
-                return getNextMenuState(userDialogStatePosition);
+                return getNextMenuState(dialogStatePosition);
             default:
                 stdOutUnknownTool(chatID);
                 return this;

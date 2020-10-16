@@ -1,14 +1,14 @@
 package ru.eatthefrog.hatterBot.MongoDBOperator;
 
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
 @Component
 public class MongoUserStatesManager {
-    public UserDialogStatePosition getStatePosition(int chatID) {
+    public DialogStatePosition getStatePosition(int chatID) {
         return null;
     }
-    public void saveStatePosition(UserDialogStatePosition userDialogStatePosition) {
+    public void saveStatePosition(DialogStatePosition dialogStatePosition) {
 
     }
 }

@@ -35,17 +35,17 @@ public class UserDialogStatePositionMongoSaverAspect {
     }
     void saveOldUserDialogStatePositions() {
         System.out.println("HELLO");
-        Dictionary<Integer, UserDialogStatePosition> dictionary = dialogStateManager.getStatePositionDict();
-        Enumeration<UserDialogStatePosition> positionEnumeration = dictionary.elements();
+        Dictionary<Integer, DialogStatePosition> dictionary = dialogStateManager.getStatePositionDict();
+        Enumeration<DialogStatePosition> positionEnumeration = dictionary.elements();
         while(positionEnumeration.hasMoreElements()){
-            UserDialogStatePosition userDialogStatePositionTemp = positionEnumeration.nextElement();
-            if (isUserDialogStatePositionOld(userDialogStatePositionTemp)) {
-                mongoUserStatesManager.saveStatePosition(userDialogStatePositionTemp);
-                dictionary.remove(userDialogStatePositionTemp.chatID);
+            DialogStatePosition dialogStatePositionTemp = positionEnumeration.nextElement();
+            if (isUserDialogStatePositionOld(dialogStatePositionTemp)) {
+                mongoUserStatesManager.saveStatePosition(dialogStatePositionTemp);
+                dictionary.remove(dialogStatePositionTemp.chatID);
             }
         }
     }
-    Boolean isUserDialogStatePositionOld(UserDialogStatePosition userDialogStatePosition) {
-        return System.currentTimeMillis() - userDialogStatePosition.lastTimeTouched > dialogStatePositionMaxLive;
+    Boolean isUserDialogStatePositionOld(DialogStatePosition dialogStatePosition) {
+        return System.currentTimeMillis() - dialogStatePosition.lastTimeTouched > dialogStatePositionMaxLive;
     }
 }

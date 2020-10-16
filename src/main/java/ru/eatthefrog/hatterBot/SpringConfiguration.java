@@ -5,8 +5,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 import org.springframework.context.annotation.*;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
-import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter1;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter2;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
 import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
@@ -29,7 +28,7 @@ public class SpringConfiguration {
         return new MongoLoginManager();
     }
     @Bean
-    public Dictionary<Integer, UserDialogStatePosition> dictionaryBean() {
+    public Dictionary<Integer, DialogStatePosition> dictionaryBean() {
         return new Hashtable<>();
     }
     @Bean

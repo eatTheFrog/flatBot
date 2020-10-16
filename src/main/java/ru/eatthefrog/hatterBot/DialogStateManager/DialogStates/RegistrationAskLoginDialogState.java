@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
 import ru.eatthefrog.hatterBot.TelegramChatSTDOUT;
 
@@ -23,16 +23,16 @@ public class RegistrationAskLoginDialogState extends DialogState {
     TelegramChatSTDOUT telegramChatSTDOUT;
 
 
-    public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition)  {
-        if (loginValidChecker.checkIfLoginIsFree(arg)) {
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition)  {
+        if (loginValidChecker.checkIfLoginIsFree(userInput)) {
             //Сразу запоминаем свободный логин, чтобы никто не занял.
             //Позже запихнём в БД.
-            loginValidChecker.addLoginToCache(arg);
-            userDialogStatePosition.loginInstance.login = arg;
+            loginValidChecker.addLoginToCache(userInput);
+            dialogStatePosition.loginInstance.login = userInput;
             return registrationAskPasswordDialogState;
         }
         telegramChatSTDOUT.printInChat("This login is busy",
-                userDialogStatePosition.chatID);
+                dialogStatePosition.chatID);
         return this;
 
 

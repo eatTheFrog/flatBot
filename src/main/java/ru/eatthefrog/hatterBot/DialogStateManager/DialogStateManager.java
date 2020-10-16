@@ -16,32 +16,29 @@ public class DialogStateManager {
     @Autowired
     MongoUserStatesManager mongoUserStatesManager;
 
-    public Dictionary<Integer, UserDialogStatePosition> getStatePositionDict() {
+    public Dictionary<Integer, DialogStatePosition> getStatePositionDict() {
         return statePositionDict;
     }
 
     @Autowired
-    Dictionary<Integer, UserDialogStatePosition> statePositionDict;
+    Dictionary<Integer, DialogStatePosition> statePositionDict;
 
 
-    public TelegramMessage statefulMessageProcess(TelegramMessage telegramMessage) {
-        System.out.println(statePositionDict);
-        int chatID = telegramMessage.chatID;
-        UserDialogStatePosition userStatePosition = getUserDialogStatePosition(chatID);
-        String newMessageText = userStatePosition.makeStep(telegramMessage.messageText);
-
-        return new TelegramMessage(newMessageText, chatID);
+    public TelegramMessage processTelegramMessage(TelegramMessage tm) {
+        DialogStatePosition dialogStatePosition = getUserDialogStatePosition(tm.chatID);
+        String newMessageText = dialogStatePosition.updateState(tm.messageText);
+        return new TelegramMessage(newMessageText, tm.chatID);
     }
 
-    UserDialogStatePosition getUserDialogStatePosition(int chatID) {
-        UserDialogStatePosition userDialogStatePosition = statePositionDict.get(chatID);
-        if (userDialogStatePosition == null) {
-            userDialogStatePosition = mongoUserStatesManager.getStatePosition(chatID);
-            if (userDialogStatePosition == null) {
-                userDialogStatePosition = new UserDialogStatePosition(rootDialogState, chatID);
-                statePositionDict.put(chatID, userDialogStatePosition);
+    DialogStatePosition getUserDialogStatePosition(int chatID) {
+        DialogStatePosition dialogStatePosition = statePositionDict.get(chatID);
+        if (dialogStatePosition == null) {
+            dialogStatePosition = mongoUserStatesManager.getStatePosition(chatID);
+            if (dialogStatePosition == null) {
+                dialogStatePosition = new DialogStatePosition(rootDialogState, chatID);
+                statePositionDict.put(chatID, dialogStatePosition);
             }
         }
-        return userDialogStatePosition;
+        return dialogStatePosition;
     }
 }

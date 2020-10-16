@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
 import javax.annotation.PostConstruct;
 
@@ -15,8 +15,8 @@ public class LoginAskLoginDialogState extends DialogState {
     @Autowired
     LoginAskPasswordDialogState loginAskPasswordDialogState;
     @Override
-    public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
-        userDialogStatePosition.loginInstance.login = arg;
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        dialogStatePosition.loginInstance.login = userInput;
         return loginAskPasswordDialogState;
     }
 }

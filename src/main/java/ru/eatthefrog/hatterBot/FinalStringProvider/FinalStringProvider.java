@@ -15,11 +15,11 @@ import java.util.Hashtable;
 
 @Component
 public class FinalStringProvider {
-
-
     Dictionary<String, String> finalStringsDictionary = new Hashtable<>();
+
     @Autowired
     DebugPrinter debugPrinter;
+
     @PostConstruct
     void loadFinalStrings() {
         try {

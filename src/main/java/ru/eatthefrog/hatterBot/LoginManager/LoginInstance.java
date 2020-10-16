@@ -6,22 +6,28 @@ public class LoginInstance {
     public long lastTimeVerified;
     public Boolean isValid = false;
     public int verificationFrequency = 3600000;
-    public LoginInstance(){};
-    public LoginInstance(String loginTemp, String passwordTemp) {
-        login = loginTemp;
-        password = passwordTemp;
+
+    public LoginInstance(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
+
+    public LoginInstance(){};
+
     public void setValid() {
         isValid = true;
         lastTimeVerified = System.currentTimeMillis();
     }
+
     public void makeUltraOld() {
         lastTimeVerified = 0;
     }
+
     public void setNotValid() {
         isValid = false;
         lastTimeVerified = 0;
     }
+
     public Boolean isItTimeToVerify() {
         return System.currentTimeMillis() - lastTimeVerified > verificationFrequency;
     }

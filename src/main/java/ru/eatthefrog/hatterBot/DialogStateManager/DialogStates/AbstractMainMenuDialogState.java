@@ -2,12 +2,12 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.Tools.InfoTool;
 import ru.eatthefrog.hatterBot.Tools.PraiseTool;
 
 @Component
-public class AbstractMainMenuDialogState extends DialogState {
+public abstract class AbstractMainMenuDialogState extends DialogState {
     @Autowired
     InfoTool infoTool;
 
@@ -28,9 +28,9 @@ public class AbstractMainMenuDialogState extends DialogState {
     }
 
     @Override
-    public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
-        int chatID = userDialogStatePosition.chatID;
-        switch (arg) {
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        int chatID = dialogStatePosition.chatID;
+        switch (userInput) {
             case "1":
                 if (dialogStateIdentifier.equals("loggedMainMenuDialogState")) {
                     return this;
@@ -40,12 +40,12 @@ public class AbstractMainMenuDialogState extends DialogState {
                 }
             case "2":
                 stdOutInfoTool(chatID);
-                return getNextMenuState(userDialogStatePosition);
+                return getNextMenuState(dialogStatePosition);
             case "3":
                 return echoModState;
             default:
                 stdOutUnknownTool(chatID);
-                return getNextMenuState(userDialogStatePosition);
+                return getNextMenuState(dialogStatePosition);
         }
     }
 }

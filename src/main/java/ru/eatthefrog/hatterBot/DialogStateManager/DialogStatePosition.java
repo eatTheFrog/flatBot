@@ -3,22 +3,23 @@ package ru.eatthefrog.hatterBot.DialogStateManager;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.DialogState;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 
-public class UserDialogStatePosition {
+public class DialogStatePosition {
+
     public LoginInstance loginInstance;
-    DialogState userDialogState = null;
-    public Boolean recentCreated = true;
+    DialogState userDialogState;
+    public Boolean recentlyCreated = true;
     public int chatID;
     public long lastTimeTouched;
-    public UserDialogStatePosition(DialogState userDialogStateArg, int chatIDArg) {
+
+    public DialogStatePosition(DialogState dialogState, int chatID) {
         lastTimeTouched = System.currentTimeMillis();
-        userDialogState = userDialogStateArg;
-        chatID = chatIDArg;
+        userDialogState = dialogState;
+        this.chatID = chatID;
         loginInstance = new LoginInstance();
     }
 
-    public String makeStep(String arg) {
-        userDialogState = userDialogState.moveOtherState(arg, this);
-
+    public String updateState(String userInput) {
+        userDialogState = userDialogState.moveOtherState(userInput, this);
         return userDialogState.getInitString();
     }
 }

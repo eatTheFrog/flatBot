@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.TelegramChatSTDOUT;
 
 import javax.annotation.PostConstruct;
@@ -16,16 +16,16 @@ public class LoginAskPasswordDialogState extends DialogState {
     @Autowired
     TelegramChatSTDOUT telegramChatSTDOUT;
 
-    public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
-        userDialogStatePosition.loginInstance.password = arg;
-        loginValidChecker.checkValidLoginInMongoAndUpdateVerification(userDialogStatePosition.loginInstance);
-        if (isLogged(userDialogStatePosition.loginInstance)) {
-            telegramChatSTDOUT.printInChat("You have logged!", userDialogStatePosition.chatID);
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        dialogStatePosition.loginInstance.password = userInput;
+        loginValidChecker.checkValidLoginInMongoAndUpdateVerification(dialogStatePosition.loginInstance);
+        if (isLogged(dialogStatePosition.loginInstance)) {
+            telegramChatSTDOUT.printInChat("You have logged!", dialogStatePosition.chatID);
         }
         else {
-            telegramChatSTDOUT.printInChat("Login isn't correct", userDialogStatePosition.chatID);
+            telegramChatSTDOUT.printInChat("Login isn't correct", dialogStatePosition.chatID);
         }
-        return getNextMenuState(userDialogStatePosition);
+        return getNextMenuState(dialogStatePosition);
     }
 
 }

@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.TelegramChatSTDOUT;
 
 import javax.annotation.PostConstruct;
@@ -15,15 +15,15 @@ public class RegistrationAskPasswordDialogState extends DialogState {
     }
     @Autowired
     TelegramChatSTDOUT telegramChatSTDOUT;
-    public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
-        userDialogStatePosition.loginInstance.password = arg;
-        loginValidChecker.rememberLoginInDB(userDialogStatePosition.loginInstance);
-        loginValidChecker.checkValidLoginInMongoAndUpdateVerification(userDialogStatePosition.loginInstance);
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        dialogStatePosition.loginInstance.password = userInput;
+        loginValidChecker.rememberLoginInDB(dialogStatePosition.loginInstance);
+        loginValidChecker.checkValidLoginInMongoAndUpdateVerification(dialogStatePosition.loginInstance);
         telegramChatSTDOUT.printInChat(
                 "You have made registration.",
-                userDialogStatePosition.chatID
+                dialogStatePosition.chatID
         );
-        return getNextMenuState(userDialogStatePosition);
+        return getNextMenuState(dialogStatePosition);
     }
 
 

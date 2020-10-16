@@ -2,7 +2,7 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.UserDialogStatePosition;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
 import javax.annotation.PostConstruct;
 
@@ -19,14 +19,12 @@ public class RootDialogState extends DialogState {
     @Autowired
     LoggedMainMenuDialogState loggedMainMenuDialogState;
 
-    public DialogState moveOtherState(String arg, UserDialogStatePosition userDialogStatePosition) {
-        if (userDialogStatePosition.recentCreated) {
-            userDialogStatePosition.recentCreated = false;
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        if (dialogStatePosition.recentlyCreated) {
+            dialogStatePosition.recentlyCreated = false;
             return this;
         }
-        else {
-            return getNextMenuState(userDialogStatePosition);
-        }
+        else
+            return getNextMenuState(dialogStatePosition);
     }
-
 }
