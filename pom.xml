@@ -9,10 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>karlMarxBot Maven Webapp</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -48,6 +44,7 @@
             <version>1.9.6</version>
             <scope>runtime</scope>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -63,6 +60,7 @@
             <version>5.2.9.RELEASE</version>
             <scope>test</scope>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -71,16 +69,12 @@
             <scope>test</scope>
         </dependency>
 
-
-
         <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjrt -->
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>1.9.6</version>
         </dependency>
-
-
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
         <dependency>
@@ -141,8 +135,6 @@
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -181,7 +173,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
