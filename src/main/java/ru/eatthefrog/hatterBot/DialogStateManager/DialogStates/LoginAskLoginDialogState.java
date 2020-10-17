@@ -4,27 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class LoginAskLoginDialogState extends DialogState {
+    @PostConstruct
+    void initIdentifier() {
+        dialogStateIdentifier = "loginAskLoginDialogState";
+    }
     @Autowired
     LoginAskPasswordDialogState loginAskPasswordDialogState;
-
-    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.login = userInput;
+    @Override
+    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        dialogStatePosition.loginInstance.setLogin(userInput);
         return loginAskPasswordDialogState;
-    }
-
-    @Override
-    public void fillStateMap() {
-    }
-
-    @Override
-    public String getOutPrompt(DialogStatePosition dialogStatePosition) {
-        return null;
-    }
-
-    @Override
-    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        return new String[]{getInPrompt(dialogStatePosition)};
     }
 }

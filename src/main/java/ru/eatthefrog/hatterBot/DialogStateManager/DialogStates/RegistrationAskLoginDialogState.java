@@ -15,7 +15,7 @@ public class RegistrationAskLoginDialogState extends DialogState {
             //Сразу запоминаем свободный логин, чтобы никто не занял.
             //Позже запихнём в БД.
             loginValidChecker.addLoginToCache(userInput);
-            dialogStatePosition.loginInstance.login = userInput;
+            dialogStatePosition.loginInstance.setLogin(userInput);
             return registrationAskPasswordDialogState;
         }
         return this;

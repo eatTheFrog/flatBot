@@ -4,9 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DebugPrinter;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 
 import javax.annotation.PostConstruct;
@@ -17,8 +15,6 @@ public class MongoLoginManager implements DataBaseLoginManager {
     @Autowired
     DebugPrinter debugPrinter;
 
-    @Autowired
-    MD5StringHasher md5StringHasher;
 
     @Autowired
     MongoDatabase mongoDatabase;

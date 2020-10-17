@@ -7,6 +7,8 @@ public class Main {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
                 SpringConfiguration.class
         );
-        context.getBean("application", Application.class).run();
+        Application app = context.getBean("application", Application.class);
+        context.close();
+        app.run();
     }
 }
