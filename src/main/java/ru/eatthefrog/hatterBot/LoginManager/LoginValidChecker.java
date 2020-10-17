@@ -13,9 +13,6 @@ public class LoginValidChecker {
     List<String> loginCache = new ArrayList<String>();
 
     @Autowired
-    MD5StringHasher md5StringHasher;
-
-    @Autowired
     DataBaseLoginManager dataBaseLoginManager;
 
     public Boolean checkValidLogin(LoginInstance loginInstance)
@@ -24,23 +21,20 @@ public class LoginValidChecker {
             return false;
         if (loginInstance.isItTimeToVerify())
             return checkValidLoginInMongoAndUpdateVerification(loginInstance);
-
         return true;
     }
 
     public Boolean checkValidLoginInMongoAndUpdateVerification(LoginInstance loginInstance) {
-        System.out.println("HELLO WORLD");
-        String hashPass = dataBaseLoginManager.getHashPasswordForLogin(loginInstance.login);
-
+        String hashPass = dataBaseLoginManager.getHashPasswordForLogin(loginInstance.getLogin());
         if (hashPass == null ||
                 !hashPass.equals(
-                md5StringHasher.getHash(loginInstance.password)
+                        loginInstance.getPasswordHash()
         ))
         {
             loginInstance.setNotValid();
             return false;
         }
-        loginInstance.setToValid();
+        loginInstance.setValid();
         return true;
     }
 
@@ -51,17 +45,16 @@ public class LoginValidChecker {
             return false;
         return true;
     }
-
     public void addLoginToCache(String login) {
         loginCache.add(login);
     }
-
     public void rememberLoginInDB(LoginInstance loginInstance) {
         dataBaseLoginManager.putLoginPasswordHash(
-                loginInstance.login,
-                md5StringHasher.getHash(loginInstance.password)
+                loginInstance.getLogin(),
+                loginInstance.getPasswordHash()
         );
-        loginCache.remove(loginInstance.login);
-        loginInstance.setToValid();
+        loginCache.remove(loginInstance.getLogin());
+        loginInstance.setValid();
     }
+
 }
