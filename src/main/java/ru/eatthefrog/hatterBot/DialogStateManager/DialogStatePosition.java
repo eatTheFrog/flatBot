@@ -1,7 +1,9 @@
 package ru.eatthefrog.hatterBot.DialogStateManager;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.DialogState;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
+import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceFactory;
 
 public class DialogStatePosition {
 
@@ -15,7 +17,7 @@ public class DialogStatePosition {
         lastTimeTouched = System.currentTimeMillis();
         userDialogState = dialogState;
         this.chatID = chatID;
-        loginInstance = new LoginInstance();
+        loginInstance = LoginInstanceFactory.getLoginInstance(null, null);
     }
 
     public String updateState(String userInput) {

@@ -8,9 +8,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
+import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceFactory;
+import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceImpl;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
 import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
 
@@ -35,9 +36,9 @@ public class LoginValidCheckerTests {
         // Обращение к базе данных происходит лишь в двух случаях:
         // 1) В момент залогинивания или регистрации.
         // 2) В момент устаревания валидного loginInstance.
-        LoginInstance loginInstance1 = new LoginInstance("12", "1234");
+        LoginInstance loginInstance1 = TestLoginInstanceFactory.getLoginInstance("abc","de");
         loginValidChecker.rememberLoginInDB(loginInstance1);
-        LoginInstance loginInstance2 = new LoginInstance("12", "1234");
+        LoginInstance loginInstance2 = TestLoginInstanceFactory.getLoginInstance("abc","de");
         assertThat(loginValidChecker.checkValidLogin(loginInstance1), equalTo(true));
         assertThat(loginValidChecker.checkValidLogin(loginInstance2), equalTo(false));
         System.out.println(dataBaseLoginManager.getCount());
@@ -45,8 +46,8 @@ public class LoginValidCheckerTests {
     }
     @Test
     public void checkLoginInstanceInDB() {
-        LoginInstance loginInstance1 = new LoginInstance("qwer", "qwert");
-        LoginInstance loginInstance2 = new LoginInstance("qwer", "qwert");
+        LoginInstance loginInstance1 = TestLoginInstanceFactory.getLoginInstance("abc","de");
+        LoginInstance loginInstance2 = TestLoginInstanceFactory.getLoginInstance("abc","de");
         loginValidChecker.rememberLoginInDB(loginInstance1);
         assertThat(loginValidChecker.checkValidLogin(loginInstance1), equalTo(true));
         assertThat(loginValidChecker.checkValidLogin(loginInstance2), equalTo(false));
@@ -59,7 +60,7 @@ public class LoginValidCheckerTests {
 
     @Test
     public void notValidWithoutDB() {
-        LoginInstance loginInstance1 = new LoginInstance("ab", "cde");
+        LoginInstance loginInstance1 = TestLoginInstanceFactory.getLoginInstance("abc","de");
         loginValidChecker.rememberLoginInDB(loginInstance1);
         loginInstance1.setNotValid();
         assertThat(loginValidChecker.checkValidLogin(loginInstance1), equalTo(false));
@@ -71,7 +72,7 @@ public class LoginValidCheckerTests {
         // loginInstance, кладём его в БД. После чего от устаревает,
         // в то время база данных очистилась, мы верифицируем его.
         // Он оказывается неверным.
-        LoginInstance loginInstance1 = new LoginInstance("ab", "cde");
+        LoginInstance loginInstance1 = TestLoginInstanceFactory.getLoginInstance("abc","de");
         loginValidChecker.rememberLoginInDB(loginInstance1);
         assertThat(loginValidChecker.checkValidLogin(loginInstance1), equalTo(true));
         loginInstance1.makeUltraOld();
@@ -81,7 +82,7 @@ public class LoginValidCheckerTests {
 
     @Test
     public void oldLoginInstanceInDB() {
-        LoginInstance loginInstance1 = new LoginInstance("ab", "cde");
+        LoginInstance loginInstance1 = TestLoginInstanceFactory.getLoginInstance("abc","de");
         loginValidChecker.rememberLoginInDB(loginInstance1);
         assertThat(loginValidChecker.checkValidLogin(loginInstance1), equalTo(true));
         loginInstance1.makeUltraOld();

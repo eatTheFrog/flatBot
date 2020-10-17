@@ -16,7 +16,7 @@ public class LoginAskLoginDialogState extends DialogState {
     LoginAskPasswordDialogState loginAskPasswordDialogState;
     @Override
     public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.login = userInput;
+        dialogStatePosition.loginInstance.setLogin(userInput);
         return loginAskPasswordDialogState;
     }
 }

@@ -16,7 +16,7 @@ public class RegistrationAskPasswordDialogState extends DialogState {
     @Autowired
     TelegramChatSTDOUT telegramChatSTDOUT;
     public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.password = userInput;
+        dialogStatePosition.loginInstance.setPassword(userInput);
         loginValidChecker.rememberLoginInDB(dialogStatePosition.loginInstance);
         loginValidChecker.checkValidLoginInMongoAndUpdateVerification(dialogStatePosition.loginInstance);
         telegramChatSTDOUT.printInChat(
