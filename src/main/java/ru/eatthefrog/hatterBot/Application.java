@@ -33,12 +33,14 @@ public class Application {
         TelegramMessage[] userMessages = longPollMessageGetter.getMessagesLongPoll();
         for (TelegramMessage userMessage :
                 userMessages) {
+
             if (userMessage.messageText == null)
                 continue;
-            TelegramMessage telegramMessage = messageProcessor.processMessage(userMessage);
-            if (telegramMessage.messageText.equals(""))
-                continue;
-            telegramAPIProvider.sendMessage(telegramMessage);
+
+            TelegramMessage[] botMessages = messageProcessor.processMessage(userMessage);
+            for (TelegramMessage botMessage : botMessages) {
+                telegramAPIProvider.sendMessage(botMessage);
+            }
         }
     }
 }

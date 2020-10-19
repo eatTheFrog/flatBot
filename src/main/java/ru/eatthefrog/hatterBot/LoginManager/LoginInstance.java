@@ -4,7 +4,7 @@ public class LoginInstance {
     public String login;
     public String password;
     public long lastTimeVerified;
-    public Boolean isValid = false;
+    private Boolean isValid = false;
     public int verificationFrequency = 3600000;
 
     public LoginInstance(String login, String password) {
@@ -14,9 +14,13 @@ public class LoginInstance {
 
     public LoginInstance(){};
 
-    public void setValid() {
+    public void setIsValid() {
         isValid = true;
         lastTimeVerified = System.currentTimeMillis();
+    }
+
+    public Boolean getIsValid(){
+        return isValid;
     }
 
     public void makeUltraOld() {

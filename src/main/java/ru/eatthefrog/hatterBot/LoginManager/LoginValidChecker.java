@@ -1,13 +1,10 @@
 package ru.eatthefrog.hatterBot.LoginManager;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
-import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ public class LoginValidChecker {
 
     public Boolean checkValidLogin(LoginInstance loginInstance)
     {
-        if (!loginInstance.isValid)
+        if (!loginInstance.getIsValid())
             return false;
         if (loginInstance.isItTimeToVerify())
             return checkValidLoginInMongoAndUpdateVerification(loginInstance);
@@ -42,7 +39,7 @@ public class LoginValidChecker {
             loginInstance.setNotValid();
             return false;
         }
-        loginInstance.setValid();
+        loginInstance.setIsValid();
         return true;
     }
 
@@ -62,7 +59,6 @@ public class LoginValidChecker {
                 md5StringHasher.getHash(loginInstance.password)
         );
         loginCache.remove(loginInstance.login);
-        loginInstance.setValid();
+        loginInstance.setIsValid();
     }
-
 }
