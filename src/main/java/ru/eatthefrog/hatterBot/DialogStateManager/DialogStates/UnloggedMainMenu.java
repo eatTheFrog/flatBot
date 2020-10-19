@@ -17,12 +17,15 @@ public class UnloggedMainMenu extends MainMenuDialogState {
     EchoState echoState;
 
     @Autowired
+    NotYetImplementedState notYetImplementedState;
+
+    @Autowired
     RegistrationAskLoginDialogState registrationAskLoginDialogState;
 
     @PostConstruct
     public void fillStateMap() {
-        nextStatesMap.put("1", loginAskLoginDialogState);
-        nextStatesMap.put("2", registrationAskLoginDialogState);
+        nextStatesMap.put("1", notYetImplementedState);
+        nextStatesMap.put("2", notYetImplementedState);
         nextStatesMap.put("3", infoState);
         nextStatesMap.put("4", echoState);
     }
