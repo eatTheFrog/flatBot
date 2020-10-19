@@ -3,8 +3,6 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
-import javax.annotation.PostConstruct;
-
 @Component
 public class StartingState extends DialogState {
 

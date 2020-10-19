@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
-import javax.annotation.PostConstruct;
-
 @Component
 public class LoginAskLoginDialogState extends DialogState {
     @Autowired
@@ -18,7 +16,6 @@ public class LoginAskLoginDialogState extends DialogState {
 
     @Override
     public void fillStateMap() {
-
     }
 
     @Override
