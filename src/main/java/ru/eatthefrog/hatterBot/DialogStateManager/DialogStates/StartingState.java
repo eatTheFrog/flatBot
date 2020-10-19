@@ -1,27 +1,26 @@
 package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class StartingState extends DialogState {
 
+    @PostConstruct
     @Override
     public void fillStateMap() {
+        nextStatesMap.put("/1", mainMenuDialogState);
     }
 
     @Override
-    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
-        return getMainMenu(dialogStatePosition);
+    public String getOutPrompt() {
+        return null;
     }
 
     @Override
-    public String getOutPrompt(DialogStatePosition dialogStatePosition) {
-        return getInPrompt(dialogStatePosition);
+    public String[] getResponse(String userInput, DialogState previousDialogState) {
+        return new String[]{getInPrompt()};
     }
 
-    @Override
-    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        return new String[]{getInPrompt(dialogStatePosition)};
-    }
 }

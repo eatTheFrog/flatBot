@@ -2,7 +2,6 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.FinalStringProvider.FinalStringProvider;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
@@ -22,19 +21,9 @@ public abstract class DialogState {
     UnknownDialogState unknownDialogState;
 
     @Autowired
-    LoggedMainMenu loggedMainMenu;
+    MainMenuDialogState mainMenuDialogState;
 
-    @Autowired
-    UnloggedMainMenu unloggedMainMenu;
-
-    @Autowired
     HashMap<String, DialogState> nextStatesMap;
-
-    public MainMenuDialogState getMainMenu(DialogStatePosition dialogStatePosition){
-        return dialogStatePosition.loginInstance.getIsValid()
-                ? loggedMainMenu
-                : unloggedMainMenu;
-    }
 
     public abstract void fillStateMap();
 
@@ -42,27 +31,16 @@ public abstract class DialogState {
         return loginValidChecker.checkValidLogin(loginInstance);
     }
 
-    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
+    public DialogState getNextState(String userInput) {
         return nextStatesMap.getOrDefault(userInput, unknownDialogState);
     }
 
-    public String getInPrompt(DialogStatePosition dialogStatePosition) {
+    public String getInPrompt() {
         return finalStringProvider
                 .getFinalString(this.getClass().getSimpleName());
     }
 
-    public abstract String getOutPrompt(DialogStatePosition dialogStatePosition);
+    public abstract String getOutPrompt();
 
-    public abstract String[] getResponse(String userInput, DialogStatePosition dialogStatePosition);
-
-    public void skipToMenu(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.previousDialogState = this;
-        dialogStatePosition.dialogState = getMainMenu(dialogStatePosition);
-    }
-
-    public String[] skipToMenuAndGetCombinedResponse(String userInput, DialogStatePosition dialogStatePosition){
-        skipToMenu(userInput, dialogStatePosition);
-        return new String[]{getInPrompt(dialogStatePosition),
-                getMainMenu(dialogStatePosition).getInPrompt(dialogStatePosition)};
-    }
+    public abstract String[] getResponse(String userInput, DialogState previousDialogState);
 }

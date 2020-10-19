@@ -8,15 +8,26 @@ import javax.annotation.PostConstruct;
 
 @Component
 public class LoginAskLoginDialogState extends DialogState {
-    @PostConstruct
-    void initIdentifier() {
-        dialogStateIdentifier = "loginAskLoginDialogState";
-    }
     @Autowired
     LoginAskPasswordDialogState loginAskPasswordDialogState;
-    @Override
-    public DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.setLogin(userInput);
+
+    public DialogState moveToOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+        dialogStatePosition.loginInstance.login = userInput;
         return loginAskPasswordDialogState;
+    }
+
+    @Override
+    public void fillStateMap() {
+
+    }
+
+    @Override
+    public String getOutPrompt() {
+        return null;
+    }
+
+    @Override
+    public String[] getResponse(String userInput, DialogState previousDialogState) {
+        return new String[0];
     }
 }

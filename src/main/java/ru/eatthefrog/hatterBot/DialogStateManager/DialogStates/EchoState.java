@@ -1,34 +1,38 @@
 package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
 import javax.annotation.PostConstruct;
 
 @Component
 public class EchoState extends DialogState {
 
+    @Autowired
+    MainMenuDialogState mainMenuDialogState;
+
+    @Autowired
+    EchoState echoState;
+
     @PostConstruct
     public void fillStateMap(){
+        nextStatesMap.put("putin", mainMenuDialogState);
     }
 
     @Override
-    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition){
-        System.out.println(userInput);
-        return userInput.equals("putin")
-                ? getMainMenu(dialogStatePosition)
-                : this;
+    public DialogState getNextState(String userInput){
+        return nextStatesMap.getOrDefault(userInput, echoState);
     }
 
     @Override
-    public String getOutPrompt(DialogStatePosition dialogStatePosition){
+    public String getOutPrompt() {
         return null;
     }
 
     @Override
-    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition){
-        return new String[]{ dialogStatePosition.previousDialogState instanceof EchoState
+    public String[] getResponse(String userInput, DialogState previousState){
+        return new String[]{ previousState instanceof EchoState
                 ? userInput
-                : getInPrompt(dialogStatePosition)};
+                : getInPrompt()};
     }
 }
