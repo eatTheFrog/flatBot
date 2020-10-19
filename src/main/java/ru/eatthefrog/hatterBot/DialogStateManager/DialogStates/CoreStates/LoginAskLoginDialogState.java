@@ -16,6 +16,5 @@ public class LoginAskLoginDialogState extends DialogState {
 
     @Override
     public void fillStateMap() {
-
     }
 }
