@@ -11,7 +11,7 @@ public class LoginAskLoginDialogState extends DialogState {
     @Autowired
     LoginAskPasswordDialogState loginAskPasswordDialogState;
 
-    public DialogState moveToOtherState(String userInput, DialogStatePosition dialogStatePosition) {
+    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
         dialogStatePosition.loginInstance.login = userInput;
         return loginAskPasswordDialogState;
     }
@@ -22,12 +22,12 @@ public class LoginAskLoginDialogState extends DialogState {
     }
 
     @Override
-    public String getOutPrompt() {
+    public String getOutPrompt(DialogStatePosition dialogStatePosition) {
         return null;
     }
 
     @Override
-    public String[] getResponse(String userInput, DialogState previousDialogState) {
-        return new String[0];
+    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
+        return new String[]{getInPrompt(dialogStatePosition)};
     }
 }

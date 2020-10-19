@@ -39,6 +39,8 @@ public class Application {
 
             TelegramMessage[] botMessages = messageProcessor.processMessage(userMessage);
             for (TelegramMessage botMessage : botMessages) {
+                if (botMessage == null)
+                    continue;
                 telegramAPIProvider.sendMessage(botMessage);
             }
         }
