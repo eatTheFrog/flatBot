@@ -8,24 +8,21 @@ import javax.annotation.PostConstruct;
 @Component
 public class UnloggedMainMenu extends MainMenuDialogState {
     @Autowired
-    LoginAskLoginDialogState loginAskLoginDialogState;
-
-    @Autowired
     InfoState infoState;
 
     @Autowired
     EchoState echoState;
 
     @Autowired
-    NotYetImplementedState notYetImplementedState;
+    LoginAskLoginDialogState loginAskLoginDialogState;
 
     @Autowired
     RegistrationAskLoginDialogState registrationAskLoginDialogState;
 
     @PostConstruct
     public void fillStateMap() {
-        nextStatesMap.put("1", notYetImplementedState);
-        nextStatesMap.put("2", notYetImplementedState);
+        nextStatesMap.put("1", loginAskLoginDialogState);
+        nextStatesMap.put("2", registrationAskLoginDialogState);
         nextStatesMap.put("3", infoState);
         nextStatesMap.put("4", echoState);
     }

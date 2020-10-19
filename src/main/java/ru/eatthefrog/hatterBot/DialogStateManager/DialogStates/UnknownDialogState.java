@@ -22,6 +22,6 @@ public class UnknownDialogState extends DialogState {
 
     @Override
     public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        return skipToNextStateAndGetCombinedResponse(userInput, dialogStatePosition);
+        return skipToMenuAndGetCombinedResponse(userInput, dialogStatePosition);
     }
 }
