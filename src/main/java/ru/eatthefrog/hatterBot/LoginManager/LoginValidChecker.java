@@ -11,6 +11,8 @@ import java.util.List;
 @Component
 public class LoginValidChecker {
     List<String> loginCache = new ArrayList<String>();
+    @Autowired
+    MD5StringHasher md5StringHasher;
 
     @Autowired
     DataBaseLoginManager dataBaseLoginManager;
@@ -21,20 +23,23 @@ public class LoginValidChecker {
             return false;
         if (loginInstance.isItTimeToVerify())
             return checkValidLoginInMongoAndUpdateVerification(loginInstance);
+
         return true;
     }
 
     public Boolean checkValidLoginInMongoAndUpdateVerification(LoginInstance loginInstance) {
-        String hashPass = dataBaseLoginManager.getHashPasswordForLogin(loginInstance.getLogin());
+        System.out.println("HELLO WORLD");
+        String hashPass = dataBaseLoginManager.getHashPasswordForLogin(loginInstance.login);
+
         if (hashPass == null ||
                 !hashPass.equals(
-                        loginInstance.getPasswordHash()
+                md5StringHasher.getHash(loginInstance.password)
         ))
         {
             loginInstance.setNotValid();
             return false;
         }
-        loginInstance.setValid();
+        loginInstance.setIsValid();
         return true;
     }
 
@@ -50,11 +55,10 @@ public class LoginValidChecker {
     }
     public void rememberLoginInDB(LoginInstance loginInstance) {
         dataBaseLoginManager.putLoginPasswordHash(
-                loginInstance.getLogin(),
-                loginInstance.getPasswordHash()
+                loginInstance.login,
+                md5StringHasher.getHash(loginInstance.password)
         );
-        loginCache.remove(loginInstance.getLogin());
-        loginInstance.setValid();
+        loginCache.remove(loginInstance.login);
+        loginInstance.setIsValid();
     }
-
 }
