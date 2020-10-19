@@ -14,7 +14,7 @@ public class LoginInstance {
 
     public LoginInstance(){};
 
-    public void setIsValid() {
+    public void setToValid() {
         isValid = true;
         lastTimeVerified = System.currentTimeMillis();
     }

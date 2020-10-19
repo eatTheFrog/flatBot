@@ -11,6 +11,7 @@ import java.util.List;
 @Component
 public class LoginValidChecker {
     List<String> loginCache = new ArrayList<String>();
+
     @Autowired
     MD5StringHasher md5StringHasher;
 
@@ -39,7 +40,7 @@ public class LoginValidChecker {
             loginInstance.setNotValid();
             return false;
         }
-        loginInstance.setIsValid();
+        loginInstance.setToValid();
         return true;
     }
 
@@ -50,15 +51,17 @@ public class LoginValidChecker {
             return false;
         return true;
     }
+
     public void addLoginToCache(String login) {
         loginCache.add(login);
     }
+
     public void rememberLoginInDB(LoginInstance loginInstance) {
         dataBaseLoginManager.putLoginPasswordHash(
                 loginInstance.login,
                 md5StringHasher.getHash(loginInstance.password)
         );
         loginCache.remove(loginInstance.login);
-        loginInstance.setIsValid();
+        loginInstance.setToValid();
     }
 }
