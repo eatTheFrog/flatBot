@@ -8,13 +8,13 @@ import javax.annotation.PostConstruct;
 @Component
 public class UnloggedMainMenu extends MainMenuDialogState {
     @Autowired
+    LoginAskLoginDialogState loginAskLoginDialogState;
+
+    @Autowired
     InfoState infoState;
 
     @Autowired
     EchoState echoState;
-
-    @Autowired
-    LoginAskLoginDialogState loginAskLoginDialogState;
 
     @Autowired
     RegistrationAskLoginDialogState registrationAskLoginDialogState;
