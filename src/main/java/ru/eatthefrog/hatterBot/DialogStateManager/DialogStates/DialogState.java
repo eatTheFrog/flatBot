@@ -51,6 +51,17 @@ public abstract class DialogState {
                 .getFinalString(this.getClass().getSimpleName());
     }
 
+    public void skipToNextState(String userInput, DialogStatePosition dialogStatePosition){
+        dialogStatePosition.previousDialogState = this;
+        dialogStatePosition.dialogState = getNextState(userInput, dialogStatePosition);
+    }
+
+    public String[] skipToNextStateAndGetCombinedResponse(String userInput, DialogStatePosition dialogStatePosition){
+        skipToNextState(userInput, dialogStatePosition);
+        return new String[]{getInPrompt(dialogStatePosition),
+                getMainMenu(dialogStatePosition).getInPrompt(dialogStatePosition)};
+    }
+
     public abstract String getOutPrompt(DialogStatePosition dialogStatePosition);
 
     public abstract String[] getResponse(String userInput, DialogStatePosition dialogStatePosition);

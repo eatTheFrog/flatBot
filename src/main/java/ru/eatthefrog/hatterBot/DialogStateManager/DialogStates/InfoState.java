@@ -21,9 +21,6 @@ public class InfoState extends DialogState
 
     @Override
     public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.previousDialogState = this;
-        dialogStatePosition.dialogState = getNextState(userInput, dialogStatePosition);
-        return new String[]{getInPrompt(dialogStatePosition),
-                getMainMenu(dialogStatePosition).getInPrompt(dialogStatePosition)};
+        return skipToNextStateAndGetCombinedResponse(userInput, dialogStatePosition);
     }
 }
