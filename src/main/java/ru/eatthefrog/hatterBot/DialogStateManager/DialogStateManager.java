@@ -1,6 +1,7 @@
 package ru.eatthefrog.hatterBot.DialogStateManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.SynthesizedAnnotation;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.*;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
@@ -41,19 +42,16 @@ public class DialogStateManager {
     }
 
     public String[] updatePositionAndFetchResponses(String userInput, DialogStatePosition dsp){
-        dsp.previousDialogState = dsp.dialogState;
+        dsp.previousDialogState = dsp
+                .dialogState;
         dsp.dialogState = dsp
                 .dialogState
-                .getNextState(userInput);
-        if (dsp.dialogState instanceof MainMenuDialogState){
-            dsp.dialogState = dsp.loginInstance.getIsValid()
-                    ? loggedMainMenu
-                    : unloggedMainMenu;
-        }
-        return new String[]{
-                dsp.previousDialogState.getOutPrompt(),
-                dsp.dialogState.getInPrompt()
-        };
+                .getNextState(userInput, dsp);
+        String[] responses = dsp.dialogState.getResponse(userInput, dsp);
+        String[] fullResponses = new String[responses.length + 1];
+        fullResponses[0] = dsp.previousDialogState.getOutPrompt(dsp);
+        System.arraycopy(responses, 0, fullResponses, 1, responses.length);
+        return fullResponses;
     }
 
     DialogStatePosition getUserDialogStatePosition(int chatID) {
