@@ -2,59 +2,45 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.FinalStringProvider.FinalStringProvider;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
-import ru.eatthefrog.hatterBot.TelegramChatSTDOUT;
-import ru.eatthefrog.hatterBot.Tools.UnknownTool;
+
+import java.util.HashMap;
 
 @Component
 public abstract class DialogState {
-    String initString;
-
-    String dialogStateIdentifier;
 
     @Autowired
     LoginValidChecker loginValidChecker;
 
     @Autowired
-    TelegramChatSTDOUT telegramChatSTDOUT;
-
-    @Autowired
-    UnknownTool unknownTool;
-
-    @Autowired
-    LoggedMainMenuDialogState loggedMainMenuDialogState;
-
-    @Autowired
-    UnloggedMainMenuDialogState unloggedMainMenuDialogState;
-
-    @Autowired
     FinalStringProvider finalStringProvider;
+
+    @Autowired
+    UnknownDialogState unknownDialogState;
+
+    @Autowired
+    MainMenuDialogState mainMenuDialogState;
+
+    HashMap<String, DialogState> nextStatesMap;
+
+    public abstract void fillStateMap();
 
     public Boolean isLogged(LoginInstance loginInstance) {
         return loginValidChecker.checkValidLogin(loginInstance);
     }
 
-    public abstract DialogState moveOtherState(String userInput, DialogStatePosition dialogStatePosition);
-
-    public DialogState getNextMenuState(DialogStatePosition dialogStatePosition) {
-        return (isLogged(dialogStatePosition.loginInstance))
-                ? loggedMainMenuDialogState
-                : unloggedMainMenuDialogState;
+    public DialogState getNextState(String userInput) {
+        return nextStatesMap.getOrDefault(userInput, unknownDialogState);
     }
 
-    public void stdOutUnknownTool(int chatID) {
-        telegramChatSTDOUT.printInChat(
-                unknownTool.getExecuteOut(),
-                 chatID
-        );
+    public String getInPrompt() {
+        return finalStringProvider
+                .getFinalString(this.getClass().getSimpleName());
     }
 
-    public String getInitString() {
-        return (initString == null)
-                ? initString = finalStringProvider.getFinalString(dialogStateIdentifier + "InitString")
-                : initString;
-    }
+    public abstract String getOutPrompt();
+
+    public abstract String[] getResponse(String userInput, DialogState previousDialogState);
 }

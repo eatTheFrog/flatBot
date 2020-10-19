@@ -7,7 +7,7 @@ public class MessageProcessor {
     @Autowired
     DialogStateManager dialogStateManager;
 
-    public TelegramMessage processMessage(TelegramMessage telegramMessage) {
+    public TelegramMessage[] processMessage(TelegramMessage telegramMessage) {
         return dialogStateManager.processTelegramMessage(telegramMessage);
     }
 }
