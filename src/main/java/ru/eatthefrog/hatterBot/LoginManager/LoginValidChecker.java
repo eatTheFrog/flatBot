@@ -2,8 +2,7 @@ package ru.eatthefrog.hatterBot.LoginManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
-import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
+import ru.eatthefrog.hatterBot.DBOperator.DataBaseLoginManager;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.*;
 import ru.eatthefrog.hatterBot.Message.Message;
 import ru.eatthefrog.hatterBot.Message.MessageFactory;
-import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
-import ru.eatthefrog.hatterBot.Message.TelegramMessage;
+import ru.eatthefrog.hatterBot.DBOperator.MongoImplementation.MongoUserStatesManager;
 
 import java.util.*;
 

@@ -22,6 +22,7 @@ public class TelegramLongPollMessageGetter implements LongPollMessageGetter {
     TelegramAPIProvider telegramAPIProvider;
 
     private void updateOffset(LongPollResponse longPollResponse){
+        System.out.println(longPollResponse);
         int lengthUpdates = longPollResponse.longPollUpdates.length;
         if (lengthUpdates > 0) {
             offest = longPollResponse.longPollUpdates[lengthUpdates - 1].update_id + 1;

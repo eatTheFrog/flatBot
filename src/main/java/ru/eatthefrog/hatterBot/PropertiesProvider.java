@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Properties;
 
-@Component
 public class PropertiesProvider {
     public String getProperty(String fileName, String propertyName) {
         Properties prop = new Properties();

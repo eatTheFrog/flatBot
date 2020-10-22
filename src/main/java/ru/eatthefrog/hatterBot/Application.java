@@ -7,7 +7,7 @@ import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.LongPollMessageGetter;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
 import ru.eatthefrog.hatterBot.Message.Message;
-import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
+import ru.eatthefrog.hatterBot.DBOperator.MongoImplementation.MongoLoginManager;
 
 
 @Component

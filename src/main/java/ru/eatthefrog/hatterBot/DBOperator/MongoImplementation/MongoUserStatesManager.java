@@ -1,4 +1,4 @@
-package ru.eatthefrog.hatterBot.MongoDBOperator;
+package ru.eatthefrog.hatterBot.DBOperator.MongoImplementation;
 
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;

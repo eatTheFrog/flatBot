@@ -7,7 +7,7 @@ import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceImpl;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
 import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
-import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
+import ru.eatthefrog.hatterBot.DBOperator.DataBaseLoginManager;
 
 public class LoginValidCheckerTestsConfiguration {
 

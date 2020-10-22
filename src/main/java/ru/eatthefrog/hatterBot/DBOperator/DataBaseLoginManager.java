@@ -1,4 +1,4 @@
-package ru.eatthefrog.hatterBot.MongoDBOperator;
+package ru.eatthefrog.hatterBot.DBOperator;
 
 public interface DataBaseLoginManager {
     public void putLoginPasswordHash(String login, String hashPass);

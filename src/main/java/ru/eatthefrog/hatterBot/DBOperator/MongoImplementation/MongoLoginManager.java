@@ -1,11 +1,10 @@
-package ru.eatthefrog.hatterBot.MongoDBOperator;
+package ru.eatthefrog.hatterBot.DBOperator.MongoImplementation;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
+import ru.eatthefrog.hatterBot.DBOperator.DataBaseLoginManager;
 import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 
 import javax.annotation.PostConstruct;

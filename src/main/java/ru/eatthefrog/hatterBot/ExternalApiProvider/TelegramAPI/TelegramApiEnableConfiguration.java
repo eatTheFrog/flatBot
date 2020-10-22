@@ -1,13 +1,18 @@
 package ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI;
 
+import com.google.gson.Gson;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import ru.eatthefrog.hatterBot.Message.Message;
 import ru.eatthefrog.hatterBot.Message.TelegramMessage;
+import ru.eatthefrog.hatterBot.PropertiesProvider;
 
-@Configuration
 public class TelegramApiEnableConfiguration {
+    @Bean
+    public Gson gsonBean() {
+        return new Gson();
+    }
     @Bean
     TelegramAPIProvider telegramAPIProviderBean() {
         return new TelegramAPIProvider();
@@ -24,5 +29,9 @@ public class TelegramApiEnableConfiguration {
     @Scope("prototype")
     Message messageBean() {
         return new TelegramMessage();
+    }
+    @Bean
+    PropertiesProvider propertiesProvider() {
+        return new PropertiesProvider();
     }
 }

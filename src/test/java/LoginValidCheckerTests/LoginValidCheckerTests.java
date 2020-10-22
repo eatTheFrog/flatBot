@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceFactory;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceImpl;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
-import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
+import ru.eatthefrog.hatterBot.DBOperator.DataBaseLoginManager;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = LoginValidCheckerTestsConfiguration.class)

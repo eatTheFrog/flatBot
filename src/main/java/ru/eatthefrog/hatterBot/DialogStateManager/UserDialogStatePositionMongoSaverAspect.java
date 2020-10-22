@@ -4,7 +4,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
+import ru.eatthefrog.hatterBot.DBOperator.MongoImplementation.MongoUserStatesManager;
 
 import javax.annotation.PostConstruct;
 import java.util.Dictionary;

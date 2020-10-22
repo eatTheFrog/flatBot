@@ -1,6 +1,6 @@
 package TestDBOperator;
 
-import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
+import ru.eatthefrog.hatterBot.DBOperator.DataBaseLoginManager;
 
 import javax.annotation.PostConstruct;
 import java.util.Dictionary;
