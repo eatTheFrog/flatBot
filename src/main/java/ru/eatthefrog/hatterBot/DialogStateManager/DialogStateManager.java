@@ -1,11 +1,12 @@
 package ru.eatthefrog.hatterBot.DialogStateManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.SynthesizedAnnotation;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.*;
+import ru.eatthefrog.hatterBot.Message.Message;
+import ru.eatthefrog.hatterBot.Message.MessageFactory;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
-import ru.eatthefrog.hatterBot.TelegramMessage;
+import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 
 import java.util.*;
 
@@ -31,13 +32,14 @@ public class DialogStateManager {
     Dictionary<Integer, DialogStatePosition> statePositionDict;
 
 
-    public TelegramMessage[] processTelegramMessage(TelegramMessage tm) {
-        DialogStatePosition dialogStatePosition = getUserDialogStatePosition(tm.chatID);
-        String[] newMessageTexts = updatePositionAndFetchResponses(tm.messageText, dialogStatePosition);
-        TelegramMessage[] telegramMessages = new TelegramMessage[newMessageTexts.length];
+    public Message[] processTelegramMessage(Message tm) {
+        DialogStatePosition dialogStatePosition = getUserDialogStatePosition(tm.getChatId());
+        String[] newMessageTexts = updatePositionAndFetchResponses(tm.getMessageText(), dialogStatePosition);
+        Message[] telegramMessages = new Message[newMessageTexts.length];
         for (var i = 0; i < newMessageTexts.length; i++)
-            if (! (newMessageTexts[i] == null || newMessageTexts[i] == ""))
-                telegramMessages[i] = new TelegramMessage(newMessageTexts[i], tm.chatID);
+            if (! (newMessageTexts[i] == null || newMessageTexts[i].equals("")))
+                 telegramMessages[i] = MessageFactory.getNewMessage(newMessageTexts[i], tm.getChatId());
+
         return telegramMessages;
     }
 

@@ -12,7 +12,7 @@ public class LoginAskLoginDialogState extends DialogState {
     LoginAskPasswordDialogState loginAskPasswordDialogState;
 
     public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.login = userInput;
+        dialogStatePosition.loginInstance.setLogin(userInput);
         return loginAskPasswordDialogState;
     }
 

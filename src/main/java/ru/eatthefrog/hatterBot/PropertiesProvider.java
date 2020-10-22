@@ -7,7 +7,7 @@ import java.util.Properties;
 
 @Component
 public class PropertiesProvider {
-    String getProperty(String fileName, String propertyName) {
+    public String getProperty(String fileName, String propertyName) {
         Properties prop = new Properties();
         try {
             //load a properties file from class path, inside static method

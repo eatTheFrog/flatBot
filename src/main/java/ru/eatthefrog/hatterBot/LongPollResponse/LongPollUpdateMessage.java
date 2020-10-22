@@ -1,7 +1,7 @@
 package ru.eatthefrog.hatterBot.LongPollResponse;
 
 import com.google.gson.annotations.SerializedName;
-import ru.eatthefrog.hatterBot.TelegramMessage;
+import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 
 public class LongPollUpdateMessage {
     @SerializedName("message_id")

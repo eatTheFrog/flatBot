@@ -8,7 +8,7 @@ import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 public class LoginAskPasswordDialogState extends DialogState {
 
     public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.password = userInput;
+        dialogStatePosition.loginInstance.setPassword(userInput);
         loginValidChecker.checkValidLoginInMongoAndUpdateVerification(dialogStatePosition.loginInstance);
         return getMainMenu(dialogStatePosition);
     }
