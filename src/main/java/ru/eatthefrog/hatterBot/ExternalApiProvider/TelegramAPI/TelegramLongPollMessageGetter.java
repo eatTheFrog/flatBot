@@ -1,16 +1,18 @@
-package ru.eatthefrog.hatterBot;
+package ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.LongPollMessageGetter;
 import ru.eatthefrog.hatterBot.LongPollResponse.LongPollResponse;
 import ru.eatthefrog.hatterBot.LongPollResponse.LongPollUpdate;
+import ru.eatthefrog.hatterBot.Message.Message;
+import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class LongPollMessageGetter {
+public class TelegramLongPollMessageGetter implements LongPollMessageGetter {
     int offest = 0;
 
     @Autowired
@@ -18,9 +20,6 @@ public class LongPollMessageGetter {
 
     @Autowired
     TelegramAPIProvider telegramAPIProvider;
-
-    @Autowired
-    DebugPrinter debugPrinter;
 
     private void updateOffset(LongPollResponse longPollResponse){
         int lengthUpdates = longPollResponse.longPollUpdates.length;
@@ -44,9 +43,8 @@ public class LongPollMessageGetter {
 
     }
 
-    TelegramMessage[] getMessagesLongPoll() {
+    public Message[] getMessagesLongPoll() {
         String response = telegramAPIProvider.getUpdates(offest);
-        debugPrinter.print(response, this);
         LongPollResponse longPollResponse = gson.fromJson(response, LongPollResponse.class);
         updateOffset(longPollResponse);
         return generateMessagess(longPollResponse);

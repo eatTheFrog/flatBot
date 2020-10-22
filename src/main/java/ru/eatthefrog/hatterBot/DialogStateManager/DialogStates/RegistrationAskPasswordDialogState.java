@@ -8,7 +8,7 @@ import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 public class RegistrationAskPasswordDialogState extends DialogState {
 
     public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.password = userInput;
+        dialogStatePosition.loginInstance.setPassword(userInput);
         loginValidChecker.rememberLoginInDB(dialogStatePosition.loginInstance);
         loginValidChecker.checkValidLoginInMongoAndUpdateVerification(dialogStatePosition.loginInstance);
         return getMainMenu(dialogStatePosition);
@@ -21,7 +21,7 @@ public class RegistrationAskPasswordDialogState extends DialogState {
 
     @Override
     public String getOutPrompt(DialogStatePosition dialogStatePosition) {
-        return String.format("User %s registered.", dialogStatePosition.loginInstance.login);
+        return String.format("User %s registered.", dialogStatePosition.loginInstance.getLogin());
     }
 
     @Override

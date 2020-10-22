@@ -1,17 +1,17 @@
-package ru.eatthefrog.hatterBot;
+package ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter1;
-import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter2;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
+import ru.eatthefrog.hatterBot.Message.Message;
+import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 
-@Component
-public class TelegramAPIProvider {
+public class TelegramAPIProvider implements ApiProvider {
     @Autowired
     HTTPGetterable httpGetter;
 
@@ -33,13 +33,13 @@ public class TelegramAPIProvider {
         );
     }
 
-    String sendMessage(TelegramMessage telegramMessage){
+    public String sendMessage(Message message){
         return httpGetter.doRequest(
                 String.format("%s%s/sendMessage?chat_id=%s&text=%s",
                         API_PREFIX,
                         Token,
-                        telegramMessage.chatID,
-                        URLEncoder.encode(telegramMessage.messageText, StandardCharsets.UTF_8))
+                        message.getChatId(),
+                        URLEncoder.encode(message.getMessageText(), StandardCharsets.UTF_8))
         );
     }
 }

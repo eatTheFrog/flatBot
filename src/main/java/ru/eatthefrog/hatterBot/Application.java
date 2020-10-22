@@ -2,7 +2,11 @@ package ru.eatthefrog.hatterBot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.LongPollMessageGetter;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
+import ru.eatthefrog.hatterBot.Message.Message;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
 
@@ -13,7 +17,7 @@ public class Application {
     @Autowired
     BotTokenProvider botTokenProvider;
     @Autowired
-    TelegramAPIProvider telegramAPIProvider;
+    ApiProvider ApiProvider;
     @Autowired
     MessageProcessor messageProcessor;
     @Autowired
@@ -21,28 +25,25 @@ public class Application {
     @Autowired
     LoginValidChecker loginValidChecker;
 
+    @Autowired
+    MultithreadRequestKeepHandler multithreadRequestKeepHandler;
+
     public void run() {
-        telegramAPIProvider.setToken(
+        ApiProvider.setToken(
                 botTokenProvider.getToken()
         );
+        Thread thread = new Thread(multithreadRequestKeepHandler);
+        thread.start();
         while (true)
             this.longPollIteration();
     }
 
     public void longPollIteration() {
-        TelegramMessage[] userMessages = longPollMessageGetter.getMessagesLongPoll();
-        for (TelegramMessage userMessage :
+        Message[] userMessages = longPollMessageGetter.getMessagesLongPoll();
+        for (Message userMessage :
                 userMessages) {
+            multithreadRequestKeepHandler.addRequest(userMessage);
 
-            if (userMessage.messageText == null)
-                continue;
-
-            TelegramMessage[] botMessages = messageProcessor.processMessage(userMessage);
-            for (TelegramMessage botMessage : botMessages) {
-                if (botMessage == null)
-                    continue;
-                telegramAPIProvider.sendMessage(botMessage);
-            }
         }
     }
 }

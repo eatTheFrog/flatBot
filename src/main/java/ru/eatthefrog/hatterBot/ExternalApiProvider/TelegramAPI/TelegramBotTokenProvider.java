@@ -1,13 +1,13 @@
-package ru.eatthefrog.hatterBot;
+package ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
+import ru.eatthefrog.hatterBot.PropertiesProvider;
 
-@Component
-public class BotTokenProvider {
-    @Autowired
-    DebugPrinter DEBUG_PRINTER;
+
+class TelegramBotTokenProvider implements BotTokenProvider {
 
     @Value("${bot.tokenValue}")
     String token;
@@ -15,7 +15,7 @@ public class BotTokenProvider {
     @Autowired
     PropertiesProvider propertiesProvider;
 
-    String getToken() {
+    public String getToken() {
         if (token.equals("default"))
             token = propertiesProvider.getProperty(
                     "secret.bot.properties",

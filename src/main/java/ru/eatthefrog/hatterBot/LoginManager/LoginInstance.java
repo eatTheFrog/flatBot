@@ -1,38 +1,13 @@
 package ru.eatthefrog.hatterBot.LoginManager;
 
-public class LoginInstance {
-    public String login;
-    public String password;
-    public long lastTimeVerified;
-    private Boolean isValid = false;
-    public int verificationFrequency = 3600000;
-
-    public LoginInstance(String login, String password) {
-        this.login = login;
-        this.password = password;
-    }
-
-    public LoginInstance(){};
-
-    public void setToValid() {
-        isValid = true;
-        lastTimeVerified = System.currentTimeMillis();
-    }
-
-    public Boolean getIsValid(){
-        return isValid;
-    }
-
-    public void makeUltraOld() {
-        lastTimeVerified = 0;
-    }
-
-    public void setNotValid() {
-        isValid = false;
-        lastTimeVerified = 0;
-    }
-
-    public Boolean isItTimeToVerify() {
-        return System.currentTimeMillis() - lastTimeVerified > verificationFrequency;
-    }
+public interface LoginInstance {
+    public void setLogin(String login);
+    public void setPassword(String password);
+    public Boolean getIsValid();
+    public Boolean isItTimeToVerify();
+    public String getPasswordHash();
+    public void setNotValid();
+    public void setValid();
+    public String getLogin();
+    public void makeUltraOld();
 }
