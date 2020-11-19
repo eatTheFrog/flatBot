@@ -1,7 +1,6 @@
 What kind of ping would you like to use?
 
 /specific - specify how many packets you want me to send
-/continuous - pings until you send a message
 /burst - sends 10 packets
 
 /back

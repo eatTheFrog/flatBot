@@ -25,6 +25,7 @@ public class Application {
         );
         Thread thread = new Thread(multithreadRequestKeepHandler);
         thread.start();
+
         while (true)
             longPollIteration();
     }

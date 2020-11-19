@@ -6,6 +6,7 @@ import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
 import ru.eatthefrog.hatterBot.Message.Message;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Component
 public class MultithreadRequestKeepHandler implements Runnable {
@@ -14,7 +15,7 @@ public class MultithreadRequestKeepHandler implements Runnable {
 
     @Autowired
     ApiProvider apiProvider;
-    Queue<Message> requestList = new LinkedList<Message>();
+    Queue<Message> requestList = new ConcurrentLinkedQueue<>();
     public void addRequest(Message messageOnGet) {
         this.requestList.add(messageOnGet);
     }
