@@ -7,17 +7,15 @@ import com.mongodb.client.MongoDatabase;
 import org.springframework.context.annotation.*;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.DialogState;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.LoggedMainMenu;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.MainMenuDialogState;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter2;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
 import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
-import java.util.Dictionary;
+import java.util.AbstractMap;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @EnableAspectJAutoProxy
@@ -35,8 +33,8 @@ public class SpringConfiguration {
     }
 
     @Bean
-    public Dictionary<Integer, DialogStatePosition> dictionaryBean() {
-        return new Hashtable<>();
+    public AbstractMap<Integer, DialogStatePosition> dictionaryBean() {
+        return new ConcurrentHashMap<>();
     }
 
     @Bean

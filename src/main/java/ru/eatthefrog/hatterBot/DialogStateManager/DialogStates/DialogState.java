@@ -36,7 +36,7 @@ public abstract class DialogState {
     HashMap<String, DialogState> nextStatesMap;
 
     @Autowired
-    ApiProvider apiProvider;
+    public ApiProvider apiProvider;
 
     @PostConstruct
     protected void initializeStatesMap(){

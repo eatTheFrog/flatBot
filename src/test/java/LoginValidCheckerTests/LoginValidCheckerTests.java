@@ -1,8 +1,4 @@
 package LoginValidCheckerTests;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.equalTo;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceFactory;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceImpl;
 import ru.eatthefrog.hatterBot.LoginManager.LoginValidChecker;
 import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = LoginValidCheckerTestsConfiguration.class)

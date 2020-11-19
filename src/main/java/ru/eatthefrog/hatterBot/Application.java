@@ -17,24 +17,25 @@ public class Application {
     @Autowired
     ApiProvider ApiProvider;
     @Autowired
-    MultithreadRequestKeepHandler multithreadRequestKeepHandler;
+    RequestHandler requestHandler;
+    @Autowired
+    MessageProcessor messageProcessor;
+
 
     public void run() {
         ApiProvider.setToken(
                 botTokenProvider.getToken()
         );
-        Thread thread = new Thread(multithreadRequestKeepHandler);
-        thread.start();
-
+        for (int i = 0; i < 5; i++)
+            new Thread(requestHandler).start();
         while (true)
             longPollIteration();
     }
 
     public void longPollIteration() {
-        Message[] userMessages = longPollMessageGetter.getMessagesLongPoll();
-        for (Message userMessage :
-                userMessages) {
-            multithreadRequestKeepHandler.addRequest(userMessage);
+            Message[] userMessages = longPollMessageGetter.getMessagesLongPoll();
+            for (Message userMessage : userMessages) {
+                requestHandler.addRequest(userMessage);
         }
     }
 }

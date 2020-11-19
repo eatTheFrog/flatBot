@@ -8,7 +8,7 @@ import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.UnloggedMainMenu;
 import ru.eatthefrog.hatterBot.Message.Message;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
 
-import java.util.Dictionary;
+import java.util.AbstractMap;
 
 @Component
 public class DialogStateManager {
@@ -24,22 +24,18 @@ public class DialogStateManager {
     @Autowired
     UnloggedMainMenu unloggedMainMenu;
 
-    public Dictionary<Integer, DialogStatePosition> getStatePositionDict() {
+    public AbstractMap<Integer, DialogStatePosition> getStatePositionDict() {
         return statePositionDict;
     }
 
     @Autowired
-    Dictionary<Integer, DialogStatePosition> statePositionDict;
+    AbstractMap<Integer, DialogStatePosition> statePositionDict;
 
 
     public void processTelegramMessage(Message tm) {
         if (tm.getMessageText() == null)
             return;
         DialogStatePosition dsp = getUserDialogStatePosition(tm.getChatId());
-        if (dsp.isIterating) {
-            dsp.isIterating = false;
-            return;
-        }
         updatePositionAndSendResponse(tm.getMessageText(), dsp);
     }
 

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
 
 import javax.annotation.PostConstruct;
-import java.util.Dictionary;
-import java.util.Enumeration;
 
 @Component
 @Aspect
@@ -34,16 +32,16 @@ public class UserDialogStatePositionMongoSaverAspect {
         }
     }
     void saveOldUserDialogStatePositions() {
-        System.out.println("HELLO");
-        Dictionary<Integer, DialogStatePosition> dictionary = dialogStateManager.getStatePositionDict();
-        Enumeration<DialogStatePosition> positionEnumeration = dictionary.elements();
-        while(positionEnumeration.hasMoreElements()){
-            DialogStatePosition dialogStatePositionTemp = positionEnumeration.nextElement();
-            if (isUserDialogStatePositionOld(dialogStatePositionTemp)) {
-                mongoUserStatesManager.saveStatePosition(dialogStatePositionTemp);
-                dictionary.remove(dialogStatePositionTemp.chatID);
-            }
-        }
+//        System.out.println("HELLO");
+//        AbstractMap<Integer, DialogStatePosition> dictionary = dialogStateManager.getStatePositionDict();
+//        Enumeration<DialogStatePosition> positionEnumeration = dictionary.values();
+//        while(positionEnumeration.hasMoreElements()){
+//            DialogStatePosition dialogStatePositionTemp = positionEnumeration.nextElement();
+//            if (isUserDialogStatePositionOld(dialogStatePositionTemp)) {
+//                mongoUserStatesManager.saveStatePosition(dialogStatePositionTemp);
+//                dictionary.remove(dialogStatePositionTemp.chatID);
+//            }
+//        }
     }
     Boolean isUserDialogStatePositionOld(DialogStatePosition dialogStatePosition) {
         return System.currentTimeMillis() - dialogStatePosition.lastTimeTouched > dialogStatePositionMaxLive;
