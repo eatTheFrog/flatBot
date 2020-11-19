@@ -15,14 +15,10 @@ public class PingState extends DialogState {
     PingSpecificCountState pingSpecificCountState;
 
     @Autowired
-    PingContinuousState pingContinuousState;
-
-    @Autowired
     PingBurstState pingBurstState;
 
     @PostConstruct
     public void fillStateMap() {
-        nextStatesMap.put("/continuous", pingContinuousState);
         nextStatesMap.put("/burst", pingBurstState);
         nextStatesMap.put("/specific", pingSpecificCountState);
         nextStatesMap.put("/back", networkingToolsMenuState);
