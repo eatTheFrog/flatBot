@@ -1,32 +1,21 @@
 package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
 @Component
 public class LoginAskPasswordDialogState extends DialogState {
 
-    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.loginInstance.setPassword(userInput);
-        loginValidChecker.checkValidLoginInMongoAndUpdateVerification(dialogStatePosition.loginInstance);
-        return getMainMenu(dialogStatePosition);
+    public DialogState getNextState(String userInput, DialogStatePosition dsp) {
+        dsp.loginInstance.setPassword(userInput);
+        loginValidChecker.checkValidLoginInMongoAndUpdateVerification(dsp.loginInstance);
+        if (! isLogged(dsp.loginInstance)){
+            sendResponse("Sorry, but something's wrong with your login or password!", dsp);
+        }
+        return getMainMenu(dsp);
     }
 
     @Override
     public void fillStateMap() {
-
-    }
-
-    @Override
-    public String getOutPrompt(DialogStatePosition dialogStatePosition) {
-        return dialogStatePosition.loginInstance.getIsValid()
-                ? "Successfully logined."
-                : "Authorization failed.";
-    }
-
-    @Override
-    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        return new String[]{getInPrompt(dialogStatePosition)};
     }
 }

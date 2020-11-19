@@ -9,7 +9,7 @@ public class MessageProcessor {
     @Autowired
     DialogStateManager dialogStateManager;
 
-    public Message[] processMessage(Message telegramMessage) {
-        return dialogStateManager.processTelegramMessage(telegramMessage);
+    public void processMessage(Message telegramMessage) {
+        dialogStateManager.processTelegramMessage(telegramMessage);
     }
 }

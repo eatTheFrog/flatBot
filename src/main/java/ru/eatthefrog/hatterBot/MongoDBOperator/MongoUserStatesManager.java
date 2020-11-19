@@ -9,6 +9,5 @@ public class MongoUserStatesManager {
         return null;
     }
     public void saveStatePosition(DialogStatePosition dialogStatePosition) {
-
     }
 }

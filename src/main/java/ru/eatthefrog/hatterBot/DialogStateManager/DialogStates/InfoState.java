@@ -10,20 +10,13 @@ public class InfoState extends DialogState
     public void fillStateMap() {
     }
 
-    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition){
-        return getMainMenu(dialogStatePosition);
+    @Override
+    public boolean isMoveForward() {
+        return true;
     }
 
     @Override
-    public String getOutPrompt(DialogStatePosition dialogStatePosition) {
-        return null;
-    }
-
-    @Override
-    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        dialogStatePosition.previousDialogState = this;
-        dialogStatePosition.dialogState = getNextState(userInput, dialogStatePosition);
-        return new String[]{getInPrompt(dialogStatePosition),
-                getMainMenu(dialogStatePosition).getInPrompt(dialogStatePosition)};
+    public DialogState getNextState(String userInput, DialogStatePosition dsp) {
+        return getMainMenu(dsp);
     }
 }

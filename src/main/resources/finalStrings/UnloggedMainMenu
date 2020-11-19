@@ -1,6 +1,7 @@
 Welcome to the Main Menu;
 Now choose what you want:
-1) login
-2) register
-3) info
-4) echo tool
+
+/login - authorize yourself
+/register - register a login via a special code
+/info - view flatBot info
+/echo - use echo tool

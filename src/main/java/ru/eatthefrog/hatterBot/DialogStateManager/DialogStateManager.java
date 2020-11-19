@@ -2,13 +2,13 @@ package ru.eatthefrog.hatterBot.DialogStateManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.*;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.LoggedMainMenu;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.StartingState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.UnloggedMainMenu;
 import ru.eatthefrog.hatterBot.Message.Message;
-import ru.eatthefrog.hatterBot.Message.MessageFactory;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
-import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 
-import java.util.*;
+import java.util.Dictionary;
 
 @Component
 public class DialogStateManager {
@@ -32,28 +32,24 @@ public class DialogStateManager {
     Dictionary<Integer, DialogStatePosition> statePositionDict;
 
 
-    public Message[] processTelegramMessage(Message tm) {
-        DialogStatePosition dialogStatePosition = getUserDialogStatePosition(tm.getChatId());
-        String[] newMessageTexts = updatePositionAndFetchResponses(tm.getMessageText(), dialogStatePosition);
-        Message[] telegramMessages = new Message[newMessageTexts.length];
-        for (var i = 0; i < newMessageTexts.length; i++)
-            if (! (newMessageTexts[i] == null || newMessageTexts[i].equals("")))
-                 telegramMessages[i] = MessageFactory.getNewMessage(newMessageTexts[i], tm.getChatId());
-
-        return telegramMessages;
+    public void processTelegramMessage(Message tm) {
+        if (tm.getMessageText() == null)
+            return;
+        DialogStatePosition dsp = getUserDialogStatePosition(tm.getChatId());
+        if (dsp.isIterating) {
+            dsp.isIterating = false;
+            return;
+        }
+        updatePositionAndSendResponse(tm.getMessageText(), dsp);
     }
 
-    public String[] updatePositionAndFetchResponses(String userInput, DialogStatePosition dsp){
-        dsp.previousDialogState = dsp
-                .dialogState;
+    public void updatePositionAndSendResponse(String userInput, DialogStatePosition dsp){
         dsp.dialogState = dsp
                 .dialogState
                 .getNextState(userInput, dsp);
-        String[] responses = dsp.dialogState.getResponse(userInput, dsp);
-        String[] fullResponses = new String[responses.length + 1];
-        fullResponses[0] = dsp.previousDialogState.getOutPrompt(dsp);
-        System.arraycopy(responses, 0, fullResponses, 1, responses.length);
-        return fullResponses;
+        if (dsp.dialogState.isMoveForward()){
+            updatePositionAndSendResponse(null, dsp);
+        }
     }
 
     DialogStatePosition getUserDialogStatePosition(int chatID) {

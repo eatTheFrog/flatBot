@@ -1,6 +1,5 @@
 package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 
@@ -16,16 +15,5 @@ public class RegistrationAskPasswordDialogState extends DialogState {
 
     @Override
     public void fillStateMap() {
-
-    }
-
-    @Override
-    public String getOutPrompt(DialogStatePosition dialogStatePosition) {
-        return String.format("User %s registered.", dialogStatePosition.loginInstance.getLogin());
-    }
-
-    @Override
-    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        return new String[]{getInPrompt(dialogStatePosition)};
     }
 }

@@ -1,7 +1,5 @@
 package ru.eatthefrog.hatterBot.MD5StringHasher;
 
-import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -21,6 +19,7 @@ public class MD5StringHasher {
             e.printStackTrace();
         }
     }
+
     public String getHash(String string) {
 
         if (messageDigest == null)

@@ -10,16 +10,12 @@ public class NotYetImplementedState extends DialogState{
     }
 
     @Override
-    public String getOutPrompt(DialogStatePosition dialogStatePosition) {
-        return null;
-    }
-
-    public DialogState getNextState(String userInput, DialogStatePosition dialogStatePosition){
-        return getMainMenu(dialogStatePosition);
+    public boolean isMoveForward() {
+        return true;
     }
 
     @Override
-    public String[] getResponse(String userInput, DialogStatePosition dialogStatePosition) {
-        return new String[]{getInPrompt(dialogStatePosition)};
+    public DialogState getNextState(String userInput, DialogStatePosition dsp) {
+        return getMainMenu(dsp);
     }
 }

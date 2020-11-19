@@ -18,25 +18,18 @@ public class MultithreadRequestKeepHandler implements Runnable {
     public void addRequest(Message messageOnGet) {
         this.requestList.add(messageOnGet);
     }
+
     public void startHandling() {
         Thread thread = new Thread(this);
         thread.start();
     }
+
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             if (requestList.isEmpty())
                 continue;
             Message userMessage = requestList.poll();
-            if (userMessage.getMessageText() == null)
-                continue;
-
-            Message[] botMessages = messageProcessor.processMessage(userMessage);
-            for (Message botMessage : botMessages) {
-                if (botMessage == null)
-                    continue;
-                apiProvider.sendMessage(botMessage);
-            }
-
+            messageProcessor.processMessage(userMessage);
         }
     }
 }
