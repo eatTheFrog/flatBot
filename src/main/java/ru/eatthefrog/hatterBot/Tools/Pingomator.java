@@ -10,17 +10,18 @@ import java.io.InputStreamReader;
 
 @Component
 public class Pingomator {
-    public void pingContinuously(DialogStatePosition dsp, ApiProvider api, String address){
-        ping(dsp, api, new String[]{"ping", address});
-    }
-
     public void pingInBurst(DialogStatePosition dsp, ApiProvider api, String address){
         ping(dsp, api, new String[]{"ping", address, "-c", "10"});
     }
 
     public void pingSpecific(DialogStatePosition dsp, ApiProvider api, String userInput){
         String[] args = userInput.split(" ");
-        ping(dsp, api, new String[]{"ping", args[0], "-c", args[2]});
+        if (args.length != 2){
+            api.sendMessage(new TelegramMessage("Bad input!", dsp.chatID));
+            return;
+        }
+
+        ping(dsp, api, new String[]{"ping", args[0], "-c", args[1]});
     }
 
     private void ping(DialogStatePosition dsp, ApiProvider api, String[] command){

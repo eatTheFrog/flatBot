@@ -1,2 +1,4 @@
-Give me an address with with -c N at the end
+Give me an address with N at the end
 where N is how many times I should ping it.
+
+example: 'vk.com 20'

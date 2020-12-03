@@ -55,7 +55,7 @@ public abstract class DialogState {
     }
 
     public void sendResponse(String response, DialogStatePosition dsp){
-        apiProvider.sendMessage(new TelegramMessage(response, dsp.chatID));
+        System.out.println(apiProvider.sendMessage(new TelegramMessage(response, dsp.chatID)));
     }
 
     public DialogState sendPromptAndYourself(DialogStatePosition dsp){

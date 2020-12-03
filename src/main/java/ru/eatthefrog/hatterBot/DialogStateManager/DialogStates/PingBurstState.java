@@ -22,6 +22,7 @@ public class PingBurstState extends DialogState{
     @Override
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
         pingomator.pingInBurst(dsp, apiProvider, userInput);
+
         return pingState.sendPromptAndYourself(dsp);
     }
 }
