@@ -8,18 +8,22 @@ import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 
 @Configuration
 public class TelegramApiEnableConfiguration {
+
     @Bean
     TelegramAPIProvider telegramAPIProviderBean() {
         return new TelegramAPIProvider();
     }
+
     @Bean
     TelegramBotTokenProvider telegramBotTokenProvider() {
         return new TelegramBotTokenProvider();
     }
+
     @Bean
     TelegramLongPollMessageGetter telegramLongPollMessageGetter() {
         return new TelegramLongPollMessageGetter();
     }
+
     @Bean
     @Scope("prototype")
     Message messageBean() {

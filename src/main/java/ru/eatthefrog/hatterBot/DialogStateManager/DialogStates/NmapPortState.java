@@ -3,23 +3,20 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
-import ru.eatthefrog.hatterBot.Tools.Pingomator;
-
-import javax.annotation.PostConstruct;
+import ru.eatthefrog.hatterBot.Tools.Nmapor;
 
 @Component
-public class PingBurstState extends DialogState{
-    @Autowired
-    PingState pingState;
-
-    @PostConstruct
+public class NmapPortState extends DialogState{
+    @Override
     public void fillStateMap() {
     }
 
+    @Autowired
+    NmapState nmapState;
+
     @Override
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        Pingomator.pingInBurst(dsp, apiProvider, userInput);
-
-        return pingState.sendPromptAndYourself(dsp);
+        Nmapor.nmapPort(dsp, apiProvider, userInput);
+        return nmapState.sendPromptAndYourself(dsp);
     }
 }

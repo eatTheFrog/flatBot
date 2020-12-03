@@ -11,10 +11,13 @@ public class NetworkingToolsMenuState extends DialogState {
     @Autowired
     PingState pingState;
 
+    @Autowired
+    NmapState nmapState;
+
     @PostConstruct
     public void fillStateMap() {
         nextStatesMap.put("/ping", pingState);
-        nextStatesMap.put("/nmap", notYetImplementedState);
+        nextStatesMap.put("/nmap", nmapState);
         nextStatesMap.put("/back", loggedMainMenu);
     }
 }

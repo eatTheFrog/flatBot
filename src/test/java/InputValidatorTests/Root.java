@@ -1,11 +1,12 @@
 package InputValidatorTests;
 
 import org.junit.Test;
+import ru.eatthefrog.hatterBot.Tools.Validator.Validable;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class RootTest {
+public class Root {
     protected static String[] inputs;
     protected static Validable v;
 

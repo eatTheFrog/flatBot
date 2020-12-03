@@ -2,9 +2,9 @@ package InputValidatorTests;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ru.eatthefrog.hatterBot.Tools.InputValidator;
+import ru.eatthefrog.hatterBot.Tools.Validator.InputValidator;
 
-public class AddressValidityTest extends RootTest {
+public class AddressValidityTest extends Root {
 
     @BeforeClass
     public static void setUp() {

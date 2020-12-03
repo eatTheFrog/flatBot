@@ -12,16 +12,13 @@ public class PingSpecificCountState extends DialogState {
     @Autowired
     PingState pingState;
 
-    @Autowired
-    Pingomator pingomator;
-
     @PostConstruct
     public void fillStateMap() {
     }
 
     @Override
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        pingomator.pingSpecific(dsp, apiProvider, userInput);
+        Pingomator.pingSpecific(dsp, apiProvider, userInput);
         return pingState.sendPromptAndYourself(dsp);
     }
 }
