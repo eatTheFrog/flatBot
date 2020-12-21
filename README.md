@@ -1,41 +1,31 @@
-# v2.2.0
-# What can I do?
+# v3.0.0!
 ![Image of Yaktocat](https://media.discordapp.net/attachments/665150642700156951/763855369645850625/sombrero-02.png)
 
 The idea behind the flatHatBot is to allow one to use a small array of network oriented tools from the comfort of their own telegram!
 
-# Updates:
-## 2.0.0
--- Dialog system was added.
-
--- Login/registration system was added.
-
--- MongoDB login saving was added.
-
-## 2.0.1
--- Git ignore was added!
-
-## 2.0.2
--- Smart token control.
-
-## 2.0.3
--- Hashing passwords in MongoDB.
-
-## 2.1.0
--- Log/pass caching was added.
-
--- DebugPrinter was added.
-
-## 2.1.1
--- Добавлена поддержка Spring AOP, AspectJ.
-
--- Внедрена функция сохранения состояний диалога в базу данных (ещё не реализована).
-
-## 2.2.0
--- Добавлена поддержка JUnit, SpringTest и Hamcrest.
-
--- Написаны тесты для LoginValidChecker.
-
--- Исправлены некоторые ошибки, связанные с LoginValidChecker.
-
--- Добавлен интерфейс для базы данных.
+- [x] Шпионские утилиты!
+    - [x] Первый блок задач
+        - [x] Базовое взаимодействие с телеграммом.
+            - [x] Управление токеном телеграма
+            - [x] Получение сообщений от телеграма
+            - [x] Обработка сообщений телеграма
+            - [x] Отправка сообщений юзеру через телеграм
+        - [x] Реализация диалогов
+            - [x] Хранение состояний диалогов
+            - [x] login/register
+            - [x] info tool
+            - [x] echo tool
+        - [x] Возможность логиниться
+            - [x] Хранение логинов и паролей в MongoDB
+            - [x] Постоянная верификация логинов и паролей
+        - [x] Утилита PING
+            - [x] Ping BURST
+            - [x] Ping SPECIFIC
+        - [x] Тесты
+            - [x] Тестирование системы авторизации
+            - [x] Тестирование валидации ввода в PING
+    - [x] Второй блок задач
+        - [x] Утилита NMAP
+            
+    - [x] Третий блок задач
+        

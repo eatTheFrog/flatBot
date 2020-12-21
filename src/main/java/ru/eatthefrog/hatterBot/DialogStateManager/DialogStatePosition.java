@@ -1,6 +1,6 @@
 package ru.eatthefrog.hatterBot.DialogStateManager;
 
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.DialogState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstanceFactory;
 

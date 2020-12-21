@@ -26,6 +26,14 @@ public class RequestHandler implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (requestList.isEmpty()) {
+                    continue;
+                }
                 Message userMessage = requestList.take();
                 messageProcessor.processMessage(userMessage);
             } catch (InterruptedException e) {

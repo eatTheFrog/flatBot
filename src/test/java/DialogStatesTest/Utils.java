@@ -1,7 +1,7 @@
 package DialogStatesTest;
 
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.DialogState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
 import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 
 import static org.mockito.Mockito.mock;

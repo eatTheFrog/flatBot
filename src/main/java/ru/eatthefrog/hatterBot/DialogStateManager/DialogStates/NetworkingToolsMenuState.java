@@ -2,6 +2,9 @@ package ru.eatthefrog.hatterBot.DialogStateManager.DialogStates;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.NmapStates.NmapState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.PingStates.PingState;
 
 import javax.annotation.PostConstruct;
 

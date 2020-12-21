@@ -6,9 +6,15 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
 import org.springframework.context.annotation.*;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.DialogState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI.TelegramAPIProvider;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI.TelegramApiEnableConfiguration;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI.TelegramBotTokenProvider;
+import ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI.TelegramLongPollMessageGetter;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetter2;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
+import ru.eatthefrog.hatterBot.Message.Message;
+import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
@@ -19,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @EnableAspectJAutoProxy
+@Import(TelegramApiEnableConfiguration.class)
 @ComponentScan("ru.eatthefrog.hatterBot")
 @PropertySource("bot.properties")
 public class SpringConfiguration {

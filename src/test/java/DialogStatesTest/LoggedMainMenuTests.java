@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.*;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.EchoState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.InfoState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.LoggedMainMenu;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.LogoutState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.SpecificStates.NotYetImplementedState;
 import ru.eatthefrog.hatterBot.SpringConfiguration;
 
 @RunWith(SpringRunner.class)

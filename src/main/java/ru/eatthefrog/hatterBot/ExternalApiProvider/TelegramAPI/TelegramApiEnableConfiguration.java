@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import ru.eatthefrog.hatterBot.Message.Message;
 import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 
-@Configuration
+
 public class TelegramApiEnableConfiguration {
 
     @Bean

@@ -7,7 +7,7 @@ import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
 import ru.eatthefrog.hatterBot.PropertiesProvider;
 
 
-class TelegramBotTokenProvider implements BotTokenProvider {
+public class TelegramBotTokenProvider implements BotTokenProvider {
 
     @Value("${bot.tokenValue}")
     String token;

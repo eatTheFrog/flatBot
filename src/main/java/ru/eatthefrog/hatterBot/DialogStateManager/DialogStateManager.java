@@ -2,9 +2,9 @@ package ru.eatthefrog.hatterBot.DialogStateManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.LoggedMainMenu;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.StartingState;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.UnloggedMainMenu;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.LoggedMainMenu;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.StartingState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.UnloggedMainMenu;
 import ru.eatthefrog.hatterBot.Message.Message;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoUserStatesManager;
 
