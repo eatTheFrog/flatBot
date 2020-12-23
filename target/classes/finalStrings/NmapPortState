@@ -1,0 +1,3 @@
+Give me an address and a port, and I'll scan it for you!
+
+example: 'scanme.nmap.org 88'

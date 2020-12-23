@@ -1,0 +1,9 @@
+Welcome to the Main Menu;
+Now choose what you want:
+
+/networking - continue to networking tools menu
+/info - view flatBot info
+/echo - use echo tool
+/settings - continue to settings menu
+
+/logout - log out of the current session

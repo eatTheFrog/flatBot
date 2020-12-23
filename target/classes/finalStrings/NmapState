@@ -1,0 +1,7 @@
+What kind of nmap would you like to use?
+
+/default - nmap without any keys, just address
+/port - specify a port you'd like to scan
+/all - scan all ports
+
+/back

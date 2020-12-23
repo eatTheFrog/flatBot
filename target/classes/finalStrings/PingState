@@ -1,0 +1,6 @@
+What kind of ping would you like to use?
+
+/specific - specify how many packets you want me to send
+/burst - sends 10 packets
+
+/back
