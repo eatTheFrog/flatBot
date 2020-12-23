@@ -31,8 +31,8 @@ public class Application {
     VkSpyRequestKeeper vkSpyRequestKeeper;
 
     public void run() {
-
         vkSpyRequestKeeper.loadResponsesMongoDatabase();
+
         ApiProvider.setToken(
                 botTokenProvider.getToken()
         );
@@ -48,7 +48,6 @@ public class Application {
     }
 
     public void longPollIteration() {
-
             Message[] userMessages = longPollMessageGetter.getMessagesLongPoll();
             for (Message userMessage : userMessages) {
                 requestHandler.addRequest(userMessage);

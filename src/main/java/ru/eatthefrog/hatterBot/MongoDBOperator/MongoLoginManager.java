@@ -32,6 +32,7 @@ public class MongoLoginManager implements DataBaseLoginManager {
         }};
         loginCollection.insertOne(mongoLoginInstance);
     }
+
     public String getHashPasswordForLogin(String login) {
         if (login == null)
             return null;
