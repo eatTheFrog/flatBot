@@ -6,39 +6,43 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.FriendsChangesComparator.FriendsChangesComparator;
 import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.TooManyRequestsException;
+import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiNameProvider;
 import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnit;
+import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkApiTokenInstance;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
 @Component
 @Scope("prototype")
 public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
+
     @Autowired
     FriendsChangesComparator friendsChangesComparator;
-    int checkFrequency = 60;
+    @PostConstruct
+    public void initBean() {
+        this.checkFrequency = 60;
+    }
     public void handle() {
         apiProvider.setToken(
                 botTokenProvider.getToken()
         );
+        VkApiTokenInstance vkToken = vkUserTokenManager.getToken(this.chatId);
         System.out.println("token_setted");
         VkProfileUnit vkProfileUnit = vkProfileUnitManager.getVkProfileState(
                 this.spyVkId,
-                vkUserTokenManager.getToken(this.chatId));
+                vkToken);
         System.out.println("profile_getted");
         Integer[] currentFriends;
         try {
-            currentFriends = this.vkApiMethods.friendsGet(this.spyVkId,
-                    this.vkUserTokenManager.getToken(
-                            this.chatId
-                    )).response.friendsIdsArray;
+            currentFriends = this.vkApiMethodsImplementator.friendsGet(this.spyVkId,
+                    vkToken).response.friendsIdsArray;
         }
         catch (TooManyRequestsException e) {
             return;
         }
         var compRes = this.friendsChangesComparator.getCompareResult(vkProfileUnit.getFriends(),
                 currentFriends);
-        System.out.println(Arrays.toString(compRes.getNewFriends()));
-        System.out.println(Arrays.toString(compRes.getDeletedFriends()));
         if (compRes.isChanged()) {
             Integer[] newFriends = compRes.getNewFriends();
             Integer[] deletedFriends = compRes.getDeletedFriends();
@@ -46,9 +50,13 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
             for (Integer i:
                  newFriends) {
                 String messageText = (
-                        String.valueOf(this.spyVkId)+
+                        vkApiNameProvider.getName(this.spyVkId,
+                                vkToken
+                                ) +
                                 " added " +
-                                String.valueOf(i));
+                                vkApiNameProvider.getName(i,
+                                        vkToken
+                                ));
                 apiProvider.sendMessage(
                         new TelegramMessage(
                                 messageText,
@@ -59,9 +67,13 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
             for (Integer i:
                     deletedFriends) {
                 String messageText = (
-                        String.valueOf(this.spyVkId)+
+                        vkApiNameProvider.getName(this.spyVkId,
+                                vkToken
+                        ) +
                                 " removed " +
-                                String.valueOf(i));
+                                vkApiNameProvider.getName(i,
+                                        vkToken
+                                ));
                 apiProvider.sendMessage(
                         new TelegramMessage(
                                 messageText,

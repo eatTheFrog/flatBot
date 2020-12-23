@@ -9,7 +9,7 @@ import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkUsersGet.VkUsersGetResponse;
 import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkApiTokenInstance;
 
 @Component
-public class VkApiMethods {
+public class VkApiMethodsImplementator {
     final String PREFIX = "https://api.vk.com/method/";
     @Autowired
     HTTPGetterable httpGetterable;
@@ -38,6 +38,7 @@ public class VkApiMethods {
         String response = this.vkApiRequest("users.get?",
                 "user_ids="+String.valueOf(profileId)+"&fields="+fields,
                 tokenInstance);
+        System.out.println(response);
         if (response == null) {
             throw new TooManyRequestsException();
         }

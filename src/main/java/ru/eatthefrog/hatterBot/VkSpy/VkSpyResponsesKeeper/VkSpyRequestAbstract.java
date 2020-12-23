@@ -3,7 +3,8 @@ package ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
-import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiMethods;
+import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiMethodsImplementator;
+import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiNameProvider;
 import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnitManager;
 import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkUserTokenManager;
 
@@ -15,8 +16,9 @@ public abstract class VkSpyRequestAbstract {
     @Autowired
     VkProfileUnitManager vkProfileUnitManager;
     @Autowired
-    VkApiMethods vkApiMethods;
-
+    VkApiMethodsImplementator vkApiMethodsImplementator;
+    @Autowired
+    VkApiNameProvider vkApiNameProvider;
     @Autowired
     ApiProvider apiProvider;
     @Autowired
