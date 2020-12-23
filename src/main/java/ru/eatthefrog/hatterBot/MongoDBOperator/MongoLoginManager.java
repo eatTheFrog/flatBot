@@ -2,6 +2,7 @@ package ru.eatthefrog.hatterBot.MongoDBOperator;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.BsonDocument;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,7 +44,7 @@ public class MongoLoginManager implements DataBaseLoginManager {
     }
 
     public void resetDatabase() {
-
+        loginCollection.deleteMany(new Document());
     }
 
     @Override
