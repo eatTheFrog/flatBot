@@ -5,8 +5,6 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.BsonDocument;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 
 import javax.annotation.PostConstruct;

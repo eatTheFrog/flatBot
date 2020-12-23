@@ -25,5 +25,6 @@ public class SpyVkState extends DialogState {
         nextStatesMap.put("/add_to_online_spy", spyVkAddSpyOnline);
         nextStatesMap.put("/add_to_friends_spy", spyVkAddSpyFriendsState);
         nextStatesMap.put("/remove_from_spy", removeFromSpyState);
+        nextStatesMap.put("/back", loggedMainMenu);
     }
 }
