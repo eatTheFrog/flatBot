@@ -3,6 +3,7 @@ package ru.eatthefrog.hatterBot.VkSpy.VkProfileManager;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.SpringConfiguration;
+import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkApiTokenInstance;
 
 import java.util.AbstractMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class VkProfileUnitManager {
     AbstractMap<Integer, VkProfileUnit> vkProfiles = new ConcurrentHashMap<>();
-    public VkProfileUnit getVkProfileState(int profileId, String token) {
+    public VkProfileUnit getVkProfileState(int profileId, VkApiTokenInstance token) {
         VkProfileUnit vkProfileUnit = this.vkProfiles.get(profileId);
         if (vkProfileUnit != null) {
             return vkProfileUnit;
@@ -19,7 +20,7 @@ public class VkProfileUnitManager {
             return this.buildProfile(profileId, token);
         }
     }
-    public VkProfileUnit buildProfile(int vkProfileId, String token) {
+    public VkProfileUnit buildProfile(int vkProfileId, VkApiTokenInstance token) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
                 SpringConfiguration.class
         );

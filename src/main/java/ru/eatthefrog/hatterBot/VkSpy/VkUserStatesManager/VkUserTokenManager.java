@@ -11,23 +11,24 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class VkUserTokenManager {
-    AbstractMap<Integer, String> vkTokens = new ConcurrentHashMap<>();
+    AbstractMap<Integer, VkApiTokenInstance> vkTokens = new ConcurrentHashMap<>();
     @Autowired
     PropertiesProvider propertiesProvider;
+
     @PostConstruct
     public void putMyToken() {
         this.vkTokens.put(
                 875574469,
-                propertiesProvider.getProperty(
+                new VkApiTokenInstance(propertiesProvider.getProperty(
                         "secret.bot.properties",
                         "vk_token"
-                )
+                ))
         );
     }
     public void addToken(int chatId, String token) {
-        this.vkTokens.put(chatId, token);
+        this.vkTokens.put(chatId, new VkApiTokenInstance(token));
     }
-    public String getToken(int chatId) {
+    public VkApiTokenInstance getToken(int chatId) {
         return this.vkTokens.get(chatId);
     }
 }

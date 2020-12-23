@@ -8,11 +8,13 @@ import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.InfoSt
 import javax.annotation.PostConstruct;
 
 @Component
-public class SpyVkOnlineState extends DialogState {
+public class SpyVkState extends DialogState {
     @Autowired
     GetSpyListState getSpyListState;
     @Autowired
-    AddToSpyState addToSpyState;
+    SpyVkAddSpyOnline spyVkAddSpyOnline;
+    @Autowired
+    SpyVkAddSpyFriendsState spyVkAddSpyFriendsState;
     @Autowired
     InfoState infoState;
     @Autowired
@@ -20,7 +22,8 @@ public class SpyVkOnlineState extends DialogState {
     @PostConstruct
     public void fillStateMap() {
         nextStatesMap.put("/get_spy_list", getSpyListState);
-        nextStatesMap.put("/add_to_spy", addToSpyState);
+        nextStatesMap.put("/add_to_online_spy", spyVkAddSpyOnline);
+        nextStatesMap.put("/add_to_friends_spy", spyVkAddSpyFriendsState);
         nextStatesMap.put("/remove_from_spy", removeFromSpyState);
     }
 }

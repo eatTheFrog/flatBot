@@ -2,14 +2,14 @@ package ru.eatthefrog.hatterBot.VkSpy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequest;
+import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequestAbstract;
 
 @Component
 public class VkRequestQueueHandlerThread implements Runnable {
     @Autowired
     VkRequestQueue vkRequestQueue;
     public void startThreadPool() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 1; i++) {
             new Thread(this).start();
         }
     }
@@ -20,9 +20,17 @@ public class VkRequestQueueHandlerThread implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            VkSpyRequest vkSpyRequest = vkRequestQueue.getRequest();
+
+            VkSpyRequestAbstract vkSpyRequest = vkRequestQueue.getRequest();
             if (vkSpyRequest != null){
-                vkSpyRequest.handle();
+                if (vkSpyRequest.isTokenReady()) {
+                    vkSpyRequest.handle();
+                    vkSpyRequest.setUnQueued();
+                }
+                else {
+                    this.vkRequestQueue.addQueuedRequestSafely(vkSpyRequest);
+                }
+
             }
         }
     }

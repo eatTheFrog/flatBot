@@ -9,13 +9,34 @@ import ru.eatthefrog.hatterBot.SpringConfiguration;
 import java.util.ArrayList;
 
 @Component
-public class VkSpyResponsesKeeper {
+public class VkSpyRequestKeeper {
     @Autowired
     VkResponseRepresentationKeeper vkResponseRepresentationKeeper;
     @Autowired
     MongoSpyRequestsManager mongoSpyRequestsManager;
-    ArrayList<VkSpyRequest> vkOnlineSpyRequests = new ArrayList<VkSpyRequest>();
+    ArrayList<VkSpyRequestAbstract> vkSpyRequestAbstractList = new ArrayList<VkSpyRequestAbstract>();
+    public void addFriendsSpy(int userChatId, int userSpyToVkId) {
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
+                SpringConfiguration.class
+        );
+        VkFriendsSpyRequest vkFriendsSpyRequest = context.getBean(
+                VkFriendsSpyRequest.class
+        );
+        vkFriendsSpyRequest.setChatId(userChatId);
+        vkFriendsSpyRequest.setSpyVkId(userSpyToVkId);
+        /*mongoSpyRequestsManager.addOnlineSpyRequest(
+                vkFriendsSpyRequest
+        );*/
+        this.vkSpyRequestAbstractList.add(
+                vkFriendsSpyRequest
+        );
+        this.vkResponseRepresentationKeeper.addSpyRequestRepresentation(
+                userChatId,
+                vkFriendsSpyRequest
+        );
 
+        context.close();
+    }
     public void addOnlineSpy(int userChatId, int userSpyToVkId) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
                 SpringConfiguration.class
@@ -28,18 +49,18 @@ public class VkSpyResponsesKeeper {
         mongoSpyRequestsManager.addOnlineSpyRequest(
             vkOnlineSpyRequest
         );
-        this.vkOnlineSpyRequests.add(
+        this.vkSpyRequestAbstractList.add(
                 vkOnlineSpyRequest
         );
-        this.vkResponseRepresentationKeeper.addOnlineSpyRequestRepresentation(
+        this.vkResponseRepresentationKeeper.addSpyRequestRepresentation(
                 userChatId,
                 vkOnlineSpyRequest
         );
 
         context.close();
     }
-    public ArrayList<VkSpyRequest> getRequests() {
-        return this.vkOnlineSpyRequests;
+    public ArrayList<VkSpyRequestAbstract> getRequests() {
+        return this.vkSpyRequestAbstractList;
     }
     public void loadResponsesMongoDatabase() {
         loadOnlineResponsesMongoDatabase();
@@ -50,12 +71,12 @@ public class VkSpyResponsesKeeper {
 
         for (VkOnlineSpyRequest vkOnlineSpyRequest:
              vkOnlineSpyRequests) {
-            this.vkOnlineSpyRequests.add(vkOnlineSpyRequest);
-            vkResponseRepresentationKeeper.addOnlineSpyRequestRepresentation(
+            this.vkSpyRequestAbstractList.add(vkOnlineSpyRequest);
+            vkResponseRepresentationKeeper.addSpyRequestRepresentation(
                     vkOnlineSpyRequest.chatId,
                     vkOnlineSpyRequest
             );
         }
-        System.out.println(this.vkOnlineSpyRequests);
+        System.out.println(this.vkSpyRequestAbstractList);
     }
 }

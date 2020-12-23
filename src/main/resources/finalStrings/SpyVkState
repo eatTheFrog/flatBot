@@ -1,6 +1,7 @@
 Hello. There are some tools.
 /get_spy_list - prints all users you are spy on.
-/add_to_spy - add user to spy list.
+/add_to_online_spy - add user to online spy list.
+/add_to_friends_spy - add user to friends spy list.
 /remove_from_spy - shows you list of user and ask if you want remove anyone.
 
 /back

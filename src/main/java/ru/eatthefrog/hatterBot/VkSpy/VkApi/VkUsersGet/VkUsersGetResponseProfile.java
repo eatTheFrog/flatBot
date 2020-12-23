@@ -1,8 +1,9 @@
-package ru.eatthefrog.hatterBot.VkSpy.VkApi;
+package ru.eatthefrog.hatterBot.VkSpy.VkApi.VkUsersGet;
 
 import com.google.gson.annotations.SerializedName;
 
 public class VkUsersGetResponseProfile {
     @SerializedName("online")
-    int online;
+    public int online;
+
 }

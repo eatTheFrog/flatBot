@@ -10,7 +10,7 @@ import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkUserTokenManager;
 @Component
 public class VkTokenAskState extends DialogState {
     @Autowired
-    VkUserTokenManager vkUserStatesManager;
+    VkUserTokenManager vkUserTokenManager;
     @Autowired
     LoggedMainMenu loggedMainMenu;
 
@@ -21,7 +21,7 @@ public class VkTokenAskState extends DialogState {
     @Override
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
         int chatId = dsp.chatID;
-        vkUserStatesManager.addToken(dsp.chatID, userInput);
+        vkUserTokenManager.addToken(dsp.chatID, userInput);
         this.sendResponse("Vk Token was added.", dsp);
         return this.getMainMenu(dsp);
     }

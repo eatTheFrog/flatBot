@@ -10,17 +10,17 @@ import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class VkResponseRepresentationKeeper {
-    AbstractMap<Integer, ArrayList<VkOnlineSpyRequest>> vkOnlineSpyRequestsByChatId = new ConcurrentHashMap<>();
-    public void addOnlineSpyRequestRepresentation(int chatId, VkOnlineSpyRequest vkOnlineSpyRequest) {
-        ArrayList<VkOnlineSpyRequest> vkOnlineSpyRequestsTemp = this.vkOnlineSpyRequestsByChatId.get(chatId);
+    AbstractMap<Integer, ArrayList<VkSpyRequestAbstract>> vkSpyRequestsByChatId = new ConcurrentHashMap<>();
+    public void addSpyRequestRepresentation(int chatId, VkSpyRequestAbstract vkSpyRequest) {
+        ArrayList<VkSpyRequestAbstract> vkOnlineSpyRequestsTemp = this.vkSpyRequestsByChatId.get(chatId);
         if (vkOnlineSpyRequestsTemp == null) {
             vkOnlineSpyRequestsTemp = new ArrayList<>();
-            vkOnlineSpyRequestsByChatId.put(chatId, vkOnlineSpyRequestsTemp);
+            vkSpyRequestsByChatId.put(chatId, vkOnlineSpyRequestsTemp);
         }
-        vkOnlineSpyRequestsTemp.add(vkOnlineSpyRequest);
+        vkOnlineSpyRequestsTemp.add(vkSpyRequest);
     }
 
-    public ArrayList<VkOnlineSpyRequest> getChatIdOnlineSpyRequests(int chatId) {
-        return this.vkOnlineSpyRequestsByChatId.get(chatId);
+    public ArrayList<VkSpyRequestAbstract> getChatIdOnlineSpyRequests(int chatId) {
+        return this.vkSpyRequestsByChatId.get(chatId);
     }
 }

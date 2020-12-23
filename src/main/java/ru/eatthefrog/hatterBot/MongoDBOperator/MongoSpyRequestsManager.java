@@ -9,8 +9,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.SpringConfiguration;
 import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkOnlineSpyRequest;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequest;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyResponsesKeeper;
 
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;

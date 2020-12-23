@@ -2,9 +2,8 @@ package ru.eatthefrog.hatterBot.VkSpy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkOnlineSpyRequest;
 import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyNullRequest;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequest;
+import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequestAbstract;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -14,11 +13,14 @@ public class VkRequestQueue {
     @Autowired
     VkSpyNullRequest vkSpyNullRequest;
 
-    BlockingQueue<VkSpyRequest> blockingQueue = new LinkedBlockingQueue<>();
-    public void addRequest(VkSpyRequest vkSpyRequest) {
-        this.blockingQueue.add(vkSpyRequest);
+    BlockingQueue<VkSpyRequestAbstract> blockingQueue = new LinkedBlockingQueue<>();
+    public void addRequest(VkSpyRequestAbstract vkSpyRequest) {
+        if (!vkSpyRequest.isQueued()) {
+            vkSpyRequest.setQueued();
+            this.blockingQueue.add(vkSpyRequest);
+        }
     }
-    public VkSpyRequest getRequest() {
+    public VkSpyRequestAbstract getRequest() {
         if (blockingQueue.isEmpty())
             return null;
         try {
@@ -28,5 +30,8 @@ public class VkRequestQueue {
             return vkSpyNullRequest;
         }
 
+    }
+    public void addQueuedRequestSafely(VkSpyRequestAbstract vkSpyRequestAbstract) {
+        this.blockingQueue.add(vkSpyRequestAbstract);
     }
 }

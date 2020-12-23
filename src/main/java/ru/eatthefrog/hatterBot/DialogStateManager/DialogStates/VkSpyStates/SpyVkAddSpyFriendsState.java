@@ -4,29 +4,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.LoginAskPasswordDialogState;
-import ru.eatthefrog.hatterBot.MongoDBOperator.MongoSpyRequestsManager;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyResponsesKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequestKeeper;
 
 @Component
-public class AddToSpyState extends DialogState {
+public class SpyVkAddSpyFriendsState extends DialogState {
     @Override
     public void fillStateMap() {
 
     }
     @Autowired
-    SpyVkOnlineState spyVkOnlineState;
+    SpyVkState spyVkState;
     @Autowired
-    VkSpyResponsesKeeper vkSpyResponsesKeeper;
+    VkSpyRequestKeeper vkSpyRequestKeeper;
 
 
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        vkSpyResponsesKeeper.addOnlineSpy(
+        vkSpyRequestKeeper.addFriendsSpy(
                 dsp.chatID,
                 Integer.parseInt(userInput)
         );
 
-        return spyVkOnlineState.sendPromptAndYourself(dsp);
+        return spyVkState.sendPromptAndYourself(dsp);
     }
 
 }

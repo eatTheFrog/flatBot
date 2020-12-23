@@ -10,6 +10,7 @@ import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI.TelegramBotTokenProvider;
 import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 import ru.eatthefrog.hatterBot.SpringConfiguration;
+import ru.eatthefrog.hatterBot.VkSpy.VkApi.TooManyRequestsException;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiMethods;
 import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnit;
 import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnitManager;
@@ -19,52 +20,10 @@ import javax.annotation.PostConstruct;
 
 @Component
 @Scope("prototype")
-public class VkOnlineSpyRequest implements VkSpyRequest{
-    long lastTimeChecked;
-    int spyVkId;
-    int chatId;
+public class VkOnlineSpyRequest extends VkSpyRequestAbstract{
+    int checkFrequency = 60;
 
-    @Autowired
-    VkProfileUnitManager vkProfileUnitManager;
-    @Autowired
-    VkApiMethods vkApiMethods;
-    @Autowired
-    VkUserTokenManager vkUserTokenManager;
-    @Autowired
-    ApiProvider apiProvider;
-    @Autowired
-    BotTokenProvider botTokenProvider;
 
-    @PostConstruct
-    public void updateTime() {
-        this.lastTimeChecked = System.currentTimeMillis();
-    }
-
-    public void setSpyVkId(int spyVkId) {
-        this.spyVkId = spyVkId;
-    }
-
-    public void setChatId(int chatId) {
-        this.chatId = chatId;
-    }
-    public int getChatId() {
-        return this.chatId;
-    }
-    public int getSpyVkId() {
-        return this.spyVkId;
-    }
-
-    @Override
-    public boolean shouldUpdate() {
-        boolean toReturn =  System.currentTimeMillis() - lastTimeChecked > 1000;
-        if (toReturn) {
-            this.lastTimeChecked = System.currentTimeMillis();
-
-        }
-        return toReturn;
-    }
-
-    @Override
     public void handle() {
         apiProvider.setToken(
                 botTokenProvider.getToken()
@@ -72,10 +31,14 @@ public class VkOnlineSpyRequest implements VkSpyRequest{
         VkProfileUnit vkProfileUnit = vkProfileUnitManager.getVkProfileState(
                 this.spyVkId,
                 vkUserTokenManager.getToken(this.chatId));
-
-        boolean isOnline = vkApiMethods.isOnline(this.spyVkId,
-                vkUserTokenManager.getToken(this.chatId));
-
+        boolean isOnline;
+        try {
+            isOnline = vkApiMethods.isOnline(this.spyVkId,
+                    vkUserTokenManager.getToken(this.chatId));
+        }
+        catch (TooManyRequestsException e) {
+            return;
+        }
         if (vkProfileUnit.getIsOnline() != isOnline) {
             String messageText = "";
             if (isOnline) {
