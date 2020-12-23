@@ -1,17 +1,18 @@
 package ru.eatthefrog.hatterBot.MD5StringHasher;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
 
 public class MD5StringHasher {
     MessageDigest messageDigest = null;
 
     @PostConstruct
     void getMD5Instance() {
-
         try {
             messageDigest = MessageDigest.getInstance("MD5");
         }
