@@ -6,9 +6,9 @@ import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.LongPollMessageGetter;
 import ru.eatthefrog.hatterBot.Message.Message;
-import ru.eatthefrog.hatterBot.VkSpy.VkRequestQueueHandlerThread;
-import ru.eatthefrog.hatterBot.VkSpy.VkRequestQueuePutter;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequestKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkRequestQueueHandlerThread;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkRequestQueuePutter;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpyRequestKeeper;
 
 
 @Component
@@ -31,11 +31,12 @@ public class Application {
     VkSpyRequestKeeper vkSpyRequestKeeper;
 
     public void run() {
-        vkSpyRequestKeeper.loadResponsesMongoDatabase();
+        vkSpyRequestKeeper.loadRequestsMongoDatabase();
 
         ApiProvider.setToken(
                 botTokenProvider.getToken()
         );
+
 
         vkRequestQueuePutter.startThread();
         vkRequestQueueHandlerThread.startThreadPool();

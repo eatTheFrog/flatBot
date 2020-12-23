@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequestKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpyRequestKeeper;
 
 @Component
 public class SpyVkAddSpyOnline extends DialogState {
@@ -19,10 +19,18 @@ public class SpyVkAddSpyOnline extends DialogState {
 
 
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        vkSpyRequestKeeper.addOnlineSpy(
-                dsp.chatID,
-                Integer.parseInt(userInput)
-        );
+        try {
+            vkSpyRequestKeeper.addOnlineSpy(
+                    dsp.chatID,
+                    Integer.parseInt(userInput)
+            );
+            this.sendResponse("Пользователь добавлен.", dsp);
+
+        }
+        catch (NumberFormatException e) {
+            this.sendResponse("Набранный вами ID был не верный. Это должно быть натуральное число.", dsp);
+        }
+
 
         return spyVkState.sendPromptAndYourself(dsp);
     }

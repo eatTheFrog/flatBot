@@ -1,10 +1,13 @@
-package ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper;
+package ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoSpyRequestsManager;
 import ru.eatthefrog.hatterBot.SpringConfiguration;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkFriendsSpyRequest;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkOnlineSpyRequest;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkSpyRequestAbstract;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,17 @@ public class VkSpyRequestKeeper {
     MongoSpyRequestsManager mongoSpyRequestsManager;
     ArrayList<VkSpyRequestAbstract> vkSpyRequestAbstractList = new ArrayList<VkSpyRequestAbstract>();
     public void addFriendsSpy(int userChatId, int userSpyToVkId) {
+        var x = vkResponseRepresentationKeeper.getChatIdOnlineSpyRequests(
+                userChatId
+        );
+        if (x != null) {
+            for (VkSpyRequestAbstract i:
+                    x) {
+                if (i.getSpyVkId() == userSpyToVkId && i.getClass() == VkFriendsSpyRequest.class) {
+                    return;
+                }
+            }
+        }
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
                 SpringConfiguration.class
         );
@@ -24,9 +38,9 @@ public class VkSpyRequestKeeper {
         );
         vkFriendsSpyRequest.setChatId(userChatId);
         vkFriendsSpyRequest.setSpyVkId(userSpyToVkId);
-        /*mongoSpyRequestsManager.addOnlineSpyRequest(
+        mongoSpyRequestsManager.addFriendsSpyRequest(
                 vkFriendsSpyRequest
-        );*/
+        );
         this.vkSpyRequestAbstractList.add(
                 vkFriendsSpyRequest
         );
@@ -38,6 +52,18 @@ public class VkSpyRequestKeeper {
         context.close();
     }
     public void addOnlineSpy(int userChatId, int userSpyToVkId) {
+        var x = vkResponseRepresentationKeeper.getChatIdOnlineSpyRequests(
+            userChatId
+        );
+        if (x != null) {
+            for (VkSpyRequestAbstract i:
+                    x) {
+                if (i.getSpyVkId() == userSpyToVkId && i.getClass() == VkOnlineSpyRequest.class) {
+                    return;
+                }
+            }
+        }
+
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
                 SpringConfiguration.class
         );
@@ -62,21 +88,29 @@ public class VkSpyRequestKeeper {
     public ArrayList<VkSpyRequestAbstract> getRequests() {
         return this.vkSpyRequestAbstractList;
     }
-    public void loadResponsesMongoDatabase() {
-        loadOnlineResponsesMongoDatabase();
+    public void loadRequestsMongoDatabase() {
+        loadOnlineRequestsMongoDatabase();
+        loadFriendsRequestsMongoDatabase();
     }
-    public void loadOnlineResponsesMongoDatabase() {
+    void loadOnlineRequestsMongoDatabase() {
+        this.loadAbstractRequestsMongoDatabase(
+                mongoSpyRequestsManager.getOnlineSpyRequests()
+        );
+    }
+    void loadFriendsRequestsMongoDatabase() {
+        this.loadAbstractRequestsMongoDatabase(
+                mongoSpyRequestsManager.getFriendsSpyRequest()
+        );
+    }
+    void loadAbstractRequestsMongoDatabase(ArrayList<VkSpyRequestAbstract> requests) {
 
-        ArrayList<VkOnlineSpyRequest> vkOnlineSpyRequests = mongoSpyRequestsManager.getOnlineSpyRequests();
-
-        for (VkOnlineSpyRequest vkOnlineSpyRequest:
-             vkOnlineSpyRequests) {
-            this.vkSpyRequestAbstractList.add(vkOnlineSpyRequest);
+        for (VkSpyRequestAbstract vkSpyRequestAbstract:
+                requests) {
+            this.vkSpyRequestAbstractList.add(vkSpyRequestAbstract);
             vkResponseRepresentationKeeper.addSpyRequestRepresentation(
-                    vkOnlineSpyRequest.chatId,
-                    vkOnlineSpyRequest
+                    vkSpyRequestAbstract.getChatId(),
+                    vkSpyRequestAbstract
             );
         }
-        System.out.println(this.vkSpyRequestAbstractList);
     }
 }

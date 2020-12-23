@@ -1,4 +1,4 @@
-package ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper;
+package ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -6,12 +6,10 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.FriendsChangesComparator.FriendsChangesComparator;
 import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.TooManyRequestsException;
-import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiNameProvider;
 import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnit;
-import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkApiTokenInstance;
+import ru.eatthefrog.hatterBot.VkSpy.VkTokenManager.VkApiTokenInstance;
 
 import javax.annotation.PostConstruct;
-import java.util.Arrays;
 
 @Component
 @Scope("prototype")
@@ -22,6 +20,12 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
     @PostConstruct
     public void initBean() {
         this.checkFrequency = 60;
+    }
+    public String getSpyPrompt() {
+        return "Вы следите за друзьями: " + this.vkNameProvider.getName(
+                this.spyVkId,
+                this.vkUserTokenManager.getToken(this.chatId)
+        );
     }
     public void handle() {
         apiProvider.setToken(
@@ -50,11 +54,11 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
             for (Integer i:
                  newFriends) {
                 String messageText = (
-                        vkApiNameProvider.getName(this.spyVkId,
+                        vkNameProvider.getName(this.spyVkId,
                                 vkToken
                                 ) +
                                 " added " +
-                                vkApiNameProvider.getName(i,
+                                vkNameProvider.getName(i,
                                         vkToken
                                 ));
                 apiProvider.sendMessage(
@@ -67,11 +71,11 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
             for (Integer i:
                     deletedFriends) {
                 String messageText = (
-                        vkApiNameProvider.getName(this.spyVkId,
+                        vkNameProvider.getName(this.spyVkId,
                                 vkToken
                         ) +
                                 " removed " +
-                                vkApiNameProvider.getName(i,
+                                vkNameProvider.getName(i,
                                         vkToken
                                 ));
                 apiProvider.sendMessage(

@@ -1,9 +1,8 @@
-package ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager;
+package ru.eatthefrog.hatterBot.VkSpy.VkTokenManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.PropertiesProvider;
-import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnit;
 
 import javax.annotation.PostConstruct;
 import java.util.AbstractMap;

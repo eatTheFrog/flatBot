@@ -1,4 +1,4 @@
-package ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager;
+package ru.eatthefrog.hatterBot.VkSpy.VkTokenManager;
 
 public class VkApiTokenInstance {
     String token_value;

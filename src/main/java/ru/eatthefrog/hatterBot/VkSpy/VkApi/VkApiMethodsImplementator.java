@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkFriendsGet.VkFriendsGetResponse;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkUsersGet.VkUsersGetResponse;
-import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkApiTokenInstance;
+import ru.eatthefrog.hatterBot.VkSpy.VkTokenManager.VkApiTokenInstance;
 
 @Component
 public class VkApiMethodsImplementator {

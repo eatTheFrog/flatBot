@@ -1,12 +1,12 @@
-package ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper;
+package ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiMethodsImplementator;
-import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiNameProvider;
+import ru.eatthefrog.hatterBot.VkSpy.VkNameProvider;
 import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnitManager;
-import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkUserTokenManager;
+import ru.eatthefrog.hatterBot.VkSpy.VkTokenManager.VkUserTokenManager;
 
 import javax.annotation.PostConstruct;
 
@@ -18,7 +18,7 @@ public abstract class VkSpyRequestAbstract {
     @Autowired
     VkApiMethodsImplementator vkApiMethodsImplementator;
     @Autowired
-    VkApiNameProvider vkApiNameProvider;
+    VkNameProvider vkNameProvider;
     @Autowired
     ApiProvider apiProvider;
     @Autowired
@@ -31,6 +31,7 @@ public abstract class VkSpyRequestAbstract {
     boolean queued;
 
     public abstract void handle();
+    public abstract String getSpyPrompt();
 
     @PostConstruct
     public void updateTime() {

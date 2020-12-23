@@ -1,10 +1,13 @@
 package ru.eatthefrog.hatterBot.ExternalApiProvider.TelegramAPI;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
 import ru.eatthefrog.hatterBot.HTTPGetter.HTTPGetterable;
 import ru.eatthefrog.hatterBot.Message.Message;
+import ru.eatthefrog.hatterBot.SpringConfiguration;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;

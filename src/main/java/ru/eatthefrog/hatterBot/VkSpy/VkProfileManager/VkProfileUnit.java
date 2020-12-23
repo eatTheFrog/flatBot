@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.TooManyRequestsException;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.VkApiMethodsImplementator;
-import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkApiTokenInstance;
+import ru.eatthefrog.hatterBot.VkSpy.VkTokenManager.VkApiTokenInstance;
 
 @Component
 @Scope("prototype")

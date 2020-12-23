@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkOnlineSpyRequest;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkResponseRepresentationKeeper;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyRequestAbstract;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkResponseRepresentationKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkSpyRequestAbstract;
 
 @Component
 public class GetSpyListState extends DialogState {
@@ -33,7 +32,7 @@ public class GetSpyListState extends DialogState {
         String response = "";
         for (VkSpyRequestAbstract i:
                 x) {
-            response += String.valueOf(i.getSpyVkId()) + "\n";
+            response += i.getSpyPrompt() + "\n";
         }
 
         sendResponse(response, dsp);

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.LoggedMainMenu;
-import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkUserTokenManager;
+import ru.eatthefrog.hatterBot.VkSpy.VkTokenManager.VkUserTokenManager;
 
 @Component
 public class VkTokenAskState extends DialogState {
