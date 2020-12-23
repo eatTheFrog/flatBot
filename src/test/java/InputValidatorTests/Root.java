@@ -6,7 +6,7 @@ import ru.eatthefrog.hatterBot.Tools.Validator.Validable;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class Root {
+public abstract class Root {
     protected static String[] inputs;
     protected static Validable v;
 

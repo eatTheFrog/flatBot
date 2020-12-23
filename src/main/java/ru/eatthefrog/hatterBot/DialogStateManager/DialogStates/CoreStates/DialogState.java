@@ -52,7 +52,7 @@ public abstract class DialogState {
     public MainMenuDialogState getMainMenu(DialogStatePosition dsp){
         MainMenuDialogState mainMenu = isLogged(dsp.loginInstance)
                 ? loggedMainMenu
-                : loggedMainMenu;
+                : unloggedMainMenu;
         return (MainMenuDialogState)mainMenu.sendPromptAndYourself(dsp);
     }
 
