@@ -22,6 +22,8 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Configuration
 @EnableAspectJAutoProxy
@@ -64,6 +66,9 @@ public class SpringConfiguration {
 
     @Bean
     public MongoDatabase mongoDatabaseBean() {
+        Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
+        mongoLogger.setLevel(Level.SEVERE);
+
         MongoClientURI clientURI = new MongoClientURI(mongoUri);
         MongoClient mongoClient = new MongoClient(clientURI);
         return mongoClient.getDatabase(
