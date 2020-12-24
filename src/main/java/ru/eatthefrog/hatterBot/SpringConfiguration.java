@@ -34,7 +34,7 @@ public class SpringConfiguration {
 
     final String dataBaseName = "FlatHatBotDatabase";
 
-    final String mongoUri = "mongodb://127.0.0.1:27017";
+    final String mongoUri = "mongodb://194.32.248.19/:27017";
 
     @Bean
     public DataBaseLoginManager dataBaseLoginManagerBean() {

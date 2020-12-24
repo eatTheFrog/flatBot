@@ -21,30 +21,25 @@ public class FinalStringProvider {
 
     @PostConstruct
     void loadFinalStrings() {
-        try {
+        ClassLoader cl = Application.class.getClassLoader();
 
-            ClassLoader cl = Application.class.getClassLoader();
-            File[] files = ResourceUtils.getFile("classpath:finalStrings").listFiles();
-            if (files == null)
-            {
-                System.out.println("ResourceUtils.getFile().listFiles() returns null and we don't know why." );
-                return;
+
+        for (String name: this.finalStringNames) {
+
+            var inputStream = cl.getResourceAsStream("finalStrings/"+name);
+            String s = null;
+            try {
+                s = IOUtils.toString(inputStream);
+            }
+            catch (IOException e) {
+                s = "";
             }
 
+            System.out.println();
 
-            for (String name: this.finalStringNames) {
-                var inputStream = cl.getResourceAsStream("finalStrings/"+name);
-                if (inputStream == null) {
-                    return;
-                }
-                finalStringsDictionary.put(
-                        name,
-                        IOUtils.toString(inputStream));
-            }
-
-        }
-        catch (IOException e) {
-            System.out.println("Failed to read resources/finalStrings/");
+            finalStringsDictionary.put(
+                    name,
+                    s);
         }
     }
 
