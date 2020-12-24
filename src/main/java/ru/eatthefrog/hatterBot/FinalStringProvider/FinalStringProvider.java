@@ -35,8 +35,6 @@ public class FinalStringProvider {
                 s = "";
             }
 
-            System.out.println();
-
             finalStringsDictionary.put(
                     name,
                     s);
