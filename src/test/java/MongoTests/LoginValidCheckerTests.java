@@ -28,7 +28,7 @@ import static org.hamcrest.Matchers.equalTo;
 public class LoginValidCheckerTests {
     @Rule
     public GenericContainer mongoDBContainer = new GenericContainer(DockerImageName.parse("mongo:4.4.2"))
-            .withExposedPorts(27016);
+            .withExposedPorts(27017);
 
     @Autowired
     MongoDatabase mongoDatabase;
