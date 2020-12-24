@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Component
 public class VkRequestQueuePutter implements Runnable {
     @Autowired
-    VkRequestQueue vkRequestQueue;
+    VkRequestQueuesHashmapProvider vkRequestQueuesHashmapProvider;
     @Autowired
     VkSpyRequestKeeper vkSpyRequestKeeper;
     void putOnQueue() {
@@ -19,7 +19,7 @@ public class VkRequestQueuePutter implements Runnable {
 
             if (vkSpyRequest.shouldUpdate()) {
 
-                vkRequestQueue.addRequest(
+                vkRequestQueuesHashmapProvider.addRequest(
 
                         vkSpyRequest
                 );
@@ -31,7 +31,11 @@ public class VkRequestQueuePutter implements Runnable {
     }
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
-
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             this.putOnQueue();
         }
     }

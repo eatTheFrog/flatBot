@@ -7,9 +7,9 @@ import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkSpyRequ
 @Component
 public class VkRequestQueueHandlerThread implements Runnable {
     @Autowired
-    VkRequestQueue vkRequestQueue;
+    VkRequestQueuesHashmapProvider vkRequestQueuesHashmapProvider;
     public void startThreadPool() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 2; i++) {
             new Thread(this).start();
         }
     }
@@ -21,16 +21,12 @@ public class VkRequestQueueHandlerThread implements Runnable {
                 e.printStackTrace();
             }
 
-            VkSpyRequestAbstract vkSpyRequest = vkRequestQueue.getRequest();
+            VkSpyRequestAbstract vkSpyRequest = vkRequestQueuesHashmapProvider.getRequest();
             if (vkSpyRequest != null){
                 if (vkSpyRequest.isTokenReady()) {
                     vkSpyRequest.handle();
                     vkSpyRequest.setUnQueued();
                 }
-                else {
-                    this.vkRequestQueue.addQueuedRequestSafely(vkSpyRequest);
-                }
-
             }
         }
     }
