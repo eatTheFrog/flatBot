@@ -201,6 +201,13 @@
                         <from>
                             <image>openjdk:10-jre</image>
                         </from>
+                        <container>
+                            <ports>
+                                <port>27017</port>
+                                <port>1000</port>
+                                <port>2000-2003</port>
+                            </ports>
+                        </container>
                     </configuration>
                 </plugin>
 

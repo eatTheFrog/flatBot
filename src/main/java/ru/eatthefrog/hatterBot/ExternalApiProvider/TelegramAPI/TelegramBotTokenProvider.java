@@ -19,7 +19,7 @@ public class TelegramBotTokenProvider implements BotTokenProvider {
         if (token.equals("default"))
             token = propertiesProvider.getProperty(
                     "secret.bot.properties",
-                    "token");
+                    "telegram_token");
         return token;
     }
 }
