@@ -24,6 +24,7 @@ public class MongoUtils {
         Document doc = collection.find(new Document("platform", platform)).first();
         System.out.println(doc);
         if (doc == null)
+
             return null;
         return doc.getString("token");
     }
