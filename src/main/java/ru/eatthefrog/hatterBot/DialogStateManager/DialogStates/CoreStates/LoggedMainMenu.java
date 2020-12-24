@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.*;
-import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.VkSpyStates.VkToolsMenuSelectState;
+import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.VkSpyStates.SpyVkState;
 
 import javax.annotation.PostConstruct;
 
@@ -22,11 +22,11 @@ public class LoggedMainMenu extends MainMenuDialogState {
     @Autowired
     NetworkingToolsMenuState networkingToolsMenuState;
     @Autowired
-    VkToolsMenuSelectState vkToolsMenuSelectState;
+    SpyVkState spyVkState;
     @PostConstruct
     public void fillStateMap() {
         nextStatesMap.put("/networking", networkingToolsMenuState );
-        nextStatesMap.put("/vk_spy", vkToolsMenuSelectState);
+        nextStatesMap.put("/vk_spy", spyVkState);
         nextStatesMap.put("/info", infoState);
         nextStatesMap.put("/echo", echoState);
         nextStatesMap.put("/settings", notYetImplementedState);

@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkOnlineSpyRequest;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkResponseRepresentationKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkResponseRepresentationKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkSpyRequestAbstract;
 
 @Component
 public class GetSpyListState extends DialogState {
@@ -13,7 +13,7 @@ public class GetSpyListState extends DialogState {
     public void fillStateMap() {
     }
     @Autowired
-    SpyVkOnlineState spyVkOnlineState;
+    SpyVkState spyVkState;
     @Autowired
     VkResponseRepresentationKeeper vkResponseRepresentationKeeper;
     @Override
@@ -23,20 +23,20 @@ public class GetSpyListState extends DialogState {
 
     @Override
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        var x = vkResponseRepresentationKeeper.getChatIdOnlineSpyRequests(dsp.chatID);
+        var x = vkResponseRepresentationKeeper.getChatIdAbstractSpyRequests(dsp.chatID);
         if (x == null) {
             sendResponse("You are not spying online now.", dsp);
-            return this.spyVkOnlineState.sendPromptAndYourself(dsp);
+            return this.spyVkState.sendPromptAndYourself(dsp);
 
         }
         String response = "";
-        for (VkOnlineSpyRequest i:
+        for (VkSpyRequestAbstract i:
                 x) {
-            response += String.valueOf(i.getSpyVkId()) + "\n";
+            response += i.getSpyPrompt() + "\n";
         }
 
         sendResponse(response, dsp);
-        return this.spyVkOnlineState.sendPromptAndYourself(dsp);
+        return this.spyVkState.sendPromptAndYourself(dsp);
     }
 
 

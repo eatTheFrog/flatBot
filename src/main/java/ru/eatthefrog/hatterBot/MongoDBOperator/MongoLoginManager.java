@@ -2,10 +2,9 @@ package ru.eatthefrog.hatterBot.MongoDBOperator;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.BsonDocument;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.LoginManager.LoginInstance;
 import ru.eatthefrog.hatterBot.MD5StringHasher.MD5StringHasher;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +31,7 @@ public class MongoLoginManager implements DataBaseLoginManager {
         }};
         loginCollection.insertOne(mongoLoginInstance);
     }
+
     public String getHashPasswordForLogin(String login) {
         if (login == null)
             return null;
@@ -42,7 +42,7 @@ public class MongoLoginManager implements DataBaseLoginManager {
     }
 
     public void resetDatabase() {
-
+        loginCollection.deleteMany(new Document());
     }
 
     @Override

@@ -30,4 +30,4 @@ hs_err_pid*
 Будет удалено target/classes/helpDoc
 Будет удалено target/classes/logback.xml
 Будет удалено target/generated-sources/
-/src/main/resources/secret.bot.properties
+Будет удалено /src/main/resources/secret.bot.properties

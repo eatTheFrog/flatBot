@@ -6,9 +6,9 @@ import ru.eatthefrog.hatterBot.ExternalApiProvider.ApiProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.BotTokenProvider;
 import ru.eatthefrog.hatterBot.ExternalApiProvider.LongPollMessageGetter;
 import ru.eatthefrog.hatterBot.Message.Message;
-import ru.eatthefrog.hatterBot.VkSpy.VkRequestQueueHandlerThread;
-import ru.eatthefrog.hatterBot.VkSpy.VkRequestQueuePutter;
-import ru.eatthefrog.hatterBot.VkSpy.VkSpyResponsesKeeper.VkSpyResponsesKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkRequestQueueHandlerThread;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkRequestQueuePutter;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpyRequestKeeper;
 
 
 @Component
@@ -28,14 +28,15 @@ public class Application {
     @Autowired
     VkRequestQueueHandlerThread vkRequestQueueHandlerThread;
     @Autowired
-    VkSpyResponsesKeeper vkSpyResponsesKeeper;
+    VkSpyRequestKeeper vkSpyRequestKeeper;
 
     public void run() {
+        vkSpyRequestKeeper.loadRequestsMongoDatabase();
 
-        vkSpyResponsesKeeper.loadResponsesMongoDatabase();
         ApiProvider.setToken(
                 botTokenProvider.getToken()
         );
+
 
         vkRequestQueuePutter.startThread();
         vkRequestQueueHandlerThread.startThreadPool();
@@ -48,7 +49,6 @@ public class Application {
     }
 
     public void longPollIteration() {
-
             Message[] userMessages = longPollMessageGetter.getMessagesLongPoll();
             for (Message userMessage : userMessages) {
                 requestHandler.addRequest(userMessage);

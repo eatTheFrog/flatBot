@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.LoggedMainMenu;
-import ru.eatthefrog.hatterBot.VkSpy.VkUserStatesManager.VkUserTokenManager;
+import ru.eatthefrog.hatterBot.VkSpy.VkTokenManager.VkUserTokenManager;
 
 @Component
 public class VkTokenAskState extends DialogState {
     @Autowired
-    VkUserTokenManager vkUserStatesManager;
+    VkUserTokenManager vkUserTokenManager;
     @Autowired
     LoggedMainMenu loggedMainMenu;
 
@@ -21,7 +21,7 @@ public class VkTokenAskState extends DialogState {
     @Override
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
         int chatId = dsp.chatID;
-        vkUserStatesManager.addToken(dsp.chatID, userInput);
+        vkUserTokenManager.addToken(dsp.chatID, userInput);
         this.sendResponse("Vk Token was added.", dsp);
         return this.getMainMenu(dsp);
     }
