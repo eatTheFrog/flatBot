@@ -14,10 +14,6 @@ public class VkUserTokenManager {
     @Autowired
     PropertiesProvider propertiesProvider;
 
-    @PostConstruct
-    public void putMyToken() {
-
-    }
     public void addToken(int chatId, String token) {
         this.vkTokens.put(chatId, new VkApiTokenInstance(token));
     }
