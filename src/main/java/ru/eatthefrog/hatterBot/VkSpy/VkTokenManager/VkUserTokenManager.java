@@ -14,16 +14,6 @@ public class VkUserTokenManager {
     @Autowired
     PropertiesProvider propertiesProvider;
 
-    @PostConstruct
-    public void putMyToken() {
-        this.vkTokens.put(
-                875574469,
-                new VkApiTokenInstance(propertiesProvider.getProperty(
-                        "secret.bot.properties",
-                        "vk_token"
-                ))
-        );
-    }
     public void addToken(int chatId, String token) {
         this.vkTokens.put(chatId, new VkApiTokenInstance(token));
     }
