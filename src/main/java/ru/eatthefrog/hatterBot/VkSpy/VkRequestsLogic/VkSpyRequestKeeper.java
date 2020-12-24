@@ -8,6 +8,7 @@ import ru.eatthefrog.hatterBot.SpringConfiguration;
 import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkFriendsSpyRequest;
 import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkOnlineSpyRequest;
 import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkSpyRequestAbstract;
+import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests.VkWallSpyRequest;
 
 import java.util.ArrayList;
 
@@ -18,83 +19,41 @@ public class VkSpyRequestKeeper {
     @Autowired
     MongoSpyRequestsManager mongoSpyRequestsManager;
     ArrayList<VkSpyRequestAbstract> vkSpyRequestAbstractList = new ArrayList<VkSpyRequestAbstract>();
+
     public void addFriendsSpy(int userChatId, int userSpyToVkId) {
-        var x = vkResponseRepresentationKeeper.getChatIdOnlineSpyRequests(
-                userChatId
-        );
-        if (x != null) {
-            for (VkSpyRequestAbstract i:
-                    x) {
-                if (i.getSpyVkId() == userSpyToVkId && i.getClass() == VkFriendsSpyRequest.class) {
-                    return;
-                }
-            }
-        }
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-                SpringConfiguration.class
-        );
-        VkFriendsSpyRequest vkFriendsSpyRequest = context.getBean(
-                VkFriendsSpyRequest.class
-        );
-        vkFriendsSpyRequest.setChatId(userChatId);
-        vkFriendsSpyRequest.setSpyVkId(userSpyToVkId);
-        mongoSpyRequestsManager.addFriendsSpyRequest(
-                vkFriendsSpyRequest
-        );
-        this.vkSpyRequestAbstractList.add(
-                vkFriendsSpyRequest
-        );
-        this.vkResponseRepresentationKeeper.addSpyRequestRepresentation(
-                userChatId,
-                vkFriendsSpyRequest
-        );
-
-        context.close();
+        this.addAbstractSpyRequest(userChatId,
+                userSpyToVkId,
+                VkFriendsSpyRequest.class);
     }
+
     public void addOnlineSpy(int userChatId, int userSpyToVkId) {
-        var x = vkResponseRepresentationKeeper.getChatIdOnlineSpyRequests(
-            userChatId
-        );
-        if (x != null) {
-            for (VkSpyRequestAbstract i:
-                    x) {
-                if (i.getSpyVkId() == userSpyToVkId && i.getClass() == VkOnlineSpyRequest.class) {
-                    return;
-                }
-            }
-        }
-
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-                SpringConfiguration.class
-        );
-        VkOnlineSpyRequest vkOnlineSpyRequest = context.getBean(
-                VkOnlineSpyRequest.class
-        );
-        vkOnlineSpyRequest.setChatId(userChatId);
-        vkOnlineSpyRequest.setSpyVkId(userSpyToVkId);
-        mongoSpyRequestsManager.addOnlineSpyRequest(
-            vkOnlineSpyRequest
-        );
-        this.vkSpyRequestAbstractList.add(
-                vkOnlineSpyRequest
-        );
-        this.vkResponseRepresentationKeeper.addSpyRequestRepresentation(
-                userChatId,
-                vkOnlineSpyRequest
-        );
-
-        context.close();
+        this.addAbstractSpyRequest(userChatId,
+                userSpyToVkId,
+                VkOnlineSpyRequest.class);
     }
+
+    public void addWallSpy(int userChatId, int userSpyToVkId) {
+        this.addAbstractSpyRequest(userChatId,
+                userSpyToVkId,
+                VkWallSpyRequest.class);
+    }
+
     public ArrayList<VkSpyRequestAbstract> getRequests() {
         return this.vkSpyRequestAbstractList;
     }
     public void loadRequestsMongoDatabase() {
         loadOnlineRequestsMongoDatabase();
         loadFriendsRequestsMongoDatabase();
+        loadWallRequestMongoDatabase();
     }
     void loadOnlineRequestsMongoDatabase() {
         this.loadAbstractRequestsMongoDatabase(
                 mongoSpyRequestsManager.getOnlineSpyRequests()
+        );
+    }
+    void loadWallRequestMongoDatabase() {
+        this.loadAbstractRequestsMongoDatabase(
+                mongoSpyRequestsManager.getWallSpyRequests()
         );
     }
     void loadFriendsRequestsMongoDatabase() {
@@ -112,5 +71,40 @@ public class VkSpyRequestKeeper {
                     vkSpyRequestAbstract
             );
         }
+    }
+    void addAbstractSpyRequest(int userChatId,
+                               int userSpyToVkId,
+                               Class vkSpyRequestAbstractClass) {
+        var x = vkResponseRepresentationKeeper.getChatIdAbstractSpyRequests(
+                userChatId
+        );
+        if (x != null) {
+            for (VkSpyRequestAbstract i:
+                    x) {
+                if (i.getSpyVkId() == userSpyToVkId && i.getClass() == VkFriendsSpyRequest.class) {
+                    return;
+                }
+            }
+        }
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
+                SpringConfiguration.class
+        );
+        VkSpyRequestAbstract vkSpyRequestAbstract = (VkSpyRequestAbstract) context.getBean(
+                vkSpyRequestAbstractClass
+        );
+        vkSpyRequestAbstract.setChatId(userChatId);
+        vkSpyRequestAbstract.setSpyVkId(userSpyToVkId);
+        mongoSpyRequestsManager.addSpyRequest(
+                vkSpyRequestAbstract
+        );
+        this.vkSpyRequestAbstractList.add(
+                vkSpyRequestAbstract
+        );
+        this.vkResponseRepresentationKeeper.addSpyRequestRepresentation(
+                userChatId,
+                vkSpyRequestAbstract
+        );
+
+        context.close();
     }
 }

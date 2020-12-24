@@ -18,12 +18,17 @@ public class SpyVkState extends DialogState {
     @Autowired
     InfoState infoState;
     @Autowired
+    SpyVkAddSpyWall spyVkAddSpyWall;
+    @Autowired
     RemoveFromSpyState removeFromSpyState;
     @PostConstruct
     public void fillStateMap() {
         nextStatesMap.put("/get_spy_list", getSpyListState);
         nextStatesMap.put("/add_to_online_spy", spyVkAddSpyOnline);
         nextStatesMap.put("/add_to_friends_spy", spyVkAddSpyFriendsState);
+
+        nextStatesMap.put("/add_to_wall_spy", spyVkAddSpyWall);
+
         nextStatesMap.put("/remove_from_spy", removeFromSpyState);
         nextStatesMap.put("/back", loggedMainMenu);
     }

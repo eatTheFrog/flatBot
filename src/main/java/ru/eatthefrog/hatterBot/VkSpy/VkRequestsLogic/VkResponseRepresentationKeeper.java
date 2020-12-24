@@ -24,7 +24,7 @@ public class VkResponseRepresentationKeeper {
         return x;
     }
 
-    public ArrayList<VkSpyRequestAbstract> getChatIdOnlineSpyRequests(int chatId) {
+    public ArrayList<VkSpyRequestAbstract> getChatIdAbstractSpyRequests(int chatId) {
         var to_return =  this.vkSpyRequestsByChatId.get(chatId);
         if (to_return == null) {
             return this.initEmptyArray(chatId);

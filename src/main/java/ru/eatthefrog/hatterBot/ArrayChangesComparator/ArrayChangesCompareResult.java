@@ -1,8 +1,6 @@
-package ru.eatthefrog.hatterBot.FriendsChangesComparator;
+package ru.eatthefrog.hatterBot.ArrayChangesComparator;
 
-import java.util.ArrayList;
-
-public class FriendsChangesCompareResult {
+public class ArrayChangesCompareResult {
     boolean isChanged = false;
     Integer[] newFriends;
     Integer[] deletedFriends;

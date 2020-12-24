@@ -1,4 +1,4 @@
-package ru.eatthefrog.hatterBot.FriendsChangesComparator;
+package ru.eatthefrog.hatterBot.ArrayChangesComparator;
 
 import org.springframework.stereotype.Component;
 
@@ -6,12 +6,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Component
-public class FriendsChangesComparator {
-    public FriendsChangesCompareResult getCompareResult(
+public class ArrayChangesComparator {
+    public ArrayChangesCompareResult getCompareResult(
             Integer[] friendsWas,
             Integer[] friendsNow
     ) {
-        var compareResult = new FriendsChangesCompareResult();
+        var compareResult = new ArrayChangesCompareResult();
         HashSet<Integer> friendsDeletedHash = new HashSet<Integer>(
                 Arrays.asList(friendsWas)
         );

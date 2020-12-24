@@ -3,7 +3,7 @@ package ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpecialRequests;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ru.eatthefrog.hatterBot.FriendsChangesComparator.FriendsChangesComparator;
+import ru.eatthefrog.hatterBot.ArrayChangesComparator.ArrayChangesComparator;
 import ru.eatthefrog.hatterBot.Message.TelegramMessage;
 import ru.eatthefrog.hatterBot.VkSpy.VkApi.TooManyRequestsException;
 import ru.eatthefrog.hatterBot.VkSpy.VkProfileManager.VkProfileUnit;
@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
 public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
 
     @Autowired
-    FriendsChangesComparator friendsChangesComparator;
+    ArrayChangesComparator arrayChangesComparator;
     @PostConstruct
     public void initBean() {
         this.checkFrequency = 60;
@@ -45,7 +45,7 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
         catch (TooManyRequestsException e) {
             return;
         }
-        var compRes = this.friendsChangesComparator.getCompareResult(vkProfileUnit.getFriends(),
+        var compRes = this.arrayChangesComparator.getCompareResult(vkProfileUnit.getFriends(),
                 currentFriends);
         if (compRes.isChanged()) {
             Integer[] newFriends = compRes.getNewFriends();

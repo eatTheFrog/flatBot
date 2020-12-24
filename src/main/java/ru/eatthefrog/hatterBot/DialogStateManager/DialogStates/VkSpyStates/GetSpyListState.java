@@ -23,7 +23,7 @@ public class GetSpyListState extends DialogState {
 
     @Override
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        var x = vkResponseRepresentationKeeper.getChatIdOnlineSpyRequests(dsp.chatID);
+        var x = vkResponseRepresentationKeeper.getChatIdAbstractSpyRequests(dsp.chatID);
         if (x == null) {
             sendResponse("You are not spying online now.", dsp);
             return this.spyVkState.sendPromptAndYourself(dsp);
