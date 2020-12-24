@@ -195,6 +195,7 @@
                     <artifactId>jib-maven-plugin</artifactId>
                     <version>2.7.0</version>
                     <configuration>
+                        
                         <to>
                             <image>myimage</image>
                         </to>
