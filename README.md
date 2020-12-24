@@ -37,4 +37,4 @@ The idea behind the flatHatBot is to allow one to use a small array of network o
             - [x] Слежка за страницей ВК
         - [X] Интеграции
             - [X] Actions
-            - [X] Heroku
+            - [ ] Heroku
