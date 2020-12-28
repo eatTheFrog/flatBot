@@ -19,7 +19,7 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
     ArrayChangesComparator arrayChangesComparator;
     @PostConstruct
     public void initBean() {
-        this.checkFrequency = 60;
+        this.checkFrequency = 10;
     }
     public String getSpyPrompt() {
         return "Вы следите за друзьями: " + this.vkNameProvider.getName(

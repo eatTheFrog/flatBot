@@ -22,7 +22,7 @@ public class VkWallSpyRequest extends VkSpyRequestAbstract {
     WallIndexesExtractor wallIndexesExtractor;
     @PostConstruct
     public void initBean() {
-        this.checkFrequency = 60;
+        this.checkFrequency = 10;
     }
     @Override
     public void handle() {

@@ -27,6 +27,9 @@ public class VkRequestQueueHandlerThread implements Runnable {
                     vkSpyRequest.handle();
                     vkSpyRequest.setUnQueued();
                 }
+                else {
+                    this.vkRequestQueuesHashmapProvider.addRequest(vkSpyRequest);
+                }
             }
         }
     }
