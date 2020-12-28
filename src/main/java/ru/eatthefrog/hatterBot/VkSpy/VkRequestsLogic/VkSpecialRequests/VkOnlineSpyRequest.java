@@ -41,6 +41,7 @@ public class VkOnlineSpyRequest extends VkSpyRequestAbstract {
         catch (TooManyRequestsException e) {
             return;
         }
+        System.out.println(isOnline);
         if (vkProfileUnit.getIsOnline() != isOnline) {
             String messageText = "";
             if (isOnline) {

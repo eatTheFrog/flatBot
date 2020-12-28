@@ -16,9 +16,7 @@ public class VkRequestQueuePutter implements Runnable {
         ArrayList<VkSpyRequestAbstract> requests = vkSpyRequestKeeper.getRequests();
         for (VkSpyRequestAbstract vkSpyRequest:
                 requests) {
-
             if (vkSpyRequest.shouldUpdate()) {
-
                 vkRequestQueuesHashmapProvider.addRequest(
 
                         vkSpyRequest

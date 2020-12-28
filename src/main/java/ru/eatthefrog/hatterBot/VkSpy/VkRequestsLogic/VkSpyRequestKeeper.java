@@ -81,7 +81,7 @@ public class VkSpyRequestKeeper {
         if (x != null) {
             for (VkSpyRequestAbstract i:
                     x) {
-                if (i.getSpyVkId() == userSpyToVkId && i.getClass() == VkFriendsSpyRequest.class) {
+                if (i.getSpyVkId() == userSpyToVkId && i.getClass() == vkSpyRequestAbstractClass) {
                     return;
                 }
             }
@@ -106,5 +106,9 @@ public class VkSpyRequestKeeper {
         );
 
         context.close();
+    }
+    public void removeSpyStates(int chatId, int vkId) {
+        this.vkSpyRequestAbstractList.removeIf(req -> req.getChatId() == chatId && req.getSpyVkId() == vkId);
+        this.vkResponseRepresentationKeeper.remove(chatId, vkId);
     }
 }

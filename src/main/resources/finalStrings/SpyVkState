@@ -1,4 +1,5 @@
 Hello. There are some tools.
+/vk_add_token - add token to vk.
 /get_spy_list - prints all users you are spy on.
 /add_to_online_spy - add user to online spy list.
 /add_to_friends_spy - add user to friends spy list.

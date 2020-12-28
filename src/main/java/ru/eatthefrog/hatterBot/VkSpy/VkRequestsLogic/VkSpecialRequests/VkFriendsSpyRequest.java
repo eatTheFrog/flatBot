@@ -28,6 +28,7 @@ public class VkFriendsSpyRequest extends VkSpyRequestAbstract {
         );
     }
     public void handle() {
+        System.out.println("FRIEND_HANDLE");
         apiProvider.setToken(
                 botTokenProvider.getToken()
         );

@@ -31,4 +31,10 @@ public class VkResponseRepresentationKeeper {
         }
         return to_return;
     }
+    public void remove(int chatId, int vkId) {
+        var list = this.vkSpyRequestsByChatId.get(chatId);
+        if (list == null)
+            return;
+        list.removeIf(req -> req.getSpyVkId() == vkId);
+    }
 }
