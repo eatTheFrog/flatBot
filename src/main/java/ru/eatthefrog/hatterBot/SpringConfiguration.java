@@ -35,6 +35,7 @@ public class SpringConfiguration {
 
     private String getMongoEnv(String env){
         var a =  System.getenv("flatHatBot_mongo_" + env);
+        System.out.println(a);
         return a;
     }
 

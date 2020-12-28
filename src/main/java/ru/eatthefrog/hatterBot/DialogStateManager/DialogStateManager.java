@@ -1,6 +1,7 @@
 package ru.eatthefrog.hatterBot.DialogStateManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.LoggedMainMenu;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.StartingState;
@@ -12,6 +13,8 @@ import java.util.AbstractMap;
 
 @Component
 public class DialogStateManager {
+    @Autowired
+    AnnotationConfigApplicationContext context;
     @Autowired
     StartingState startingState;
 
@@ -53,7 +56,9 @@ public class DialogStateManager {
         if (dsp == null) {
             dsp = mongoUserStatesManager.getStatePosition(chatID);
             if (dsp == null) {
-                dsp = new DialogStatePosition(startingState, chatID);
+                dsp = context.getBean(DialogStatePosition.class);
+                dsp.setDialogState(startingState);
+                dsp.setChatID(chatID);
                 statePositionDict.put(chatID, dsp);
             }
         }

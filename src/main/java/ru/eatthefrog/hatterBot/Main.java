@@ -13,7 +13,6 @@ public class Main {
                 SpringConfiguration.class
         );
         Application app = context.getBean("application", Application.class);
-        context.close();
         app.run();
     }
 }
