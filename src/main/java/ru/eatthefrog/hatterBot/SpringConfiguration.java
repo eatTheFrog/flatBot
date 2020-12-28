@@ -1,8 +1,8 @@
 package ru.eatthefrog.hatterBot;
 
 import com.google.gson.Gson;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import com.mongodb.*;
+import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import org.springframework.context.annotation.*;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
@@ -19,6 +19,7 @@ import ru.eatthefrog.hatterBot.MongoDBOperator.DataBaseLoginManager;
 import ru.eatthefrog.hatterBot.MongoDBOperator.MongoLoginManager;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,9 +33,18 @@ import java.util.logging.Logger;
 @PropertySource("bot.properties")
 public class SpringConfiguration {
 
-    final String dataBaseName = "FlatHatBotDatabase";
+    private String getMongoEnv(String env){
+        var a =  System.getenv("flatHatBot_mongo_" + env);
+        System.out.println("flatHatBot_mongo_" + env + " = " + a);
+        return a;
 
-    final String mongoUri = "mongodb://194.32.248.19/:27017";
+    }
+
+    final String MONGO_USER = getMongoEnv("user");
+    final String MONGO_PWD = getMongoEnv("pwd");
+    final String MONGO_HOST = getMongoEnv("host");
+    final String MONGO_PORT = getMongoEnv("port");
+    final String MONGO_DB = getMongoEnv("db");
 
     @Bean
     public DataBaseLoginManager dataBaseLoginManagerBean() {
@@ -69,10 +79,12 @@ public class SpringConfiguration {
         Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
         mongoLogger.setLevel(Level.SEVERE);
 
-        MongoClientURI clientURI = new MongoClientURI(mongoUri);
-        MongoClient mongoClient = new MongoClient(clientURI);
-        return mongoClient.getDatabase(
-                dataBaseName
-        );
+        return MongoClients
+                .create(String.format("mongodb://%s:%s@%s:%s",
+                        MONGO_USER,
+                        MONGO_PWD,
+                        MONGO_HOST,
+                        MONGO_PORT))
+                .getDatabase(MONGO_DB);
     }
 }

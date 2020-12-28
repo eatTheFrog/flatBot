@@ -37,7 +37,6 @@ public class Application {
                 botTokenProvider.getToken()
         );
 
-
         vkRequestQueuePutter.startThread();
         vkRequestQueueHandlerThread.startThreadPool();
 

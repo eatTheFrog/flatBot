@@ -26,12 +26,11 @@ import static org.hamcrest.Matchers.equalTo;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = SpringConfiguration.class)
 public class LoginValidCheckerTests {
+
     @Rule
     public GenericContainer mongoDBContainer = new GenericContainer(DockerImageName.parse("mongo:4.4.2"))
-            .withExposedPorts(27017);
-
-    @Autowired
-    MongoDatabase mongoDatabase;
+            .withExposedPorts(27017)
+            .withExtraHost("localhost", "127.0.0.1");
 
     @Autowired
     LoginValidChecker loginValidChecker;
@@ -65,6 +64,7 @@ public class LoginValidCheckerTests {
         System.out.println(dataBaseLoginManager.getCount());
 
     }
+
     @Test
     public void checkLoginInstanceInDB() {
         LoginInstance loginInstance1 = getLoginInstance("abc","de");
