@@ -19,18 +19,8 @@ public class RemoveFromSpyState extends DialogState {
 
 
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        try {
-            vkSpyRequestKeeper.addOnlineSpy(
-                    dsp.chatID,
-                    Integer.parseInt(userInput)
-            );
-            this.sendResponse("Пользователь добавлен.", dsp);
 
-        }
-        catch (NumberFormatException e) {
-            this.sendResponse("Набранный вами ID был не верный. Это должно быть натуральное число.", dsp);
-        }
-
+        this.vkSpyRequestKeeper.removeSpyStates(dsp.chatID, Integer.parseInt(userInput));
 
         return spyVkState.sendPromptAndYourself(dsp);
     }
