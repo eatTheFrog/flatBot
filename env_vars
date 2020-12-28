@@ -1,5 +1,0 @@
-export flatHatBot_mongo_user=
-export flatHatBot_mongo_pwd=
-export flatHatBot_mongo_host=
-export flatHatBot_mongo_port=
-export flatHatBot_mongo_db=
