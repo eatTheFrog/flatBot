@@ -23,7 +23,8 @@ public class MongoSpyRequestsManager {
     MongoCollection<Document> onlineSpyCollection;
     MongoCollection<Document> friendsSpyCollection;
     MongoCollection<Document> wallSpyCollection;
-
+    @Autowired
+    AnnotationConfigApplicationContext context;
     @Autowired
     MongoDatabase mongoDatabase;
 
@@ -60,9 +61,7 @@ public class MongoSpyRequestsManager {
 
         ArrayList<VkSpyRequestAbstract> temp = new ArrayList<VkSpyRequestAbstract>();
 
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-                SpringConfiguration.class
-        );
+
         for (Document doc:
                 docs) {
             System.out.println(doc);
@@ -73,7 +72,6 @@ public class MongoSpyRequestsManager {
             temp.add(vkOnlineSpyRequest);
 
         }
-        context.close();
         return temp;
     }
     public ArrayList<VkSpyRequestAbstract> getOnlineSpyRequests() {

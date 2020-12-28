@@ -24,6 +24,7 @@ public class VkOnlineSpyRequest extends VkSpyRequestAbstract {
         );
     }
     public void handle() {
+        System.out.println("online spy request started");
         apiProvider.setToken(
                 botTokenProvider.getToken()
         );

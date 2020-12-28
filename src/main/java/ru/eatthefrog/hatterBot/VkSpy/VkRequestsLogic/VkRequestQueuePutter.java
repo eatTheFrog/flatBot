@@ -28,6 +28,7 @@ public class VkRequestQueuePutter implements Runnable {
         new Thread(this).start();
     }
     public void run() {
+        System.out.println("queue putter started");
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 Thread.sleep(1000);

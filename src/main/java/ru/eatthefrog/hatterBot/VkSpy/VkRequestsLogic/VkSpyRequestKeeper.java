@@ -15,6 +15,8 @@ import java.util.ArrayList;
 @Component
 public class VkSpyRequestKeeper {
     @Autowired
+    AnnotationConfigApplicationContext context;
+    @Autowired
     VkResponseRepresentationKeeper vkResponseRepresentationKeeper;
     @Autowired
     MongoSpyRequestsManager mongoSpyRequestsManager;
@@ -86,9 +88,7 @@ public class VkSpyRequestKeeper {
                 }
             }
         }
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-                SpringConfiguration.class
-        );
+
         VkSpyRequestAbstract vkSpyRequestAbstract = (VkSpyRequestAbstract) context.getBean(
                 vkSpyRequestAbstractClass
         );
@@ -104,8 +104,6 @@ public class VkSpyRequestKeeper {
                 userChatId,
                 vkSpyRequestAbstract
         );
-
-        context.close();
     }
     public void removeSpyStates(int chatId, int vkId) {
         this.vkSpyRequestAbstractList.removeIf(req -> req.getChatId() == chatId && req.getSpyVkId() == vkId);
