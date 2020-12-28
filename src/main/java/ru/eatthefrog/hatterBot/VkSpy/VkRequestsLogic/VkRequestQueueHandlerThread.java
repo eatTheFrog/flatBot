@@ -9,7 +9,7 @@ public class VkRequestQueueHandlerThread implements Runnable {
     @Autowired
     VkRequestQueuesHashmapProvider vkRequestQueuesHashmapProvider;
     public void startThreadPool() {
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 6; i++) {
             new Thread(this).start();
         }
     }
