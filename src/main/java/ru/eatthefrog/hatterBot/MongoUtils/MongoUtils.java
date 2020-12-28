@@ -22,7 +22,6 @@ public class MongoUtils {
 
     private String getToken(MongoCollection<Document> collection, String platform){
         Document doc = collection.find(new Document("platform", platform)).first();
-        System.out.println(doc);
         if (doc == null)
 
             return null;

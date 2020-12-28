@@ -28,7 +28,6 @@ public class VkRequestQueuesHashmapProvider {
         }
     }
     public VkSpyRequestAbstract getRequest() {
-        System.out.println(blockingQueues.keySet());
         for (var chatId:
              blockingQueues.keySet()) {
             var queue = blockingQueues.get(chatId);
@@ -36,7 +35,6 @@ public class VkRequestQueuesHashmapProvider {
             if (element != null && element.isTokenReady()) {
                 try {
                     element = queue.take();
-                    System.out.println(String.format("element, taken. now peek is %s, count is %s",queue.peek(),queue.size()));
                     return element;
                 }
                 catch (InterruptedException e) {

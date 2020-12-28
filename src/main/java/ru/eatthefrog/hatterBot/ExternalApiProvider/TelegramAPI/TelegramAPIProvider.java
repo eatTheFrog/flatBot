@@ -38,6 +38,7 @@ public class TelegramAPIProvider implements ApiProvider {
     }
 
     public String sendMessage(Message message){
+        System.out.println(message.getChatId());
         String request_text = String.format("%s%s/sendMessage?chat_id=%s&text=%s",
                 API_PREFIX,
                 this.getToken(),

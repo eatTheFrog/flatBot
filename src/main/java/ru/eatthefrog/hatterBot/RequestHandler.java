@@ -19,7 +19,6 @@ public class RequestHandler implements Runnable {
     }
 
     public static void addRequest(Message messageOnGet) {
-        System.out.println(messageOnGet.getMessageText());
         requestList.add(messageOnGet);
     }
 
