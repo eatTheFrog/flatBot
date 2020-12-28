@@ -26,12 +26,13 @@ public class VkRequestQueueHandlerThread implements Runnable {
             if (vkSpyRequest != null){
                 if (vkSpyRequest.isTokenReady()) {
                     System.out.println("handler started handle");
+                    System.out.println(vkSpyRequest.getClass());
                     vkSpyRequest.handle();
                     vkSpyRequest.setUnQueued();
                 }
                 else {
                     System.out.println("handler back");
-                    this.vkRequestQueuesHashmapProvider.addRequest(vkSpyRequest);
+                    this.vkRequestQueuesHashmapProvider.addRequestForce(vkSpyRequest);
                 }
             }
         }

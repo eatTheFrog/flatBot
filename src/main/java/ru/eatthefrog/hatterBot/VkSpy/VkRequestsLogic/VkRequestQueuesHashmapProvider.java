@@ -23,6 +23,7 @@ public class VkRequestQueuesHashmapProvider {
                     new LinkedBlockingQueue<>());
         }
         if (!vkSpyRequest.isQueued()) {
+            System.out.println("ADDED FINALY!");
             vkSpyRequest.setQueued();
             this.blockingQueues.get(chatId).add(vkSpyRequest);
         }
@@ -32,6 +33,8 @@ public class VkRequestQueuesHashmapProvider {
              blockingQueues.keySet()) {
             var queue = blockingQueues.get(chatId);
             var element = queue.peek();
+            System.out.println(queue.size());
+            System.out.println(queue.peek());
             if (element != null && element.isTokenReady()) {
                 try {
                     element = queue.take();
@@ -45,5 +48,10 @@ public class VkRequestQueuesHashmapProvider {
         }
         return null;
 
+    }
+    public void addRequestForce(VkSpyRequestAbstract vkSpyRequestAbstract) {
+        this.blockingQueues.get(
+                vkSpyRequestAbstract.getChatId()
+        ).add(vkSpyRequestAbstract);
     }
 }

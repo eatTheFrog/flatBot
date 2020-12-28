@@ -14,9 +14,12 @@ public class VkRequestQueuePutter implements Runnable {
     VkSpyRequestKeeper vkSpyRequestKeeper;
     void putOnQueue() {
         ArrayList<VkSpyRequestAbstract> requests = vkSpyRequestKeeper.getRequests();
+        System.out.println(requests.size());
+        System.out.println("requests up");
         for (VkSpyRequestAbstract vkSpyRequest:
                 requests) {
             if (vkSpyRequest.shouldUpdate()) {
+                System.out.println("added request!");
                 vkRequestQueuesHashmapProvider.addRequest(
 
                         vkSpyRequest
@@ -28,8 +31,9 @@ public class VkRequestQueuePutter implements Runnable {
         new Thread(this).start();
     }
     public void run() {
-        System.out.println("queue putter started");
+
         while (!Thread.currentThread().isInterrupted()) {
+            System.out.println("queue putter work");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
