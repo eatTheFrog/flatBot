@@ -26,12 +26,15 @@ The idea behind the flatHatBot is to allow one to use a small array of network o
             - [x] Тестирование валидации ввода в PING
     - [x] Второй блок задач
         - [x] Утилита NMAP
-        - [X] Docker тесты
-
+            - [X] NMAP specific ports
+            - [X] NMAP all ports
+        - [X] Тесты
+            - [X] Testcontainers
     - [x] Третий блок задач
         - [X] VK spy
             - [x] Слежка за онлайном ВК
             - [x] Слежка за друзьями
             - [x] Слежка за страницей ВК
-
-Message #основной
+        - [X] Интеграции
+            - [X] Actions
+            - [ ] Heroku
