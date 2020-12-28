@@ -16,7 +16,6 @@ public class VkRequestQueuesHashmapProvider {
     VkSpyNullRequest vkSpyNullRequest;
 
     AbstractMap<Integer, BlockingQueue<VkSpyRequestAbstract>> blockingQueues = new ConcurrentHashMap<>();
-    BlockingQueue<VkSpyRequestAbstract> blockingQueue = new LinkedBlockingQueue<>();
     public void addRequest(VkSpyRequestAbstract vkSpyRequest) {
         int chatId = vkSpyRequest.getChatId();
         if (!blockingQueues.containsKey(chatId)) {
@@ -25,10 +24,11 @@ public class VkRequestQueuesHashmapProvider {
         }
         if (!vkSpyRequest.isQueued()) {
             vkSpyRequest.setQueued();
-            this.blockingQueue.add(vkSpyRequest);
+            this.blockingQueues.get(chatId).add(vkSpyRequest);
         }
     }
     public VkSpyRequestAbstract getRequest() {
+        System.out.println(blockingQueues.keySet());
         for (var chatId:
              blockingQueues.keySet()) {
             var queue = blockingQueues.get(chatId);
@@ -36,6 +36,7 @@ public class VkRequestQueuesHashmapProvider {
             if (element != null && element.isTokenReady()) {
                 try {
                     element = queue.take();
+                    System.out.println(String.format("element, taken. now peek is %s, count is %s",queue.peek(),queue.size()));
                     return element;
                 }
                 catch (InterruptedException e) {
@@ -46,8 +47,5 @@ public class VkRequestQueuesHashmapProvider {
         }
         return null;
 
-    }
-    public void addQueuedRequestSafely(VkSpyRequestAbstract vkSpyRequestAbstract) {
-        this.blockingQueue.add(vkSpyRequestAbstract);
     }
 }

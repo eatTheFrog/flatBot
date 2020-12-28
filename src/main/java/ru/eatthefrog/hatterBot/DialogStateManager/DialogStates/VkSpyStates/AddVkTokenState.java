@@ -5,9 +5,10 @@ import org.springframework.stereotype.Component;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStatePosition;
 import ru.eatthefrog.hatterBot.DialogStateManager.DialogStates.CoreStates.DialogState;
 import ru.eatthefrog.hatterBot.VkSpy.VkRequestsLogic.VkSpyRequestKeeper;
+import ru.eatthefrog.hatterBot.VkSpy.VkTokenManager.VkUserTokenManager;
 
 @Component
-public class RemoveFromSpyState extends DialogState {
+public class AddVkTokenState extends DialogState {
     @Override
     public void fillStateMap() {
 
@@ -15,23 +16,12 @@ public class RemoveFromSpyState extends DialogState {
     @Autowired
     SpyVkState spyVkState;
     @Autowired
-    VkSpyRequestKeeper vkSpyRequestKeeper;
+    VkUserTokenManager vkUserTokenManager;
 
 
     public DialogState getNextState(String userInput, DialogStatePosition dsp) {
-        try {
-            vkSpyRequestKeeper.addOnlineSpy(
-                    dsp.chatID,
-                    Integer.parseInt(userInput)
-            );
-            this.sendResponse("Пользователь добавлен.", dsp);
-
-        }
-        catch (NumberFormatException e) {
-            this.sendResponse("Набранный вами ID был не верный. Это должно быть натуральное число.", dsp);
-        }
-
-
+        this.vkUserTokenManager.addToken(dsp.chatID, userInput);
+        this.sendResponse("Token VK added!", dsp);
         return spyVkState.sendPromptAndYourself(dsp);
     }
 

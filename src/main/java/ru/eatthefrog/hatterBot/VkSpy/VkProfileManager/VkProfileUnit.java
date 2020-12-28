@@ -55,7 +55,12 @@ public class VkProfileUnit {
             ).response.posts;
 
             this.wallIds = wallIndexesExtractor.extractWallIndexes(posts);
-            this.maxPostId = Collections.max(Arrays.asList(this.wallIds));
+            if (this.wallIds.length > 0) {
+                this.maxPostId = Collections.max(Arrays.asList(this.wallIds));
+            }
+            else {
+                this.maxPostId = 0;
+            }
             System.out.println(Arrays.toString(this.wallIds));
         }
         catch (TooManyRequestsException e) {
